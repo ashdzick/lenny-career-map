@@ -23,6 +23,7 @@ const nextConfig = {
         "./data/paths.json",
         "./data/citation-urls.json",
         "./data/market-signals.json",
+        "./data/podcast-recs.json",
       ],
     },
   },

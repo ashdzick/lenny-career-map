@@ -7,6 +7,7 @@ import Link from "next/link";
 import LearningPathOutput from "@/components/LearningPathOutput";
 import EpisodePlaylist from "@/components/EpisodePlaylist";
 import MarketSignal from "@/components/MarketSignal";
+import PodcastRecs from "@/components/PodcastRecs";
 import type { PathsData } from "@/app/page";
 import { roleGroups } from "@/lib/roleGroups";
 import { useLocalStorage } from "@/lib/useLocalStorage";
@@ -421,6 +422,9 @@ function CareerMapInner({ data }: Props) {
             citationUrls={data.citationUrls}
             pathKey={pathKey}
           />
+
+          {/* Podcast recommendations from corpus */}
+          <PodcastRecs recs={data.podcastRecs[pathKey] ?? []} />
 
           {/* Personal notes */}
           <div className="mt-4 rounded-2xl border border-gray-200 bg-white p-5">

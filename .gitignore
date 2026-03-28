@@ -1,0 +1,27 @@
+# dependencies
+/node_modules
+
+# next.js
+/.next/
+/out/
+
+# env files
+.env
+.env.local
+.env.*.local
+
+# generated files — rebuild locally, don't commit
+/data/corpus.json
+/data/all-contexts.json
+
+# temp clone directory for build-corpus script
+/.tmp/
+
+# misc
+.DS_Store
+*.pem
+/coverage
+tsconfig.tsbuildinfo
+
+# claude code local config
+.claude/

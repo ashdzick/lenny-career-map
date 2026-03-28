@@ -1,0 +1,96 @@
+{
+  "_comment": "Market context per target role. Source: Lenny's 'State of the product job market in early 2026'. Only include roles with direct data — omit roles not covered.",
+  "_source": "State of the product job market in early 2026",
+  "_sourceUrl": "https://www.lennysnewsletter.com/p/state-of-the-product-job-market-in-ee9",
+
+  "AI Engineer": {
+    "type": "tailwind",
+    "headline": "Explosive demand",
+    "detail": "AI engineering is on a hockey-stick growth curve — among the fastest-growing roles in tech in early 2026, with a third of all AI roles concentrated in the Bay Area."
+  },
+  "AI PM": {
+    "type": "tailwind",
+    "headline": "Explosive demand",
+    "detail": "AI PM demand is surging alongside AI engineering. One of the fastest-growing PM specializations in early 2026."
+  },
+  "Chief Product Officer": {
+    "type": "tailwind",
+    "headline": "Strong market",
+    "detail": "PM roles broadly are at their highest levels since 2022 — up 75% from 2023 lows, with 20% growth since the start of 2026."
+  },
+  "Data Analyst": {
+    "type": "neutral",
+    "headline": "Mixed signals",
+    "detail": "Data roles are not separately tracked in the 2026 report, but engineering demand broadly remains strong with no AI-driven slowdown."
+  },
+  "Data Scientist": {
+    "type": "neutral",
+    "headline": "Mixed signals",
+    "detail": "Data science roles are not separately tracked in the 2026 report, but engineering demand broadly remains strong with no AI-driven slowdown."
+  },
+  "Director of Product": {
+    "type": "tailwind",
+    "headline": "Strong market",
+    "detail": "PM roles broadly are at their highest levels since 2022 — up 75% from 2023 lows, with 20% growth since the start of 2026."
+  },
+  "Director of UX": {
+    "type": "headwind",
+    "headline": "Challenging market",
+    "detail": "Design hiring has been flat since early 2023. PM openings now outnumber design openings 1.27:1 — a ratio that was at parity just two years ago."
+  },
+  "Engineering Manager": {
+    "type": "tailwind",
+    "headline": "Strong market",
+    "detail": "Engineering demand remains strong — 67,000+ open positions globally in early 2026, with recruiter hiring near 2022 peak levels."
+  },
+  "Founder / CEO": {
+    "type": "tailwind",
+    "headline": "Strong conditions",
+    "detail": "Marc Andreessen and leading AI-era founders describe a moment where a single person with AI tools can build what previously required a team — lowering the barrier to founding."
+  },
+  "Growth Manager": {
+    "type": "tailwind",
+    "headline": "Strong market",
+    "detail": "PM roles broadly are at their highest levels since 2022 — up 75% from 2023 lows, with 20% growth since the start of 2026."
+  },
+  "Principal PM": {
+    "type": "tailwind",
+    "headline": "Strong market",
+    "detail": "PM roles broadly are at their highest levels since 2022 — up 75% from 2023 lows, with 20% growth since the start of 2026."
+  },
+  "Product Designer": {
+    "type": "headwind",
+    "headline": "Challenging market",
+    "detail": "Design hiring has been flat since early 2023. PM openings now outnumber design openings 1.27:1 — a ratio that was at parity two years ago. AI-enabled engineering speed is reducing traditional design process involvement."
+  },
+  "Product Manager": {
+    "type": "tailwind",
+    "headline": "Strong market",
+    "detail": "PM openings are at their highest levels since 2022 — up 75% from 2023 lows and 20% growth since the start of 2026. Bay Area accounts for 23% of all open PM roles globally."
+  },
+  "Software Engineer": {
+    "type": "tailwind",
+    "headline": "Strong market",
+    "detail": "Engineering demand remains strong — 67,000+ open positions globally in early 2026 with no slowdown from AI adoption. Engineering recruiter hiring is near 2022 peak levels."
+  },
+  "Staff Engineer": {
+    "type": "tailwind",
+    "headline": "Strong market",
+    "detail": "Engineering demand remains strong — 67,000+ open positions globally in early 2026 with no slowdown from AI adoption."
+  },
+  "UX Lead": {
+    "type": "headwind",
+    "headline": "Challenging market",
+    "detail": "Design hiring has been flat since early 2023. PM openings now outnumber design openings 1.27:1 — a ratio that was at parity just two years ago."
+  },
+  "UX Researcher": {
+    "type": "headwind",
+    "headline": "Challenging market",
+    "detail": "Design hiring has been flat since early 2023 and UX research roles face particular pressure. PM openings now outnumber design openings 1.27:1."
+  },
+  "VP of Product": {
+    "type": "tailwind",
+    "headline": "Strong market",
+    "detail": "PM roles broadly are at their highest levels since 2022 — up 75% from 2023 lows, with 20% growth since the start of 2026."
+  }
+}

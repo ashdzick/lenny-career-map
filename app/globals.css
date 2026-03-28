@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #fdf8f0;
+}
+
+::selection {
+  background-color: #f5d9a8;
+  color: #3d1f0a;
+}
+
+/* Blinking cursor shown at end of streaming output */
+.streaming-cursor::after {
+  content: "▋";
+  display: inline-block;
+  color: #e07b39;
+  animation: blink 0.8s step-end infinite;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Skeleton pulse animation */
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+.skeleton {
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+  background: linear-gradient(90deg, #faefd8 0%, #f5d9a8 50%, #faefd8 100%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+}

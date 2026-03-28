@@ -1,0 +1,189 @@
+"use client";
+
+import { forwardRef } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import type { Components } from "react-markdown";
+
+interface Props {
+  markdown: string;
+  isStreaming?: boolean;
+  citationUrls?: Record<string, string>;
+}
+
+// Custom renderers for polished styling
+const components: Components = {
+  h2({ children }) {
+    return (
+      <h2 className="flex items-start gap-3 text-xl font-bold text-brand-900 mt-8 mb-3 first:mt-0">
+        <span className="mt-1 flex-shrink-0 w-1 h-6 rounded-full bg-brand-500" />
+        <span>{children}</span>
+      </h2>
+    );
+  },
+  h3({ children }) {
+    return (
+      <h3 className="text-base font-semibold text-brand-800 mt-5 mb-1.5">{children}</h3>
+    );
+  },
+  p({ children }) {
+    return <p className="text-gray-700 leading-relaxed mb-3">{children}</p>;
+  },
+  ul({ children }) {
+    return <ul className="space-y-2 mb-4 pl-1">{children}</ul>;
+  },
+  li({ children }) {
+    return (
+      <li className="flex items-start gap-2 text-gray-700 leading-relaxed">
+        <span className="mt-2 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-brand-400" />
+        <span>{children}</span>
+      </li>
+    );
+  },
+  strong({ children }) {
+    return <strong className="font-semibold text-gray-900">{children}</strong>;
+  },
+  em({ children }) {
+    return <em className="italic text-gray-600">{children}</em>;
+  },
+  // Render inline code as styled citation badges
+  code({ children, className }) {
+    if (!className) {
+      return (
+        <code className="px-1.5 py-0.5 rounded bg-brand-100 text-brand-700 text-xs font-medium">
+          {children}
+        </code>
+      );
+    }
+    return <code className={className}>{children}</code>;
+  },
+  blockquote({ children }) {
+    return (
+      <blockquote className="border-l-4 border-brand-300 pl-4 my-3 text-gray-600 italic">
+        {children}
+      </blockquote>
+    );
+  },
+  hr() {
+    return <hr className="my-6 border-gray-200" />;
+  },
+};
+
+function CitationBadge({ text, url }: { text: string; url?: string }) {
+  const inner = (
+    <>
+      <svg className="w-3 h-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+      </svg>
+      {text}
+    </>
+  );
+
+  const baseClass = "not-italic inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-brand-100 text-brand-700 text-xs font-medium mx-0.5";
+
+  if (url) {
+    return (
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`${baseClass} hover:bg-brand-200 transition-colors cursor-pointer underline-offset-2`}
+      >
+        {inner}
+      </a>
+    );
+  }
+
+  return <cite className={baseClass}>{inner}</cite>;
+}
+
+function ProcessCitations({
+  children,
+  citationUrls,
+}: {
+  children: React.ReactNode;
+  citationUrls: Record<string, string>;
+}): React.ReactNode {
+  if (typeof children === "string") {
+    const parts = children.split(/(\[[^\]]+\])/g);
+    if (parts.length === 1) return children;
+    return (
+      <>
+        {parts.map((part, i) => {
+          if (part.startsWith("[") && part.endsWith("]")) {
+            const text = part.slice(1, -1);
+            const url = citationUrls[text];
+            return <CitationBadge key={i} text={text} url={url} />;
+          }
+          return part;
+        })}
+      </>
+    );
+  }
+
+  if (Array.isArray(children)) {
+    return (
+      <>
+        {children.map((child, i) => (
+          <ProcessCitations key={i} citationUrls={citationUrls}>
+            {child}
+          </ProcessCitations>
+        ))}
+      </>
+    );
+  }
+
+  return <>{children}</>;
+}
+
+function makeCitationComponents(citationUrls: Record<string, string>): Components {
+  return {
+    ...components,
+    p({ children }) {
+      return (
+        <p className="text-gray-700 leading-relaxed mb-3">
+          <ProcessCitations citationUrls={citationUrls}>{children}</ProcessCitations>
+        </p>
+      );
+    },
+    li({ children }) {
+      return (
+        <li className="flex items-start gap-2 text-gray-700 leading-relaxed">
+          <span className="mt-2 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-brand-400" />
+          <span>
+            <ProcessCitations citationUrls={citationUrls}>{children}</ProcessCitations>
+          </span>
+        </li>
+      );
+    },
+  };
+}
+
+const LearningPathOutput = forwardRef<HTMLDivElement, Props>(
+  ({ markdown, isStreaming = false, citationUrls = {} }, ref) => {
+    const resolvedComponents = makeCitationComponents(citationUrls);
+
+    return (
+      <div
+        ref={ref}
+        className="bg-white rounded-2xl shadow-lg ring-1 ring-gray-100 p-8 sm:p-10"
+      >
+        <div className={isStreaming ? "streaming-cursor" : ""}>
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            components={resolvedComponents}
+          >
+            {markdown}
+          </ReactMarkdown>
+        </div>
+        <div className="mt-8 pt-6 border-t border-gray-100 text-center text-xs text-gray-400">
+          Generated from Lenny&apos;s Newsletter podcast transcripts.
+        </div>
+      </div>
+    );
+  }
+);
+
+LearningPathOutput.displayName = "LearningPathOutput";
+
+export default LearningPathOutput;

@@ -65,6 +65,9 @@ function loadPathsData(): PathsData {
   };
 }
 
+/** Avoid static shell + client bailout leaving first-time visitors with an empty / unstyled flash. */
+export const dynamic = "force-dynamic";
+
 export default function Home() {
   const data = loadPathsData();
   return <CareerMapApp data={data} />;

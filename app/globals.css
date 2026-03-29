@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Cap 24×24 icon SVGs when sizing utilities fail (must live in this file, not a manual <head>). */
+svg[viewBox="0 0 24 24"] {
+  max-width: 2.5rem;
+  max-height: 2.5rem;
+}
+
 html {
   scroll-behavior: smooth;
 }

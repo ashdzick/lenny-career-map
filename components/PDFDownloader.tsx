@@ -6,6 +6,8 @@ interface Props {
   outputRef: RefObject<HTMLDivElement | null>;
   currentRole: string;
   targetRole: string;
+  /** `link`: quiet text-style control (secondary to reading). */
+  variant?: "button" | "link";
 }
 
 function slugify(str: string): string {
@@ -16,7 +18,12 @@ function slugify(str: string): string {
     .slice(0, 40);
 }
 
-export default function PDFDownloader({ outputRef, currentRole, targetRole }: Props) {
+export default function PDFDownloader({
+  outputRef,
+  currentRole,
+  targetRole,
+  variant = "button",
+}: Props) {
   const [isGenerating, setIsGenerating] = useState(false);
 
   async function handleDownload() {
@@ -110,25 +117,34 @@ export default function PDFDownloader({ outputRef, currentRole, targetRole }: Pr
     }
   }
 
+  const linkClasses =
+    "inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-brand-700 underline-offset-2 hover:underline " +
+    "focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2 rounded " +
+    "disabled:opacity-50 disabled:cursor-not-allowed disabled:no-underline";
+
+  const buttonClasses =
+    "flex items-center gap-2 px-6 py-2.5 rounded-xl border border-brand-300 bg-white text-brand-700 font-medium text-sm " +
+    "hover:bg-brand-50 hover:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-2 " +
+    "disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm";
+
   return (
     <button
+      type="button"
       onClick={handleDownload}
       disabled={isGenerating}
-      className="flex items-center gap-2 px-6 py-2.5 rounded-xl border border-brand-300 bg-white text-brand-700 font-medium text-sm
-                 hover:bg-brand-50 hover:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-2
-                 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
+      className={variant === "link" ? linkClasses : buttonClasses}
     >
       {isGenerating ? (
         <>
-          <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
+          <svg className="animate-spin h-4 w-4 flex-shrink-0" viewBox="0 0 24 24" fill="none">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
           </svg>
-          Generating PDF...
+          Generating PDF…
         </>
       ) : (
         <>
-          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <svg className="h-4 w-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
           Download as PDF

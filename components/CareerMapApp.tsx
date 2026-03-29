@@ -1,13 +1,13 @@
 "use client";
 
-import { useRef, useState, useEffect, useCallback, Suspense } from "react";
+import { useRef, useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import LearningPathOutput from "@/components/LearningPathOutput";
-import EpisodePlaylist from "@/components/EpisodePlaylist";
+import GoDeeperSection from "@/components/GoDeeperSection";
+import CareerMapLoading from "@/components/CareerMapLoading";
 import MarketSignal from "@/components/MarketSignal";
-import PodcastRecs from "@/components/PodcastRecs";
 import type { PathsData } from "@/app/page";
 import { roleGroups } from "@/lib/roleGroups";
 import { useLocalStorage } from "@/lib/useLocalStorage";
@@ -48,6 +48,7 @@ function CareerMapInner({ data }: Props) {
   const [markdown, setMarkdown] = useState("");
   const [error, setError] = useState<string | null>(null);
   const outputRef = useRef<HTMLDivElement>(null);
+  const pathScrollRef = useRef<HTMLDivElement>(null);
 
   // ── Persistent state ──────────────────────────────────────────────────────
   const [savedPaths, setSavedPaths] = useLocalStorage<SavedPath[]>(
@@ -63,9 +64,13 @@ function CareerMapInner({ data }: Props) {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  // Notes save state
-  const [notesSaved, setNotesSaved] = useState(false);
-  const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  /** idle | saving | saved — notes persist on every change; this is feedback only */
+  const [noteStatus, setNoteStatus] = useState<"idle" | "saving" | "saved">("idle");
+  const notesEditRef = useRef(false);
+  const noteStatusTimers = useRef<{ t1?: ReturnType<typeof setTimeout>; t2?: ReturnType<typeof setTimeout> }>(
+    {}
+  );
+  const prevPathKeyForNotes = useRef<string | null>(null);
 
   const notReady = roles.length === 0;
   const totalPaths = Object.keys(paths).length;
@@ -83,17 +88,36 @@ function CareerMapInner({ data }: Props) {
 
   function updateNote(value: string) {
     if (!pathKey) return;
+    notesEditRef.current = true;
     setNotes((prev) => ({ ...prev, [pathKey]: value }));
-    setNotesSaved(false);
   }
 
-  const saveNote = useCallback(() => {
-    // Notes are already persisted on every keystroke via updateNote;
-    // this just gives the user visual confirmation.
-    setNotesSaved(true);
-    if (saveTimer.current) clearTimeout(saveTimer.current);
-    saveTimer.current = setTimeout(() => setNotesSaved(false), 2500);
-  }, []);
+  /** Only reset note UI when the user actually switches paths (not on first mount). */
+  useEffect(() => {
+    const prev = prevPathKeyForNotes.current;
+    prevPathKeyForNotes.current = pathKey;
+    if (prev === null || prev === pathKey) return;
+    notesEditRef.current = false;
+    setNoteStatus("idle");
+    const { t1, t2 } = noteStatusTimers.current;
+    if (t1) clearTimeout(t1);
+    if (t2) clearTimeout(t2);
+  }, [pathKey]);
+
+  useEffect(() => {
+    if (!pathKey || !notesEditRef.current) return;
+    setNoteStatus("saving");
+    const { t1: prev1, t2: prev2 } = noteStatusTimers.current;
+    if (prev1) clearTimeout(prev1);
+    if (prev2) clearTimeout(prev2);
+    const t1 = setTimeout(() => setNoteStatus("saved"), 450);
+    const t2 = setTimeout(() => setNoteStatus("idle"), 3200);
+    noteStatusTimers.current = { t1, t2 };
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
+  }, [pathKey, notes[pathKey]]);
 
   // Auto-load path when URL params are present on mount
   useEffect(() => {
@@ -168,7 +192,7 @@ function CareerMapInner({ data }: Props) {
     params.set("to", targetRole);
     router.replace(`?${params.toString()}`, { scroll: false });
     setTimeout(() => {
-      outputRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      pathScrollRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 50);
   }
 
@@ -193,7 +217,7 @@ function CareerMapInner({ data }: Props) {
     params.set("to", to);
     router.replace(`?${params.toString()}`, { scroll: false });
     setTimeout(() => {
-      outputRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      pathScrollRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 50);
   }
 
@@ -257,6 +281,7 @@ function CareerMapInner({ data }: Props) {
               <div className="relative">
                 <select
                   id="current-role"
+                  suppressHydrationWarning
                   value={currentRole}
                   onChange={(e) => handleCurrentRoleChange(e.target.value)}
                   className="w-full appearance-none px-4 py-2.5 pr-9 rounded-xl border border-gray-200 bg-white
@@ -287,6 +312,7 @@ function CareerMapInner({ data }: Props) {
               <div className="relative">
                 <select
                   id="target-role"
+                  suppressHydrationWarning
                   value={targetRole}
                   onChange={(e) => {
                     setTargetRole(e.target.value);
@@ -374,69 +400,96 @@ function CareerMapInner({ data }: Props) {
             />
           )}
 
-          {/* Timeline badge + bookmark — inline row */}
-          <div className="flex items-center justify-between gap-3 flex-wrap mb-4">
-            {timeline ? (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-700 text-xs font-medium">
-                <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                Estimated timeline: {timeline}
-              </span>
-            ) : (
-              <span />
-            )}
+          <div ref={pathScrollRef} className="scroll-mt-4">
+            {/* Path title + timeline + save */}
+            <div className="mb-3">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+                <h2 className="text-2xl sm:text-[1.65rem] font-bold text-brand-900 leading-snug tracking-tight">
+                  <span className="text-gray-500 font-semibold">{currentRole}</span>
+                  <span className="mx-2 text-gray-300 font-normal" aria-hidden>
+                    →
+                  </span>
+                  <span>{targetRole}</span>
+                </h2>
+                <button
+                  type="button"
+                  onClick={toggleSaved}
+                  aria-label={isSaved ? "Remove from saved paths" : "Save this path"}
+                  className={`flex-shrink-0 inline-flex items-center gap-1.5 self-start px-3 py-1.5 rounded-xl border text-xs font-medium transition-colors ${
+                    isSaved
+                      ? "border-brand-400 bg-brand-50 text-brand-700 hover:bg-brand-100"
+                      : "border-gray-200 bg-white text-gray-500 hover:border-brand-300 hover:text-brand-600 hover:bg-brand-50"
+                  }`}
+                >
+                  <svg
+                    className="w-3.5 h-3.5"
+                    fill={isSaved ? "currentColor" : "none"}
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
+                    />
+                  </svg>
+                  {isSaved ? "Saved" : "Save path"}
+                </button>
+              </div>
+              {timeline && (
+                <span className="mt-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-xs font-medium">
+                  <svg
+                    className="w-3.5 h-3.5 flex-shrink-0"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  Estimated timeline: {timeline}
+                </span>
+              )}
+            </div>
 
-            {/* Bookmark toggle */}
-            <button
-              onClick={toggleSaved}
-              aria-label={isSaved ? "Remove from saved paths" : "Save this path"}
-              className={`flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-medium transition-colors ${
-                isSaved
-                  ? "border-brand-400 bg-brand-50 text-brand-700 hover:bg-brand-100"
-                  : "border-gray-200 bg-white text-gray-500 hover:border-brand-300 hover:text-brand-600 hover:bg-brand-50"
-              }`}
-            >
-              <svg
-                className="w-3.5 h-3.5"
-                fill={isSaved ? "currentColor" : "none"}
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-              </svg>
-              {isSaved ? "Saved" : "Save path"}
-            </button>
+            <LearningPathOutput
+              ref={outputRef}
+              markdown={markdown}
+              citationUrls={data.citationUrls}
+            />
           </div>
 
-          <LearningPathOutput
-            ref={outputRef}
-            markdown={markdown}
-            citationUrls={data.citationUrls}
-          />
-
-          {/* Episode playlist with checkboxes */}
-          <EpisodePlaylist
+          <GoDeeperSection
             markdown={markdown}
             citationUrls={data.citationUrls}
             pathKey={pathKey}
+            recs={data.podcastRecs[pathKey] ?? []}
           />
 
-          {/* Podcast recommendations from corpus */}
-          <PodcastRecs recs={data.podcastRecs[pathKey] ?? []} />
-
           {/* Personal notes */}
-          <div className="mt-4 rounded-2xl border border-gray-200 bg-white p-5">
-            <div className="flex items-center justify-between mb-2">
-              <label
-                htmlFor="path-notes"
-                className="block text-xs font-semibold text-gray-400 uppercase tracking-widest"
-              >
-                My notes
-              </label>
-              <div className="flex items-center gap-2">
-                {notesSaved && (
+          <div className="mt-6 rounded-2xl border border-gray-200 bg-white p-5">
+            <div className="flex items-start justify-between gap-3 mb-2">
+              <div>
+                <label
+                  htmlFor="path-notes"
+                  className="block text-xs font-semibold text-gray-400 uppercase tracking-widest"
+                >
+                  My notes
+                </label>
+                <p className="mt-1 text-xs text-gray-400 leading-snug">
+                  Saved automatically in this browser.
+                </p>
+              </div>
+              <div className="flex-shrink-0 min-h-[1.25rem] flex items-center">
+                {noteStatus === "saving" && (
+                  <span className="text-xs text-gray-400 font-medium">Saving…</span>
+                )}
+                {noteStatus === "saved" && (
                   <span className="text-xs text-emerald-600 font-medium flex items-center gap-1">
                     <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
@@ -444,12 +497,6 @@ function CareerMapInner({ data }: Props) {
                     Saved
                   </span>
                 )}
-                <button
-                  onClick={saveNote}
-                  className="text-xs font-medium text-brand-600 hover:text-brand-800 transition-colors"
-                >
-                  Save
-                </button>
               </div>
             </div>
             <textarea
@@ -462,24 +509,28 @@ function CareerMapInner({ data }: Props) {
             />
           </div>
 
-          <div className="mt-6 flex justify-center">
-            <PDFDownloader
-              outputRef={outputRef}
-              currentRole={currentRole}
-              targetRole={targetRole}
-            />
-          </div>
+          {mounted && (
+            <div className="mt-5">
+              <PDFDownloader
+                outputRef={outputRef}
+                currentRole={currentRole}
+                targetRole={targetRole}
+                variant="link"
+              />
+            </div>
+          )}
 
-          {/* Related paths */}
+          {/* Related paths — after long read */}
           {relatedPaths.length > 0 && (
-            <div className="mt-8">
+            <div className="mt-10 pt-8 border-t border-gray-100">
               <p className="text-xs font-medium text-gray-400 uppercase tracking-widest mb-3">
                 Also explore
               </p>
               <div className="flex flex-wrap gap-2">
                 {relatedPaths.map(({ from, to, key }) => (
                   <button
-                    key={key}
+                    key={`end-${key}`}
+                    type="button"
                     onClick={() => loadPath(from, to)}
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200
                                bg-white text-xs font-medium hover:border-brand-300 hover:text-brand-700
@@ -508,7 +559,7 @@ function CareerMapInner({ data }: Props) {
 
 export default function CareerMapApp({ data }: Props) {
   return (
-    <Suspense>
+    <Suspense fallback={<CareerMapLoading />}>
       <CareerMapInner data={data} />
     </Suspense>
   );
@@ -519,7 +570,18 @@ export default function CareerMapApp({ data }: Props) {
 function ChevronDown() {
   return (
     <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
-      <svg className="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      {/* width/height + inline size: if Tailwind CSS fails to load, SVGs otherwise fill the viewport */}
+      <svg
+        className="h-4 w-4 text-gray-400"
+        width={16}
+        height={16}
+        style={{ width: 16, height: 16, flexShrink: 0 }}
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        strokeWidth={2}
+        aria-hidden
+      >
         <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
       </svg>
     </div>

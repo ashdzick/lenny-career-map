@@ -21,8 +21,32 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="min-h-screen bg-brand-50 font-sans antialiased">
-        <div className="max-w-3xl mx-auto px-6 py-12">{children}</div>
+      {/* Do not add <head> here — Next injects stylesheets into the generated head; a manual
+          <head> replaces it and drops linked CSS (Tailwind), leaving only inline body styles. */}
+      <body
+        className="min-h-screen bg-brand-50 font-sans antialiased"
+        style={{
+          minHeight: "100vh",
+          backgroundColor: "#fdf8f0",
+          fontFamily: "var(--font-inter), ui-sans-serif, system-ui, sans-serif",
+          WebkitFontSmoothing: "antialiased",
+          MozOsxFontSmoothing: "grayscale",
+        }}
+      >
+        <div
+          className="max-w-3xl mx-auto px-6 py-12"
+          style={{
+            maxWidth: "48rem",
+            marginLeft: "auto",
+            marginRight: "auto",
+            paddingTop: "3rem",
+            paddingBottom: "3rem",
+            paddingLeft: "1.5rem",
+            paddingRight: "1.5rem",
+          }}
+        >
+          {children}
+        </div>
       </body>
     </html>
   );

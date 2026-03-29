@@ -34,9 +34,9 @@ export default function RootLayout({
         }}
       >
         <div
-          className="max-w-3xl mx-auto px-6 py-12"
+          className="max-w-7xl mx-auto px-6 py-12"
           style={{
-            maxWidth: "48rem",
+            maxWidth: "80rem",
             marginLeft: "auto",
             marginRight: "auto",
             paddingTop: "3rem",

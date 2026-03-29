@@ -59,6 +59,7 @@ export default function EpisodePlaylist({
             <li key={text} className="flex items-start gap-3 text-sm">
               {/* Checkbox */}
               <button
+                type="button"
                 onClick={() => toggleListened(text)}
                 aria-label={done ? "Mark as not listened" : "Mark as listened"}
                 className={`flex-shrink-0 mt-0.5 w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${

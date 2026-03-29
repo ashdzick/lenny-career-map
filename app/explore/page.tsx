@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import Link from "next/link";
 import type { PathEntry } from "@/app/page";
+import ReadingColumnShell from "@/components/ReadingColumnShell";
 import { roleGroups } from "@/lib/roleGroups";
 
 function loadPaths(): Record<string, PathEntry> {
@@ -40,7 +41,7 @@ export default function ExplorePage() {
 
   return (
     <main>
-      {/* Header */}
+      <ReadingColumnShell>
       <header className="mb-10">
         <div className="flex items-center gap-2 mb-3">
           <div className="w-2 h-2 rounded-full bg-brand-500" />
@@ -106,6 +107,7 @@ export default function ExplorePage() {
       <footer className="mt-16 text-center text-xs text-gray-400">
         Built on Lenny&apos;s Newsletter podcast transcripts.
       </footer>
+      </ReadingColumnShell>
     </main>
   );
 }

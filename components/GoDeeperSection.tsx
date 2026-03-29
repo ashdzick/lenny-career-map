@@ -19,10 +19,11 @@ export default function GoDeeperSection({ markdown, citationUrls, pathKey, recs 
 
   return (
     <section
-      className="mt-8 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm ring-1 ring-gray-100/80"
-      aria-label="Go deeper"
+      id="your-learning-plan"
+      className="mt-8 scroll-mt-24 rounded-2xl bg-white p-6 shadow-lg ring-1 ring-gray-100"
+      aria-label="Your learning plan"
     >
-      <p className="text-xs font-medium text-gray-400 uppercase tracking-widest">Go deeper</p>
+      <p className="text-xs font-medium text-gray-400 uppercase tracking-widest">Your learning plan</p>
 
       {hasCited && (
         <div className="mt-5">
@@ -43,7 +44,7 @@ export default function GoDeeperSection({ markdown, citationUrls, pathKey, recs 
           }
         >
           <h3 className="text-sm font-semibold text-gray-800 mb-3">More episodes to consider</h3>
-          <PodcastRecs recs={recs} variant="embedded" />
+          <PodcastRecs recs={recs} pathKey={pathKey} variant="embedded" />
         </div>
       )}
     </section>

@@ -1,21 +1,70 @@
 "use client";
 
-import { forwardRef } from "react";
+import { forwardRef, useMemo, type ReactNode } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import type { Components } from "react-markdown";
+
+export interface PathTocItem {
+  id: string;
+  label: string;
+}
+
+/** Strip `##` lines into plain labels and stable slug ids (deduped). */
+export function extractPathTocFromMarkdown(markdown: string): PathTocItem[] {
+  const lines = markdown.split(/\r?\n/);
+  const rawTitles: string[] = [];
+  for (const line of lines) {
+    const m = line.match(/^##\s+(.+)$/);
+    if (m) rawTitles.push(m[1].trim());
+  }
+  const used = new Set<string>();
+  return rawTitles.map((mdTitle) => {
+    const label = mdTitle.replace(/\*/g, "").trim();
+    let base = slugifyHeading(label || mdTitle);
+    let id = base;
+    let n = 2;
+    while (used.has(id)) {
+      id = `${base}-${n++}`;
+    }
+    used.add(id);
+    return { id, label: label || mdTitle };
+  });
+}
+
+function slugifyHeading(text: string): string {
+  const s = text
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+  return s || "section";
+}
+
+/** When the file opens with `## …`, return the first TOC entry and markdown after that line (for slots before body). */
+function splitLeadingH2Block(markdown: string, tocItems: PathTocItem[]): { first: PathTocItem | null; rest: string } {
+  if (tocItems.length === 0) return { first: null, rest: markdown };
+  const text = markdown.replace(/^\uFEFF/, "");
+  const lineMatch = text.match(/^##\s+[^\r\n]+\r?\n?/);
+  if (!lineMatch) return { first: null, rest: markdown };
+  return { first: tocItems[0], rest: text.slice(lineMatch[0].length) };
+}
 
 interface Props {
   markdown: string;
   isStreaming?: boolean;
   citationUrls?: Record<string, string>;
+  /** Inserted before the first `##` heading (e.g. market context above “Career Transition Overview”). */
+  afterFirstH2?: ReactNode;
 }
 
-// Custom renderers for polished styling
+// Custom renderers for polished styling (h2 ids come from makeCitationComponents when TOC is provided)
 const components: Components = {
   h2({ children }) {
     return (
-      <h2 className="flex items-start gap-3 text-xl font-bold text-brand-900 mt-8 mb-3 first:mt-0">
+      <h2 className="flex items-start gap-3 text-xl font-bold text-brand-900 mt-8 mb-3 first:mt-0 scroll-mt-24">
         <span className="mt-1 flex-shrink-0 w-1 h-6 rounded-full bg-brand-500" />
         <span>{children}</span>
       </h2>
@@ -136,9 +185,24 @@ function ProcessCitations({
   return <>{children}</>;
 }
 
-function makeCitationComponents(citationUrls: Record<string, string>): Components {
+function makeCitationComponents(citationUrls: Record<string, string>, tocItems: PathTocItem[]): Components {
+  let h2Index = 0;
   return {
     ...components,
+    h2({ children }) {
+      const item = tocItems[h2Index];
+      const id = item?.id ?? `path-section-${h2Index}`;
+      h2Index += 1;
+      return (
+        <h2
+          id={id}
+          className="flex items-start gap-3 text-xl font-bold text-brand-900 mt-8 mb-3 first:mt-0 scroll-mt-24"
+        >
+          <span className="mt-1 flex-shrink-0 w-1 h-6 rounded-full bg-brand-500" />
+          <span>{children}</span>
+        </h2>
+      );
+    },
     p({ children }) {
       return (
         <p className="text-gray-700 leading-relaxed mb-3">
@@ -160,8 +224,21 @@ function makeCitationComponents(citationUrls: Record<string, string>): Component
 }
 
 const LearningPathOutput = forwardRef<HTMLDivElement, Props>(
-  ({ markdown, isStreaming = false, citationUrls = {} }, ref) => {
-    const resolvedComponents = makeCitationComponents(citationUrls);
+  ({ markdown, isStreaming = false, citationUrls = {}, afterFirstH2 }, ref) => {
+    const tocItems = useMemo(() => extractPathTocFromMarkdown(markdown), [markdown]);
+    const { first: leadingH2, rest: bodyAfterFirstH2 } = useMemo(
+      () => splitLeadingH2Block(markdown, tocItems),
+      [markdown, tocItems]
+    );
+
+    const splitFirstHeadingForMarket = Boolean(afterFirstH2 && leadingH2);
+    const markdownForParser = splitFirstHeadingForMarket ? bodyAfterFirstH2 : markdown;
+    const tocForParser = splitFirstHeadingForMarket ? tocItems.slice(1) : tocItems;
+
+    const resolvedComponents = useMemo(
+      () => makeCitationComponents(citationUrls, tocForParser),
+      [citationUrls, tocForParser]
+    );
 
     return (
       <div
@@ -169,15 +246,22 @@ const LearningPathOutput = forwardRef<HTMLDivElement, Props>(
         className="bg-white rounded-2xl shadow-lg ring-1 ring-gray-100 p-8 sm:p-10"
       >
         <div className={isStreaming ? "streaming-cursor" : ""}>
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            components={resolvedComponents}
-          >
-            {markdown}
+          {splitFirstHeadingForMarket && leadingH2 && (
+            <>
+              {afterFirstH2}
+              <h2
+                id={leadingH2.id}
+                className="flex items-start gap-3 text-xl font-bold text-brand-900 mt-0 mb-3 scroll-mt-24"
+              >
+                <span className="mt-1 flex-shrink-0 w-1 h-6 rounded-full bg-brand-500" />
+                <span>{leadingH2.label}</span>
+              </h2>
+            </>
+          )}
+          {afterFirstH2 && !leadingH2 && <div className="mb-4">{afterFirstH2}</div>}
+          <ReactMarkdown remarkPlugins={[remarkGfm]} components={resolvedComponents}>
+            {markdownForParser}
           </ReactMarkdown>
-        </div>
-        <div className="mt-8 pt-6 border-t border-gray-100 text-center text-xs text-gray-400">
-          Generated from Lenny&apos;s Newsletter podcast transcripts.
         </div>
       </div>
     );

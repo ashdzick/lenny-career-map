@@ -10,6 +10,10 @@ interface Props {
   targetRole: string;
   signal: MarketSignalEntry;
   sourceUrl: string;
+  /** Extra classes on the outer card (e.g. `mb-0` in sidebars). */
+  className?: string;
+  /** Tighter type and padding for narrow / sidebar layouts. */
+  compact?: boolean;
 }
 
 const config = {
@@ -57,25 +61,41 @@ const config = {
   },
 };
 
-export default function MarketSignal({ targetRole, signal, sourceUrl }: Props) {
+export default function MarketSignal({
+  targetRole,
+  signal,
+  sourceUrl,
+  className = "",
+  compact = false,
+}: Props) {
   const c = config[signal.type];
 
+  const pad = compact ? "px-3 py-2.5 mb-0" : "px-4 py-3 mb-4";
+  const iconWrap = compact ? "w-6 h-6" : "w-7 h-7";
+  const labelClass = compact
+    ? `text-[10px] font-semibold uppercase tracking-wider ${c.headlineColor}`
+    : `text-xs font-semibold uppercase tracking-wider ${c.headlineColor}`;
+  const metaClass = compact
+    ? `text-[10px] font-medium ${c.headlineColor}`
+    : `text-xs font-medium ${c.headlineColor}`;
+  const bodyClass = compact ? `text-xs ${c.detailColor} leading-relaxed` : `text-sm ${c.detailColor} leading-relaxed`;
+
   return (
-    <div className={`rounded-xl border ${c.bg} ${c.border} px-4 py-3 mb-4`}>
-      <div className="flex items-start gap-3">
-        <div className={`flex-shrink-0 w-7 h-7 rounded-full ${c.iconBg} ${c.iconColor} flex items-center justify-center mt-0.5`}>
+    <div className={`rounded-xl border ${c.bg} ${c.border} ${pad} ${className}`.trim()}>
+      <div className={`flex items-start ${compact ? "gap-2" : "gap-3"}`}>
+        <div
+          className={`flex-shrink-0 ${iconWrap} rounded-full ${c.iconBg} ${c.iconColor} flex items-center justify-center mt-0.5${compact ? " [&_svg]:h-3 [&_svg]:w-3" : ""}`}
+        >
           {c.icon}
         </div>
         <div className="min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-0.5">
-            <span className={`text-xs font-semibold uppercase tracking-wider ${c.headlineColor}`}>
-              {c.label}
-            </span>
-            <span className={`text-xs font-medium ${c.headlineColor}`}>
+            <span className={labelClass}>{c.label}</span>
+            <span className={metaClass}>
               · {targetRole} · {signal.headline}
             </span>
           </div>
-          <p className={`text-sm ${c.detailColor} leading-relaxed`}>
+          <p className={bodyClass}>
             {signal.detail}{" "}
             <a
               href={sourceUrl}

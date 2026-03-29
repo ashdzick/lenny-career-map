@@ -18,6 +18,16 @@
     "headline": "Strong market",
     "detail": "PM roles broadly are at their highest levels since 2022 — up 75% from 2023 lows, with 20% growth since the start of 2026."
   },
+  "Chief Marketing Officer": {
+    "type": "neutral",
+    "headline": "Mixed signals",
+    "detail": "Marketing leadership is not broken out separately in the 2026 report; PM and growth-adjacent hiring is up sharply, while brand and design-heavy functions have been flatter since 2023."
+  },
+  "Chief of Staff": {
+    "type": "neutral",
+    "headline": "Mixed signals",
+    "detail": "Chief of staff roles are not separately tracked in the 2026 report; demand tends to follow general leadership and operator hiring at your company stage."
+  },
   "Data Analyst": {
     "type": "neutral",
     "headline": "Mixed signals",
@@ -52,6 +62,11 @@
     "type": "tailwind",
     "headline": "Strong market",
     "detail": "PM roles broadly are at their highest levels since 2022 — up 75% from 2023 lows, with 20% growth since the start of 2026."
+  },
+  "Marketing Manager": {
+    "type": "neutral",
+    "headline": "Mixed signals",
+    "detail": "Marketing IC roles are not separately tracked in the 2026 report; growth and product hiring is strong, while some brand and design pipelines remain tight."
   },
   "Principal PM": {
     "type": "tailwind",
@@ -92,5 +107,10 @@
     "type": "tailwind",
     "headline": "Strong market",
     "detail": "PM roles broadly are at their highest levels since 2022 — up 75% from 2023 lows, with 20% growth since the start of 2026."
+  },
+  "VP of Engineering / CTO": {
+    "type": "tailwind",
+    "headline": "Strong market",
+    "detail": "Engineering demand remains strong — 67,000+ open positions globally in early 2026, with recruiter hiring near 2022 peak levels. Leadership engineering tracks benefit from the same tight market for senior ICs and managers."
   }
 }

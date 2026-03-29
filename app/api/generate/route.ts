@@ -1,6 +1,6 @@
 // This route is no longer used.
 // Career transition paths are pre-generated at build time via:
-//   node scripts/generate-paths.js
+//   npm run generate:paths
 // and served as static data from data/paths.json.
 
 export function GET() {

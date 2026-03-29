@@ -25,3 +25,9 @@ tsconfig.tsbuildinfo
 
 # claude code local config
 .claude/
+
+# Cursor / editor local project state
+.cursor/
+
+# Local-only internal notes (not for GitHub)
+/docs/internal/design-decisions-log.md

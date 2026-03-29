@@ -14,6 +14,7 @@ import MarketSignal from "@/components/MarketSignal";
 import type { PathsData } from "@/app/page";
 import { roleGroups } from "@/lib/roleGroups";
 import { useLocalStorage } from "@/lib/useLocalStorage";
+import { useActiveScrollSection } from "@/lib/useActiveScrollSection";
 
 const PDFDownloader = dynamic(() => import("@/components/PDFDownloader"), {
   ssr: false,
@@ -52,6 +53,8 @@ function CareerMapInner({ data }: Props) {
   const [error, setError] = useState<string | null>(null);
   const outputRef = useRef<HTMLDivElement>(null);
   const pathScrollRef = useRef<HTMLDivElement>(null);
+  /** Last path key we scrolled to — avoids duplicate scroll on URL + debounce both loading same pair. */
+  const pathScrollKeyRef = useRef<string | null>(null);
 
   // ── Persistent state ──────────────────────────────────────────────────────
   const [savedPaths, setSavedPaths] = useLocalStorage<SavedPath[]>(
@@ -119,6 +122,8 @@ function CareerMapInner({ data }: Props) {
     if (t2) clearTimeout(t2);
   }, [pathKey]);
 
+  const currentNoteText = notesSafe[pathKey];
+
   useEffect(() => {
     if (!pathKey || !notesEditRef.current) return;
     setNoteStatus("saving");
@@ -132,19 +137,52 @@ function CareerMapInner({ data }: Props) {
       clearTimeout(t1);
       clearTimeout(t2);
     };
-  }, [pathKey, notesSafe[pathKey]]);
+  }, [pathKey, currentNoteText]);
 
   // Auto-load path when URL params are present on mount
   useEffect(() => {
     if (initialFrom && initialTo) {
-      const entry = paths[`${initialFrom}|||${initialTo}`];
+      const key = `${initialFrom}|||${initialTo}`;
+      const entry = paths[key];
       if (entry) {
         setMarkdown(entry.markdown);
+        pathScrollKeyRef.current = key;
       } else if (initialFrom || initialTo) {
         setError("No path found for this combination. Try a different pair.");
+        pathScrollKeyRef.current = null;
       }
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Debounced auto-load when both roles are selected (keeps URL in sync)
+  useEffect(() => {
+    if (!currentRole || !targetRole) return;
+
+    const key = `${currentRole}|||${targetRole}`;
+    const t = window.setTimeout(() => {
+      const entry = paths[key];
+      setError(null);
+      if (entry) {
+        setMarkdown(entry.markdown);
+        const params = new URLSearchParams();
+        params.set("from", currentRole);
+        params.set("to", targetRole);
+        router.replace(`?${params.toString()}`, { scroll: false });
+        if (pathScrollKeyRef.current !== key) {
+          pathScrollKeyRef.current = key;
+          window.setTimeout(() => {
+            pathScrollRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+          }, 50);
+        }
+      } else {
+        setMarkdown("");
+        pathScrollKeyRef.current = null;
+        setError("No path found for this combination. Try a different pair.");
+      }
+    }, 320);
+
+    return () => window.clearTimeout(t);
+  }, [currentRole, targetRole, paths, router]);
 
   // Only show roles that have at least one outbound path in the left dropdown
   const sourceRoles = roles.filter((r) =>
@@ -195,34 +233,21 @@ function CareerMapInner({ data }: Props) {
     (hasMarkdownCitations(markdown) ||
       ((data.podcastRecs?.[pathKey]?.length ?? 0) > 0));
 
-  function handleGenerate(e: React.FormEvent) {
-    e.preventDefault();
-    setError(null);
-    setMarkdown("");
-    if (!currentRole || !targetRole) return;
+  const navSectionIds = useMemo(() => {
+    const ids = pathTocItems.map((item) => item.id);
+    if (hasGoDeeperContent) ids.push("your-learning-plan");
+    ids.push("my-notes");
+    return ids;
+  }, [pathTocItems, hasGoDeeperContent]);
 
-    const key = `${currentRole}|||${targetRole}`;
-    const entry = paths[key];
-    if (!entry) {
-      setError("No path found for this combination. Try a different pair.");
-      return;
-    }
-
-    setMarkdown(entry.markdown);
-    const params = new URLSearchParams();
-    params.set("from", currentRole);
-    params.set("to", targetRole);
-    router.replace(`?${params.toString()}`, { scroll: false });
-    setTimeout(() => {
-      pathScrollRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 50);
-  }
+  const activeSectionId = useActiveScrollSection(navSectionIds, Boolean(markdown));
 
   function handleCurrentRoleChange(value: string) {
     setCurrentRole(value);
     setTargetRole("");
     setMarkdown("");
     setError(null);
+    pathScrollKeyRef.current = null;
     router.replace("?", { scroll: false });
   }
 
@@ -238,7 +263,8 @@ function CareerMapInner({ data }: Props) {
     params.set("from", from);
     params.set("to", to);
     router.replace(`?${params.toString()}`, { scroll: false });
-    setTimeout(() => {
+    pathScrollKeyRef.current = key;
+    window.setTimeout(() => {
       pathScrollRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 50);
   }
@@ -273,6 +299,8 @@ function CareerMapInner({ data }: Props) {
                 <Link
                   href="/explore"
                   className="text-sm text-brand-600 hover:text-brand-800 underline underline-offset-2 whitespace-nowrap"
+                  aria-label={`Browse all ${totalPaths} career transition paths`}
+                  title="Open the full list of transitions"
                 >
                   Browse all {totalPaths} paths →
                 </Link>
@@ -281,6 +309,8 @@ function CareerMapInner({ data }: Props) {
                 <Link
                   href="/saved"
                   className="text-sm text-brand-600 hover:text-brand-800 underline underline-offset-2 whitespace-nowrap"
+                  aria-label={`View ${savedPathsSafe.length} saved ${savedPathsSafe.length === 1 ? "path" : "paths"}`}
+                  title="Open paths you saved on this device"
                 >
                   Saved {savedPathsSafe.length} {savedPathsSafe.length === 1 ? "path" : "paths"} →
                 </Link>
@@ -297,7 +327,7 @@ function CareerMapInner({ data }: Props) {
           <p>
             Run{" "}
             <code className="px-1.5 py-0.5 rounded bg-amber-100 font-mono text-xs">
-              ANTHROPIC_API_KEY=sk-ant-xxx node scripts/generate-paths.js
+              ANTHROPIC_API_KEY=sk-ant-xxx npm run generate:paths
             </code>{" "}
             to build the static path library.
           </p>
@@ -306,7 +336,7 @@ function CareerMapInner({ data }: Props) {
 
       {/* Form */}
       {!notReady && (
-        <form onSubmit={handleGenerate} className="space-y-4 mb-6">
+        <div className="space-y-4 mb-6">
           <div className="grid sm:grid-cols-2 gap-4">
             {/* Current role */}
             <div>
@@ -374,17 +404,7 @@ function CareerMapInner({ data }: Props) {
               </div>
             </div>
           </div>
-
-          <button
-            type="submit"
-            disabled={!currentRole || !targetRole}
-            className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-brand-500 text-white font-medium text-sm
-                       hover:bg-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-2
-                       disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-          >
-            Map My Path
-          </button>
-        </form>
+        </div>
       )}
 
       {/* Error */}
@@ -398,7 +418,11 @@ function CareerMapInner({ data }: Props) {
       {/* Output */}
       {markdown && (
         <>
-          <PathReadingNavMobile tocItems={pathTocItems} showGoDeeper={hasGoDeeperContent} />
+          <PathReadingNavMobile
+            tocItems={pathTocItems}
+            showGoDeeper={hasGoDeeperContent}
+            activeSectionId={activeSectionId}
+          />
 
           <div className="lg:grid lg:grid-cols-[10rem_minmax(0,48rem)_minmax(0,1fr)] lg:grid-rows-[auto_1fr] lg:gap-x-8 lg:items-start">
             <div className="hidden lg:block lg:col-start-1 lg:row-start-1 min-h-0" aria-hidden />
@@ -420,7 +444,16 @@ function CareerMapInner({ data }: Props) {
                   <button
                     type="button"
                     onClick={toggleSaved}
-                    aria-label={isSaved ? "Remove from saved paths" : "Save this path"}
+                    aria-label={
+                      isSaved
+                        ? "Remove this transition from saved paths"
+                        : "Save this transition to your saved paths on this device"
+                    }
+                    title={
+                      isSaved
+                        ? "Remove from your saved list (this device only)"
+                        : "Add to your saved list to reopen later (this device only)"
+                    }
                     className={`flex-shrink-0 inline-flex items-center gap-1.5 self-start px-3 py-1.5 rounded-xl border text-xs font-medium transition-colors ${
                       isSaved
                         ? "border-brand-400 bg-brand-50 text-brand-700 hover:bg-brand-100"
@@ -467,6 +500,7 @@ function CareerMapInner({ data }: Props) {
             <PathReadingNavGutter
               tocItems={pathTocItems}
               showGoDeeper={hasGoDeeperContent}
+              activeSectionId={activeSectionId}
               className="lg:col-start-1 lg:row-start-2"
             />
 

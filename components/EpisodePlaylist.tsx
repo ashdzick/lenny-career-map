@@ -1,13 +1,16 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useLocalStorage } from "@/lib/useLocalStorage";
 
 interface Props {
   markdown: string;
   citationUrls: Record<string, string>;
-  pathKey: string; // "From|||To" — scopes listened state to each path
-  /** `embedded`: list only (parent supplies section title + outer card). */
+  pathKey: string; // "From|||To" — scopes completion state to each path
+  /** `embedded`: list inside Your learning plan; pass `embeddedTitle` for heading + progress row. */
   variant?: "card" | "embedded";
+  /** Shown left of the x/y completed line (embedded only). */
+  embeddedTitle?: ReactNode;
 }
 
 /** Whether markdown contains at least one citation `[like this]`. */
@@ -20,6 +23,7 @@ export default function EpisodePlaylist({
   citationUrls,
   pathKey,
   variant = "card",
+  embeddedTitle,
 }: Props) {
   // Extract all [citation] matches from markdown, preserving order, de-duplicating
   const seen = new Set<string>();
@@ -35,7 +39,6 @@ export default function EpisodePlaylist({
     }
   }
 
-  // Persisted set of listened episode titles, scoped to this path
   const [listened, setListened] = useLocalStorage<string[]>(
     `lenny-listened-${pathKey}`,
     []
@@ -61,7 +64,7 @@ export default function EpisodePlaylist({
               <button
                 type="button"
                 onClick={() => toggleListened(text)}
-                aria-label={done ? "Mark as not listened" : "Mark as listened"}
+                aria-label={done ? "Mark as not completed" : "Mark as completed"}
                 className={`flex-shrink-0 mt-0.5 w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${
                   done
                     ? "bg-brand-500 border-brand-500"
@@ -102,11 +105,12 @@ export default function EpisodePlaylist({
 
   if (variant === "embedded") {
     return (
-      <div className="space-y-2">
-        {listenedCount > 0 && (
-          <div className="flex justify-end">
-            <span className="text-xs text-brand-600 font-medium">
-              {listenedCount}/{episodes.length} listened
+      <div>
+        {embeddedTitle != null && (
+          <div className="flex items-center justify-between gap-3 mb-3 min-h-[1.25rem]">
+            <div className="min-w-0">{embeddedTitle}</div>
+            <span className="text-xs text-brand-600 font-medium tabular-nums shrink-0">
+              {listenedCount}/{episodes.length} completed
             </span>
           </div>
         )}
@@ -117,8 +121,8 @@ export default function EpisodePlaylist({
 
   return (
     <div className="mt-6 rounded-2xl bg-brand-50 border border-brand-100 p-6">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-sm font-semibold text-brand-800 flex items-center gap-2">
+      <div className="flex items-center justify-between gap-3 mb-4">
+        <h3 className="text-sm font-semibold text-brand-800 flex items-center gap-2 min-w-0">
           <svg
             className="w-4 h-4 flex-shrink-0"
             fill="none"
@@ -134,11 +138,9 @@ export default function EpisodePlaylist({
           </svg>
           Articles &mdash; {episodes.length} cited
         </h3>
-        {listenedCount > 0 && (
-          <span className="text-xs text-brand-600 font-medium">
-            {listenedCount}/{episodes.length} listened
-          </span>
-        )}
+        <span className="text-xs text-brand-600 font-medium tabular-nums shrink-0">
+          {listenedCount}/{episodes.length} completed
+        </span>
       </div>
       {list}
     </div>

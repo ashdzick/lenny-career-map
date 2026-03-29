@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useLocalStorage } from "@/lib/useLocalStorage";
 
 export interface PodcastRec {
@@ -14,19 +15,26 @@ function recStorageId(title: string, guest: string): string {
 
 interface Props {
   recs: PodcastRec[];
-  /** `embedded`: list only inside Your learning plan (parent supplies title + shell). */
+  /** `embedded`: list inside Your learning plan; pass `embeddedTitle` for heading + progress row. */
   variant?: "card" | "embedded";
   /** Scopes persisted checkbox state per path (use with `embedded`). */
   pathKey?: string;
+  /** Shown left of the x/y completed line (embedded only). */
+  embeddedTitle?: ReactNode;
 }
 
-export default function PodcastRecs({ recs, variant = "card", pathKey = "" }: Props) {
-  if (!recs || recs.length === 0) return null;
-
+export default function PodcastRecs({
+  recs,
+  variant = "card",
+  pathKey = "",
+  embeddedTitle,
+}: Props) {
   const [heard, setHeard] = useLocalStorage<string[]>(
     `lenny-podcast-heard-${pathKey || "default"}`,
     []
   );
+
+  if (!recs || recs.length === 0) return null;
 
   function toggleHeard(id: string) {
     setHeard((prev) => {
@@ -50,7 +58,7 @@ export default function PodcastRecs({ recs, variant = "card", pathKey = "" }: Pr
             <button
               type="button"
               onClick={() => toggleHeard(id)}
-              aria-label={done ? "Mark as not listened" : "Mark as listened"}
+              aria-label={done ? "Mark as not completed" : "Mark as completed"}
               className={`flex-shrink-0 mt-0.5 w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${
                 done
                   ? "bg-brand-500 border-brand-500"
@@ -99,11 +107,12 @@ export default function PodcastRecs({ recs, variant = "card", pathKey = "" }: Pr
 
   if (variant === "embedded") {
     return (
-      <div className="space-y-2">
-        {heardCount > 0 && (
-          <div className="flex justify-end">
-            <span className="text-xs text-brand-600 font-medium">
-              {heardCount}/{recs.length} listened
+      <div>
+        {embeddedTitle != null && (
+          <div className="flex items-center justify-between gap-3 mb-3 min-h-[1.25rem]">
+            <div className="min-w-0">{embeddedTitle}</div>
+            <span className="text-xs text-brand-600 font-medium tabular-nums shrink-0">
+              {heardCount}/{recs.length} completed
             </span>
           </div>
         )}
@@ -114,8 +123,8 @@ export default function PodcastRecs({ recs, variant = "card", pathKey = "" }: Pr
 
   return (
     <div className="mt-6 rounded-2xl bg-brand-50 border border-brand-100 p-6">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-sm font-semibold text-brand-800 flex items-center gap-2">
+      <div className="flex items-center justify-between gap-3 mb-4">
+        <h3 className="text-sm font-semibold text-brand-800 flex items-center gap-2 min-w-0">
           <svg
             className="w-4 h-4 flex-shrink-0"
             fill="none"
@@ -131,11 +140,9 @@ export default function PodcastRecs({ recs, variant = "card", pathKey = "" }: Pr
           </svg>
           Episodes &mdash; {recs.length} recommended
         </h3>
-        {heardCount > 0 && (
-          <span className="text-xs text-brand-600 font-medium">
-            {heardCount}/{recs.length} listened
-          </span>
-        )}
+        <span className="text-xs text-brand-600 font-medium tabular-nums shrink-0">
+          {heardCount}/{recs.length} completed
+        </span>
       </div>
       {list}
     </div>

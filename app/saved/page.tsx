@@ -16,9 +16,8 @@ export default function SavedPathsPage() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  const list = Array.isArray(savedPaths) ? savedPaths : [];
-
   const { bySource, allGroups, totalSaved } = useMemo(() => {
+    const list = Array.isArray(savedPaths) ? savedPaths : [];
     const bySourceInner: Record<string, string[]> = {};
     const seenPair = new Set<string>();
     for (const { from, to } of list) {
@@ -45,7 +44,7 @@ export default function SavedPathsPage() {
     ];
 
     return { bySource: bySourceInner, allGroups: groups, totalSaved: seenPair.size };
-  }, [list]);
+  }, [savedPaths]);
 
   return (
     <main>
@@ -68,12 +67,27 @@ export default function SavedPathsPage() {
                 : "Loading…"}
             </p>
           </div>
-          <Link
-            href="/"
-            className="flex-shrink-0 text-sm text-brand-600 hover:text-brand-800 underline underline-offset-2 mt-1 whitespace-nowrap"
+          <nav
+            className="flex flex-shrink-0 flex-wrap items-center justify-end gap-x-4 gap-y-2 mt-1"
+            aria-label="Site"
           >
-            ← Back
-          </Link>
+            <Link
+              href="/"
+              className="text-sm text-brand-600 hover:text-brand-800 underline underline-offset-2 whitespace-nowrap"
+              aria-label="Home"
+              title="Return to home"
+            >
+              Home →
+            </Link>
+            <Link
+              href="/explore"
+              className="text-sm text-brand-600 hover:text-brand-800 underline underline-offset-2 whitespace-nowrap"
+              aria-label="Browse all career transition paths"
+              title="Open the full list of transitions"
+            >
+              Browse all paths →
+            </Link>
+          </nav>
         </div>
       </header>
 
@@ -123,8 +137,9 @@ export default function SavedPathsPage() {
             <Link
               href="/"
               className="text-sm text-brand-600 hover:text-brand-800 underline underline-offset-2 font-medium"
+              aria-label="Home"
             >
-              Career map →
+              Home →
             </Link>
             <Link
               href="/explore"

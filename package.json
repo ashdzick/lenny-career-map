@@ -2,6 +2,16 @@
   "name": "lennys-career-map",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT-0",
+  "description": "Pre-generated career transition learning paths from Lenny's podcast corpus (Next.js)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ashdzick/lenny-career-map.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ashdzick/lenny-career-map/issues"
+  },
+  "homepage": "https://lenny-career-map.vercel.app",
   "scripts": {
     "build:corpus": "node scripts/build-corpus.js",
     "generate:paths": "node scripts/generate-paths.js",
@@ -29,6 +39,8 @@
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.1",
     "autoprefixer": "^10.4.21",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.35",
     "postcss": "^8.5.3",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.0"

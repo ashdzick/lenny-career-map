@@ -59,12 +59,19 @@ export default function ExplorePage() {
               transition to explore it.
             </p>
           </div>
-          <Link
-            href="/"
-            className="flex-shrink-0 text-sm text-brand-600 hover:text-brand-800 underline underline-offset-2 mt-1"
+          <nav
+            className="flex flex-shrink-0 flex-wrap items-center justify-end gap-x-4 gap-y-2 mt-1"
+            aria-label="Site"
           >
-            ← Back
-          </Link>
+            <Link
+              href="/"
+              className="text-sm text-brand-600 hover:text-brand-800 underline underline-offset-2 whitespace-nowrap"
+              aria-label="Home"
+              title="Return to home"
+            >
+              Home →
+            </Link>
+          </nav>
         </div>
       </header>
 

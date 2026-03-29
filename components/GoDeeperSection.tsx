@@ -27,12 +27,14 @@ export default function GoDeeperSection({ markdown, citationUrls, pathKey, recs 
 
       {hasCited && (
         <div className="mt-5">
-          <h3 className="text-sm font-semibold text-gray-800 mb-3">Articles cited in this path</h3>
           <EpisodePlaylist
             markdown={markdown}
             citationUrls={citationUrls}
             pathKey={pathKey}
             variant="embedded"
+            embeddedTitle={
+              <h3 className="text-sm font-semibold text-gray-800">Articles cited in this path</h3>
+            }
           />
         </div>
       )}
@@ -43,8 +45,14 @@ export default function GoDeeperSection({ markdown, citationUrls, pathKey, recs 
             hasCited ? "mt-8 pt-6 border-t border-gray-100" : "mt-5"
           }
         >
-          <h3 className="text-sm font-semibold text-gray-800 mb-3">More episodes to consider</h3>
-          <PodcastRecs recs={recs} pathKey={pathKey} variant="embedded" />
+          <PodcastRecs
+            recs={recs}
+            pathKey={pathKey}
+            variant="embedded"
+            embeddedTitle={
+              <h3 className="text-sm font-semibold text-gray-800">More episodes to consider</h3>
+            }
+          />
         </div>
       )}
     </section>

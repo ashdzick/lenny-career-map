@@ -64,9 +64,8 @@ interface Props {
 const components: Components = {
   h2({ children }) {
     return (
-      <h2 className="flex items-start gap-3 text-xl font-bold text-brand-900 mt-8 mb-3 first:mt-0 scroll-mt-24">
-        <span className="mt-1 flex-shrink-0 w-1 h-6 rounded-full bg-brand-500" />
-        <span>{children}</span>
+      <h2 className="text-xl font-bold text-brand-900 mt-8 mb-3 first:mt-0 scroll-mt-24">
+        {children}
       </h2>
     );
   },
@@ -196,10 +195,9 @@ function makeCitationComponents(citationUrls: Record<string, string>, tocItems: 
       return (
         <h2
           id={id}
-          className="flex items-start gap-3 text-xl font-bold text-brand-900 mt-8 mb-3 first:mt-0 scroll-mt-24"
+          className="text-xl font-bold text-brand-900 mt-8 mb-3 first:mt-0 scroll-mt-24"
         >
-          <span className="mt-1 flex-shrink-0 w-1 h-6 rounded-full bg-brand-500" />
-          <span>{children}</span>
+          {children}
         </h2>
       );
     },
@@ -251,10 +249,9 @@ const LearningPathOutput = forwardRef<HTMLDivElement, Props>(
               {afterFirstH2}
               <h2
                 id={leadingH2.id}
-                className="flex items-start gap-3 text-xl font-bold text-brand-900 mt-0 mb-3 scroll-mt-24"
+                className="text-xl font-bold text-brand-900 mt-0 mb-3 scroll-mt-24"
               >
-                <span className="mt-1 flex-shrink-0 w-1 h-6 rounded-full bg-brand-500" />
-                <span>{leadingH2.label}</span>
+                {leadingH2.label}
               </h2>
             </>
           )}

@@ -22,6 +22,18 @@ For each route, generated output is structured around things like:
 
 It also **recommends podcasts** per route. Podcast associations were partly filled **manually per route**, so **not every route will have podcast recommendations**.
 
+## UX principles (IA & layout)
+
+These guided the home path experience and related pages; keep them when changing UI.
+
+1. **Reading is the hero** — Path markdown is the focal column; supporting blocks stay clearly secondary or grouped.
+2. **One mental model for audio** — Citations (articles) vs curated podcast recs stay distinct in labeling and grouping (e.g. **Your learning plan** with two subheads).
+3. **Discovery without scrolling fatigue** — Related paths and browse affordances where momentum remains; don’t bury the main read.
+4. **Honest affordances** — If something persists automatically (notes), don’t imply a separate save step unless it does more.
+5. **PDF stays quiet** — Available, not co-equal with reading in hierarchy.
+
+**UI backlog:** [`todos.md`](./todos.md). A fuller internal log (gitignored on this repo) is `design-decisions-log.md` if you maintain it locally.
+
 ## Product behavior (current)
 
 - **Save routes** and **add notes** on a route (client-side persistence).
@@ -33,5 +45,4 @@ It also **recommends podcasts** per route. Podcast associations were partly fill
 
 - Paths are **pre-generated** for fixed role pairs and shipped as JSON (`data/paths.json`), not generated on each page load.
 - Corpus / transcript pipeline is separate from the Next.js UI; see `README.md` for commands and env vars.
-- Planned UI work (UX audit → phased tasks): [`ui-improvement-plan.md`](./ui-improvement-plan.md).
 - **Continuing in a new chat:** read [`handoff.md`](./handoff.md) first (code map, gotchas, next steps).

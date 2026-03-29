@@ -13,7 +13,7 @@ Thanks for your interest in this project.
 - **UI:** `components/` (start with `CareerMapApp.tsx`).
 - **Routes:** `app/` (`page.tsx`, `explore/`, `saved/`).
 - **Static path data:** `data/*.json` (see `README.md` for regeneration).
-- **Maintainer-oriented notes:** `docs/internal/` (product context, UX principles, handoff, todos). Optional reading for contributors.
+- **Maintainer-oriented notes:** `docs/internal/` (product context, UX principles, handoff). Optional reading for contributors.
 
 ## Regenerating content
 

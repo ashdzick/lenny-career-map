@@ -58,7 +58,11 @@ export default function PodcastRecs({
             <button
               type="button"
               onClick={() => toggleHeard(id)}
-              aria-label={done ? "Mark as not completed" : "Mark as completed"}
+              aria-label={
+                done
+                  ? `Mark episode as not completed: ${displayTitle}`
+                  : `Mark episode as completed: ${displayTitle}`
+              }
               className={`flex-shrink-0 mt-0.5 w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${
                 done
                   ? "bg-brand-500 border-brand-500"
@@ -80,7 +84,7 @@ export default function PodcastRecs({
                   rel="noopener noreferrer"
                   className={`block leading-relaxed transition-colors ${
                     done
-                      ? "line-through text-gray-400"
+                      ? "line-through text-gray-600"
                       : "text-brand-700 hover:text-brand-900 hover:underline underline-offset-2"
                   }`}
                 >
@@ -88,13 +92,13 @@ export default function PodcastRecs({
                 </a>
               ) : (
                 <span
-                  className={`block leading-relaxed ${done ? "line-through text-gray-400" : "text-gray-600"}`}
+                  className={`block leading-relaxed ${done ? "line-through text-gray-600" : "text-gray-700"}`}
                 >
                   {displayTitle}
                 </span>
               )}
               {guestLine.length > 0 && (
-                <p className={`text-xs mt-0.5 leading-relaxed ${done ? "text-gray-300" : "text-gray-400"}`}>
+                <p className={`text-xs mt-0.5 leading-relaxed ${done ? "text-gray-500" : "text-gray-600"}`}>
                   {guestLine}
                 </p>
               )}
@@ -111,7 +115,7 @@ export default function PodcastRecs({
         {embeddedTitle != null && (
           <div className="flex items-center justify-between gap-3 mb-3 min-h-[1.25rem]">
             <div className="min-w-0">{embeddedTitle}</div>
-            <span className="text-xs text-brand-600 font-medium tabular-nums shrink-0">
+            <span className="text-xs text-brand-700 font-medium tabular-nums shrink-0">
               {heardCount}/{recs.length} completed
             </span>
           </div>
@@ -131,6 +135,7 @@ export default function PodcastRecs({
             viewBox="0 0 24 24"
             stroke="currentColor"
             strokeWidth={2}
+            aria-hidden
           >
             <path
               strokeLinecap="round"
@@ -140,7 +145,7 @@ export default function PodcastRecs({
           </svg>
           Episodes &mdash; {recs.length} recommended
         </h3>
-        <span className="text-xs text-brand-600 font-medium tabular-nums shrink-0">
+        <span className="text-xs text-brand-700 font-medium tabular-nums shrink-0">
           {heardCount}/{recs.length} completed
         </span>
       </div>

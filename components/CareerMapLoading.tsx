@@ -4,7 +4,11 @@
  */
 export default function CareerMapLoading() {
   return (
-    <main style={{ fontFamily: "ui-sans-serif, system-ui, sans-serif", color: "#3d1f0a" }}>
+    <main
+      id="main-content"
+      tabIndex={-1}
+      style={{ fontFamily: "ui-sans-serif, system-ui, sans-serif", color: "#3d1f0a" }}
+    >
       <header style={{ marginBottom: "2.5rem" }}>
         <p
           style={{

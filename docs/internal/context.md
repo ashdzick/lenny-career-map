@@ -32,7 +32,7 @@ These guided the home path experience and related pages; keep them when changing
 4. **Honest affordances** — If something persists automatically (notes), don’t imply a separate save step unless it does more.
 5. **PDF stays quiet** — Available, not co-equal with reading in hierarchy.
 
-**UI backlog:** [`todos.md`](./todos.md). A fuller internal log (gitignored on this repo) is `design-decisions-log.md` if you maintain it locally.
+A fuller internal log (gitignored on this repo) is `design-decisions-log.md` if you maintain it locally.
 
 ## Product behavior (current)
 

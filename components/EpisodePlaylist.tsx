@@ -64,7 +64,11 @@ export default function EpisodePlaylist({
               <button
                 type="button"
                 onClick={() => toggleListened(text)}
-                aria-label={done ? "Mark as not completed" : "Mark as completed"}
+                aria-label={
+                  done
+                    ? `Mark article as not completed: ${text}`
+                    : `Mark article as completed: ${text}`
+                }
                 className={`flex-shrink-0 mt-0.5 w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${
                   done
                     ? "bg-brand-500 border-brand-500"
@@ -86,14 +90,14 @@ export default function EpisodePlaylist({
                   rel="noopener noreferrer"
                   className={`leading-relaxed transition-colors ${
                     done
-                      ? "line-through text-gray-400"
+                      ? "line-through text-gray-600"
                       : "text-brand-700 hover:text-brand-900 hover:underline underline-offset-2"
                   }`}
                 >
                   {text}
                 </a>
               ) : (
-                <span className={`leading-relaxed ${done ? "line-through text-gray-400" : "text-gray-600"}`}>
+                <span className={`leading-relaxed ${done ? "line-through text-gray-600" : "text-gray-700"}`}>
                   {text}
                 </span>
               )}
@@ -109,7 +113,7 @@ export default function EpisodePlaylist({
         {embeddedTitle != null && (
           <div className="flex items-center justify-between gap-3 mb-3 min-h-[1.25rem]">
             <div className="min-w-0">{embeddedTitle}</div>
-            <span className="text-xs text-brand-600 font-medium tabular-nums shrink-0">
+            <span className="text-xs text-brand-700 font-medium tabular-nums shrink-0">
               {listenedCount}/{episodes.length} completed
             </span>
           </div>
@@ -129,6 +133,7 @@ export default function EpisodePlaylist({
             viewBox="0 0 24 24"
             stroke="currentColor"
             strokeWidth={2}
+            aria-hidden
           >
             <path
               strokeLinecap="round"
@@ -138,7 +143,7 @@ export default function EpisodePlaylist({
           </svg>
           Articles &mdash; {episodes.length} cited
         </h3>
-        <span className="text-xs text-brand-600 font-medium tabular-nums shrink-0">
+        <span className="text-xs text-brand-700 font-medium tabular-nums shrink-0">
           {listenedCount}/{episodes.length} completed
         </span>
       </div>

@@ -22,6 +22,8 @@ const podcasts = corpus.filter(e =>
 // ── Scoring helpers (same as get-chunks.js) ──────────────────────────────────
 const STOP  = new Set(["a","an","the","and","or","of","in","at","by","for","with","on","as","it","is","be","do","to","this","that","was","are","from","has","had","have","will","would","could","should","may","can","not","but","i","my","we","you","he","she","they"]);
 const NOISE = new Set(["senior","junior","lead","staff","principal","head","director","vp","associate","manager","executive","chief","svp","evp","founding","interim","global","regional"]);
+// Two-letter role tokens (otherwise dropped by length>=3), e.g. Director of UX, Principal PM
+const SHORT_ROLE = new Set(["ux", "pm", "vp", "ai", "hr", "qa", "bi", "ui", "cx", "dx"]);
 const EXP   = {
   product:  ["pm","roadmap","prioriti","strateg","stakeholder","discovery"],
   engineer: ["technolog","architect","system","code","softwar"],
@@ -48,7 +50,9 @@ function stem(w) {
 }
 function kw(role) {
   const s = new Set();
-  for (const w of role.toLowerCase().replace(/[^a-z0-9\s]/g, " ").split(/\s+/).filter(w => w.length >= 3)) {
+  for (const w of role.toLowerCase().replace(/[^a-z0-9\s]/g, " ").split(/\s+/)) {
+    if (w.length < 2) continue;
+    if (w.length < 3 && !SHORT_ROLE.has(w)) continue;
     if (!STOP.has(w) && !NOISE.has(w)) s.add(stem(w));
   }
   return [...s];

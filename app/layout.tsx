@@ -33,6 +33,12 @@ export default function RootLayout({
           MozOsxFontSmoothing: "grayscale",
         }}
       >
+        <a
+          href="#main-content"
+          className="fixed left-4 top-0 z-[100] -translate-y-full px-4 py-2 text-sm font-medium rounded-lg bg-brand-900 text-white outline-none ring-2 ring-transparent ring-offset-2 focus:translate-y-4 focus:ring-brand-400"
+        >
+          Skip to main content
+        </a>
         <div
           className="max-w-7xl mx-auto px-6 py-12"
           style={{

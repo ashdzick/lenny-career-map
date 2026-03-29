@@ -24,6 +24,7 @@ const config = {
     iconColor: "text-emerald-600",
     headlineColor: "text-emerald-800",
     detailColor: "text-emerald-700",
+    linkClass: "font-medium text-emerald-900 underline underline-offset-2 hover:text-emerald-950",
     label: "Market tailwind",
     icon: (
       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -38,6 +39,7 @@ const config = {
     iconColor: "text-amber-600",
     headlineColor: "text-amber-800",
     detailColor: "text-amber-700",
+    linkClass: "font-medium text-amber-900 underline underline-offset-2 hover:text-amber-950",
     label: "Market headwind",
     icon: (
       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -52,6 +54,7 @@ const config = {
     iconColor: "text-gray-500",
     headlineColor: "text-gray-700",
     detailColor: "text-gray-600",
+    linkClass: "font-medium text-gray-900 underline underline-offset-2 hover:text-brand-900",
     label: "Market context",
     icon: (
       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -85,6 +88,7 @@ export default function MarketSignal({
       <div className={`flex items-start ${compact ? "gap-2" : "gap-3"}`}>
         <div
           className={`flex-shrink-0 ${iconWrap} rounded-full ${c.iconBg} ${c.iconColor} flex items-center justify-center mt-0.5${compact ? " [&_svg]:h-3 [&_svg]:w-3" : ""}`}
+          aria-hidden
         >
           {c.icon}
         </div>
@@ -101,7 +105,7 @@ export default function MarketSignal({
               href={sourceUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className={`underline underline-offset-2 opacity-70 hover:opacity-100 transition-opacity`}
+              className={c.linkClass}
             >
               2026 job market report ↗
             </a>

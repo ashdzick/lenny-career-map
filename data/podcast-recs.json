@@ -222,53 +222,49 @@
   ],
   "Product Designer|||UX Researcher": [
     {
-      "title": "Building better product roadmaps | Janna Bastow (Mind the Product, ProdPad)",
-      "guest": "Janna Bastow",
-      "url": "https://www.lennysnewsletter.com/p/building-better-roadmaps-janna-bastow"
+      "title": "Interview Q Compilation",
+      "guest": "Interview Q Compilation"
     },
     {
-      "title": "Good Strategy, Bad Strategy | Richard Rumelt",
-      "guest": "Richard Rumelt",
-      "url": "https://www.lennysnewsletter.com/p/good-strategy-bad-strategy-richard"
+      "title": "How to interview product managers",
+      "guest": "Harry Stebbings",
+      "url": "https://www.lennysnewsletter.com/p/how-to-interview-product-managers"
     },
     {
-      "title": "How to create a winning product strategy | Melissa Perri",
-      "guest": "Melissa Perri",
-      "url": "https://www.lennysnewsletter.com/p/how-to-create-a-winning-product-strategy"
+      "title": "Teresa Torres on how to interview customers, automating continuous discovery, the opportunity solution tree framework, making the case for user research, common interviewing mistakes, and much more",
+      "guest": "Teresa Torres"
     }
   ],
   "UX Researcher|||Product Designer": [
     {
+      "title": "Interview Q Compilation",
+      "guest": "Interview Q Compilation"
+    },
+    {
+      "title": "How to interview product managers",
+      "guest": "Harry Stebbings",
+      "url": "https://www.lennysnewsletter.com/p/how-to-interview-product-managers"
+    },
+    {
       "title": "Building better product roadmaps | Janna Bastow (Mind the Product, ProdPad)",
       "guest": "Janna Bastow",
       "url": "https://www.lennysnewsletter.com/p/building-better-roadmaps-janna-bastow"
-    },
-    {
-      "title": "Good Strategy, Bad Strategy | Richard Rumelt",
-      "guest": "Richard Rumelt",
-      "url": "https://www.lennysnewsletter.com/p/good-strategy-bad-strategy-richard"
-    },
-    {
-      "title": "How to create a winning product strategy | Melissa Perri",
-      "guest": "Melissa Perri",
-      "url": "https://www.lennysnewsletter.com/p/how-to-create-a-winning-product-strategy"
     }
   ],
   "UX Researcher|||Product Manager": [
     {
+      "title": "Interview Q Compilation",
+      "guest": "Interview Q Compilation"
+    },
+    {
+      "title": "How to interview product managers",
+      "guest": "Harry Stebbings",
+      "url": "https://www.lennysnewsletter.com/p/how-to-interview-product-managers"
+    },
+    {
       "title": "Building better product roadmaps | Janna Bastow (Mind the Product, ProdPad)",
       "guest": "Janna Bastow",
       "url": "https://www.lennysnewsletter.com/p/building-better-roadmaps-janna-bastow"
-    },
-    {
-      "title": "Good Strategy, Bad Strategy | Richard Rumelt",
-      "guest": "Richard Rumelt",
-      "url": "https://www.lennysnewsletter.com/p/good-strategy-bad-strategy-richard"
-    },
-    {
-      "title": "How to create a winning product strategy | Melissa Perri",
-      "guest": "Melissa Perri",
-      "url": "https://www.lennysnewsletter.com/p/how-to-create-a-winning-product-strategy"
     }
   ],
   "Data Analyst|||Product Manager": [
@@ -630,19 +626,18 @@
   ],
   "UX Lead|||Director of Product": [
     {
+      "title": "Interview Q Compilation",
+      "guest": "Interview Q Compilation"
+    },
+    {
+      "title": "How to interview product managers",
+      "guest": "Harry Stebbings",
+      "url": "https://www.lennysnewsletter.com/p/how-to-interview-product-managers"
+    },
+    {
       "title": "Building better product roadmaps | Janna Bastow (Mind the Product, ProdPad)",
       "guest": "Janna Bastow",
       "url": "https://www.lennysnewsletter.com/p/building-better-roadmaps-janna-bastow"
-    },
-    {
-      "title": "Good Strategy, Bad Strategy | Richard Rumelt",
-      "guest": "Richard Rumelt",
-      "url": "https://www.lennysnewsletter.com/p/good-strategy-bad-strategy-richard"
-    },
-    {
-      "title": "How to create a winning product strategy | Melissa Perri",
-      "guest": "Melissa Perri",
-      "url": "https://www.lennysnewsletter.com/p/how-to-create-a-winning-product-strategy"
     }
   ],
   "Product Manager|||VP of Product": [
@@ -698,23 +693,40 @@
   ],
   "Director of UX|||Director of Product": [
     {
+      "title": "Interview Q Compilation",
+      "guest": "Interview Q Compilation"
+    },
+    {
+      "title": "How to interview product managers",
+      "guest": "Harry Stebbings",
+      "url": "https://www.lennysnewsletter.com/p/how-to-interview-product-managers"
+    },
+    {
       "title": "Building better product roadmaps | Janna Bastow (Mind the Product, ProdPad)",
       "guest": "Janna Bastow",
       "url": "https://www.lennysnewsletter.com/p/building-better-roadmaps-janna-bastow"
-    },
-    {
-      "title": "Good Strategy, Bad Strategy | Richard Rumelt",
-      "guest": "Richard Rumelt",
-      "url": "https://www.lennysnewsletter.com/p/good-strategy-bad-strategy-richard"
-    },
-    {
-      "title": "How to create a winning product strategy | Melissa Perri",
-      "guest": "Melissa Perri",
-      "url": "https://www.lennysnewsletter.com/p/how-to-create-a-winning-product-strategy"
     }
   ],
-  "Director of UX|||Principal PM": [],
+  "Director of UX|||Principal PM": [
+    {
+      "title": "Interview Q Compilation",
+      "guest": "Interview Q Compilation"
+    },
+    {
+      "title": "How to interview product managers",
+      "guest": "Harry Stebbings",
+      "url": "https://www.lennysnewsletter.com/p/how-to-interview-product-managers"
+    },
+    {
+      "title": "Teresa Torres on how to interview customers, automating continuous discovery, the opportunity solution tree framework, making the case for user research, common interviewing mistakes, and much more",
+      "guest": "Teresa Torres"
+    }
+  ],
   "Product Manager|||AI PM": [
+    {
+      "title": "Aishwarya Naresh Reganti + Kiriti Badam",
+      "guest": "Aishwarya Naresh Reganti + Kiriti Badam"
+    },
     {
       "title": "Building better product roadmaps | Janna Bastow (Mind the Product, ProdPad)",
       "guest": "Janna Bastow",
@@ -724,28 +736,21 @@
       "title": "Good Strategy, Bad Strategy | Richard Rumelt",
       "guest": "Richard Rumelt",
       "url": "https://www.lennysnewsletter.com/p/good-strategy-bad-strategy-richard"
-    },
-    {
-      "title": "How to create a winning product strategy | Melissa Perri",
-      "guest": "Melissa Perri",
-      "url": "https://www.lennysnewsletter.com/p/how-to-create-a-winning-product-strategy"
     }
   ],
   "Product Designer|||AI PM": [
     {
+      "title": "Aishwarya Naresh Reganti + Kiriti Badam",
+      "guest": "Aishwarya Naresh Reganti + Kiriti Badam"
+    },
+    {
+      "title": "The UX research reckoning is here | Judd Antin (Airbnb, Meta)",
+      "guest": "Judd Antin"
+    },
+    {
       "title": "Building better product roadmaps | Janna Bastow (Mind the Product, ProdPad)",
       "guest": "Janna Bastow",
       "url": "https://www.lennysnewsletter.com/p/building-better-roadmaps-janna-bastow"
-    },
-    {
-      "title": "Good Strategy, Bad Strategy | Richard Rumelt",
-      "guest": "Richard Rumelt",
-      "url": "https://www.lennysnewsletter.com/p/good-strategy-bad-strategy-richard"
-    },
-    {
-      "title": "How to create a winning product strategy | Melissa Perri",
-      "guest": "Melissa Perri",
-      "url": "https://www.lennysnewsletter.com/p/how-to-create-a-winning-product-strategy"
     }
   ],
   "Software Engineer|||AI Engineer": [
@@ -755,14 +760,13 @@
       "url": "https://www.lennysnewsletter.com/p/leaving-big-tech-to-build-the-1-technology"
     },
     {
+      "title": "Aishwarya Naresh Reganti + Kiriti Badam",
+      "guest": "Aishwarya Naresh Reganti + Kiriti Badam"
+    },
+    {
       "title": "The future of AI in software development | Inbal Shani (CPO of GitHub)",
       "guest": "Inbal S",
       "url": "https://www.lennysnewsletter.com/p/the-future-of-ai-in-software-development"
-    },
-    {
-      "title": "The power user’s guide to Codex: parallelizing workflows, planning techniques, advanced context engineering tips, automating code reviews, and more | Alexander Embiricos",
-      "guest": "Alexander Embiricos",
-      "url": "https://www.lennysnewsletter.com/p/this-week-on-how-i-ai-the-power-users"
     }
   ]
 }

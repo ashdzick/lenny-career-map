@@ -47,12 +47,12 @@ export default function SavedPathsPage() {
   }, [savedPaths]);
 
   return (
-    <main>
+    <main id="main-content" tabIndex={-1}>
       <ReadingColumnShell>
       <header className="mb-10">
         <div className="flex items-center gap-2 mb-3">
           <div className="w-2 h-2 rounded-full bg-brand-500" />
-          <span className="text-xs font-medium text-brand-600 uppercase tracking-widest">
+          <span className="text-xs font-medium text-brand-800 uppercase tracking-widest">
             Lenny&apos;s Podcast
           </span>
         </div>
@@ -73,7 +73,7 @@ export default function SavedPathsPage() {
           >
             <Link
               href="/"
-              className="text-sm text-brand-600 hover:text-brand-800 underline underline-offset-2 whitespace-nowrap"
+              className="text-sm text-brand-700 hover:text-brand-900 underline underline-offset-2 whitespace-nowrap"
               aria-label="Home"
               title="Return to home"
             >
@@ -81,7 +81,7 @@ export default function SavedPathsPage() {
             </Link>
             <Link
               href="/explore"
-              className="text-sm text-brand-600 hover:text-brand-800 underline underline-offset-2 whitespace-nowrap"
+              className="text-sm text-brand-700 hover:text-brand-900 underline underline-offset-2 whitespace-nowrap"
               aria-label="Browse all career transition paths"
               title="Open the full list of transitions"
             >
@@ -95,7 +95,7 @@ export default function SavedPathsPage() {
         <div className="space-y-10">
           {allGroups.map((group) => (
             <section key={group.label}>
-              <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-5">
+              <h2 className="text-xs font-semibold text-gray-600 uppercase tracking-widest mb-5">
                 {group.label}
               </h2>
               <div className="space-y-5">
@@ -109,12 +109,15 @@ export default function SavedPathsPage() {
                         <Link
                           key={to}
                           href={`/?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`}
+                          aria-label={`Open saved path from ${from} to ${to}`}
                           className="inline-flex items-center gap-1 px-3 py-1 rounded-full
                                      bg-white border border-gray-200 text-gray-600 text-xs font-medium
                                      hover:border-brand-300 hover:text-brand-700 hover:bg-brand-50
                                      transition-colors"
                         >
-                          <span className="text-gray-300 mr-0.5">→</span>
+                          <span className="text-gray-500 mr-0.5" aria-hidden>
+                            →
+                          </span>
                           {to}
                         </Link>
                       ))}
@@ -136,14 +139,15 @@ export default function SavedPathsPage() {
           <div className="flex flex-wrap justify-center gap-3">
             <Link
               href="/"
-              className="text-sm text-brand-600 hover:text-brand-800 underline underline-offset-2 font-medium"
+              className="text-sm text-brand-700 hover:text-brand-900 underline underline-offset-2 font-medium"
               aria-label="Home"
             >
               Home →
             </Link>
             <Link
               href="/explore"
-              className="text-sm text-brand-600 hover:text-brand-800 underline underline-offset-2 font-medium"
+              className="text-sm text-brand-700 hover:text-brand-900 underline underline-offset-2 font-medium"
+              aria-label="Browse all career transition paths"
             >
               Browse all paths →
             </Link>
@@ -151,7 +155,7 @@ export default function SavedPathsPage() {
         </div>
       )}
 
-      <footer className="mt-16 text-center text-xs text-gray-400">
+      <footer className="mt-16 text-center text-xs text-gray-600">
         Built on Lenny&apos;s Newsletter podcast transcripts.
       </footer>
       </ReadingColumnShell>

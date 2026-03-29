@@ -23,7 +23,7 @@ export default function GoDeeperSection({ markdown, citationUrls, pathKey, recs 
       className="mt-8 scroll-mt-24 rounded-2xl bg-white p-6 shadow-lg ring-1 ring-gray-100"
       aria-label="Your learning plan"
     >
-      <p className="text-xs font-medium text-gray-400 uppercase tracking-widest">Your learning plan</p>
+      <p className="text-xs font-medium text-gray-600 uppercase tracking-widest">Your learning plan</p>
 
       {hasCited && (
         <div className="mt-5">

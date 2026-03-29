@@ -73,10 +73,12 @@ export function PathReadingNavMobile({ tocItems, showGoDeeper, activeSectionId }
   return (
     <div className="mx-auto w-full max-w-3xl lg:hidden mb-6">
       <details className="group rounded-xl border border-gray-100 bg-brand-50/50 px-3 py-2.5 open:pb-3">
-        <summary className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden flex items-center gap-2">
+        <summary className="text-[10px] font-semibold text-gray-600 uppercase tracking-widest cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden flex items-center gap-2 rounded-lg -m-0.5 p-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2">
           On this page
-          <span className="text-gray-300 font-normal normal-case">·</span>
-          <span className="text-xs font-medium text-brand-700 normal-case">
+          <span className="text-gray-500 font-normal normal-case" aria-hidden>
+            ·
+          </span>
+          <span className="text-xs font-medium text-brand-800 normal-case">
             {linkCount} {linkCount === 1 ? "place" : "places"}
           </span>
         </summary>

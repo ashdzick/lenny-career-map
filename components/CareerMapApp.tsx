@@ -270,13 +270,13 @@ function CareerMapInner({ data }: Props) {
   }
 
   return (
-    <main>
+    <main id="main-content" tabIndex={-1}>
       <ReadingColumnShell>
       {/* Header */}
       <header className="mb-10">
         <div className="flex items-center gap-2 mb-3">
           <div className="w-2 h-2 rounded-full bg-brand-500" />
-          <span className="text-xs font-medium text-brand-600 uppercase tracking-widest">
+          <span className="text-xs font-medium text-brand-800 uppercase tracking-widest">
             Lenny&apos;s Podcast
           </span>
         </div>
@@ -298,7 +298,7 @@ function CareerMapInner({ data }: Props) {
               {totalPaths > 0 && (
                 <Link
                   href="/explore"
-                  className="text-sm text-brand-600 hover:text-brand-800 underline underline-offset-2 whitespace-nowrap"
+                  className="text-sm text-brand-700 hover:text-brand-900 underline underline-offset-2 whitespace-nowrap"
                   aria-label={`Browse all ${totalPaths} career transition paths`}
                   title="Open the full list of transitions"
                 >
@@ -308,7 +308,7 @@ function CareerMapInner({ data }: Props) {
               {mounted && savedPathsSafe.length > 0 && (
                 <Link
                   href="/saved"
-                  className="text-sm text-brand-600 hover:text-brand-800 underline underline-offset-2 whitespace-nowrap"
+                  className="text-sm text-brand-700 hover:text-brand-900 underline underline-offset-2 whitespace-nowrap"
                   aria-label={`View ${savedPathsSafe.length} saved ${savedPathsSafe.length === 1 ? "path" : "paths"}`}
                   title="Open paths you saved on this device"
                 >
@@ -409,7 +409,10 @@ function CareerMapInner({ data }: Props) {
 
       {/* Error */}
       {error && (
-        <div className="mb-6 px-4 py-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm">
+        <div
+          className="mb-6 px-4 py-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm"
+          role="alert"
+        >
           {error}
         </div>
       )}
@@ -435,8 +438,8 @@ function CareerMapInner({ data }: Props) {
               <div className="mb-3">
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
                   <h2 className="text-2xl sm:text-[1.65rem] font-bold text-brand-900 leading-snug tracking-tight">
-                    <span className="text-gray-500 font-semibold">{currentRole}</span>
-                    <span className="mx-2 text-gray-300 font-normal" aria-hidden>
+                    <span className="text-gray-600 font-semibold">{currentRole}</span>
+                    <span className="mx-2 text-gray-500 font-normal" aria-hidden>
                       →
                     </span>
                     <span>{targetRole}</span>
@@ -457,7 +460,7 @@ function CareerMapInner({ data }: Props) {
                     className={`flex-shrink-0 inline-flex items-center gap-1.5 self-start px-3 py-1.5 rounded-xl border text-xs font-medium transition-colors ${
                       isSaved
                         ? "border-brand-400 bg-brand-50 text-brand-700 hover:bg-brand-100"
-                        : "border-gray-200 bg-white text-gray-500 hover:border-brand-300 hover:text-brand-600 hover:bg-brand-50"
+                        : "border-gray-200 bg-white text-gray-500 hover:border-brand-300 hover:text-brand-700 hover:bg-brand-50"
                     }`}
                   >
                     <svg
@@ -466,6 +469,7 @@ function CareerMapInner({ data }: Props) {
                       viewBox="0 0 24 24"
                       stroke="currentColor"
                       strokeWidth={2}
+                      aria-hidden
                     >
                       <path
                         strokeLinecap="round"
@@ -484,6 +488,7 @@ function CareerMapInner({ data }: Props) {
                       viewBox="0 0 24 24"
                       stroke="currentColor"
                       strokeWidth={2}
+                      aria-hidden
                     >
                       <path
                         strokeLinecap="round"
@@ -540,17 +545,21 @@ function CareerMapInner({ data }: Props) {
                   <div>
                     <label
                       htmlFor="path-notes"
-                      className="block text-xs font-semibold text-gray-400 uppercase tracking-widest"
+                      className="block text-xs font-semibold text-gray-600 uppercase tracking-widest"
                     >
                       My notes
                     </label>
-                    <p className="mt-1 text-xs text-gray-400 leading-snug">
+                    <p className="mt-1 text-xs text-gray-600 leading-snug">
                       Saved automatically in this browser.
                     </p>
                   </div>
-                  <div className="flex-shrink-0 min-h-[1.25rem] flex items-center">
+                  <div
+                    className="flex-shrink-0 min-h-[1.25rem] flex items-center"
+                    aria-live="polite"
+                    aria-atomic="true"
+                  >
                     {noteStatus === "saving" && (
-                      <span className="text-xs text-gray-400 font-medium">Saving…</span>
+                      <span className="text-xs text-gray-600 font-medium">Saving…</span>
                     )}
                     {noteStatus === "saved" && (
                       <span className="text-xs text-emerald-600 font-medium flex items-center gap-1">
@@ -560,6 +569,7 @@ function CareerMapInner({ data }: Props) {
                           viewBox="0 0 24 24"
                           stroke="currentColor"
                           strokeWidth={2.5}
+                          aria-hidden
                         >
                           <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                         </svg>
@@ -574,7 +584,7 @@ function CareerMapInner({ data }: Props) {
                   onChange={(e) => updateNote(e.target.value)}
                   placeholder="What resonated? Which episodes are priorities? What do you want to action first?"
                   rows={4}
-                  className="w-full text-sm text-gray-700 placeholder-gray-300 resize-none focus:outline-none leading-relaxed"
+                  className="w-full text-sm text-gray-700 placeholder-gray-500 resize-none focus:outline-none leading-relaxed"
                 />
               </div>
 
@@ -592,7 +602,7 @@ function CareerMapInner({ data }: Props) {
               {/* Related paths — after long read */}
               {relatedPaths.length > 0 && (
                 <div className="mt-10 pt-8 border-t border-gray-100">
-                  <p className="text-xs font-medium text-gray-400 uppercase tracking-widest mb-3">
+                  <p className="text-xs font-medium text-gray-600 uppercase tracking-widest mb-3">
                     Also explore
                   </p>
                   <div className="flex flex-wrap gap-2">
@@ -601,12 +611,15 @@ function CareerMapInner({ data }: Props) {
                         key={`end-${key}`}
                         type="button"
                         onClick={() => loadPath(from, to)}
+                        aria-label={`Open career path from ${from} to ${to}`}
                         className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200
                                    bg-white text-xs font-medium hover:border-brand-300 hover:text-brand-700
                                    hover:bg-brand-50 transition-colors cursor-pointer"
                       >
-                        <span className="text-gray-400">{from}</span>
-                        <span className="text-gray-300 mx-0.5">→</span>
+                        <span className="text-gray-600">{from}</span>
+                        <span className="text-gray-500 mx-0.5" aria-hidden>
+                          →
+                        </span>
                         <span className="text-gray-700">{to}</span>
                       </button>
                     ))}
@@ -619,7 +632,7 @@ function CareerMapInner({ data }: Props) {
       )}
 
       {/* Footer */}
-      <footer className="mt-16 text-center text-xs text-gray-400">
+      <footer className="mt-16 text-center text-xs text-gray-600">
         Built on Lenny&apos;s Newsletter podcast transcripts.
       </footer>
     </main>
@@ -643,7 +656,7 @@ function ChevronDown() {
     <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
       {/* width/height + inline size: if Tailwind CSS fails to load, SVGs otherwise fill the viewport */}
       <svg
-        className="h-4 w-4 text-gray-400"
+        className="h-4 w-4 text-gray-600"
         width={16}
         height={16}
         style={{ width: 16, height: 16, flexShrink: 0 }}

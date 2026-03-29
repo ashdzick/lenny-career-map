@@ -1,6 +1,6 @@
 # Handoff notes (for the next session)
 
-Short map of the repo, sharp edges, and where to continue. Pair with [`context.md`](./context.md) (product, audience, **UX principles**) and [`todos.md`](./todos.md) (UI/data backlog). Optional local log: `design-decisions-log.md` (gitignored).
+Short map of the repo, sharp edges, and where to continue. Pair with [`context.md`](./context.md) (product, audience, **UX principles**). Optional local log: `design-decisions-log.md` (gitignored).
 
 ## What this is
 
@@ -35,7 +35,6 @@ Next.js 14 app: **pre-generated** career transition paths from Lenny podcast/new
 
 ## Suggested next work
 
-- [`todos.md`](./todos.md) — Phase 4–style polish, data fixes.
 - Optional UX ideas not yet built: market signal **sidebar / collapsible** on wide screens; **inline “see all transitions”** after related chips; rename `localStorage` keys if completion semantics change further (UI copy already uses “completed”).
 
 ## Quick commands

@@ -9,6 +9,7 @@ import GoDeeperSection from "@/components/GoDeeperSection";
 import { PathReadingNavMobile, PathReadingNavGutter } from "@/components/PathReadingNav";
 import { hasMarkdownCitations } from "@/components/EpisodePlaylist";
 import CareerMapLoading from "@/components/CareerMapLoading";
+import HomeBuildYourOwnLinks from "@/components/HomeBuildYourOwnLinks";
 import ReadingColumnShell from "@/components/ReadingColumnShell";
 import MarketSignal from "@/components/MarketSignal";
 import type { PathsData } from "@/app/page";
@@ -273,7 +274,7 @@ function CareerMapInner({ data }: Props) {
     <main id="main-content" tabIndex={-1}>
       <ReadingColumnShell>
       {/* Header */}
-      <header className="mb-10">
+      <header className={markdown ? "mb-6" : "mb-10"}>
         <div className="flex items-center gap-2 mb-3">
           <div className="w-2 h-2 rounded-full bg-brand-500" />
           <span className="text-xs font-medium text-brand-800 uppercase tracking-widest">
@@ -285,10 +286,12 @@ function CareerMapInner({ data }: Props) {
             <h1 className="text-3xl font-bold text-brand-900 leading-tight">
               Career Transition Map
             </h1>
-            <p className="mt-2 text-base text-gray-600 leading-relaxed">
-              Choose your current and target role. Every insight is grounded in
-              Lenny&apos;s podcast interviews — no fabricated advice.
-            </p>
+            {!markdown && (
+              <p className="mt-2 text-base text-gray-600 leading-relaxed">
+                Choose your current and target role. Every insight is grounded in
+                Lenny&apos;s podcast interviews — no fabricated advice.
+              </p>
+            )}
           </div>
           {(totalPaths > 0 || (mounted && savedPathsSafe.length > 0)) && (
             <nav
@@ -416,11 +419,13 @@ function CareerMapInner({ data }: Props) {
           {error}
         </div>
       )}
+
+      {!currentRole && <HomeBuildYourOwnLinks className="mt-2 mb-6" />}
       </ReadingColumnShell>
 
-      {/* Output */}
+      {/* Output — separated from header + pickers for clearer “content” band */}
       {markdown && (
-        <>
+        <div className="mt-8 border-t border-gray-100 pt-7">
           <PathReadingNavMobile
             tocItems={pathTocItems}
             showGoDeeper={hasGoDeeperContent}
@@ -434,16 +439,40 @@ function CareerMapInner({ data }: Props) {
               ref={pathScrollRef}
               className="min-w-0 scroll-mt-28 lg:col-start-2 lg:row-start-1"
             >
-              {/* Path title + timeline + save */}
+              {/* Path title (caption = timeline) + save */}
               <div className="mb-3">
-                <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
-                  <h2 className="text-2xl sm:text-[1.65rem] font-bold text-brand-900 leading-snug tracking-tight">
-                    <span className="text-gray-600 font-semibold">{currentRole}</span>
-                    <span className="mx-2 text-gray-500 font-normal" aria-hidden>
-                      →
-                    </span>
-                    <span>{targetRole}</span>
-                  </h2>
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+                  <div className="min-w-0">
+                    <h2 className="text-2xl sm:text-[1.65rem] font-bold text-brand-900 leading-snug tracking-tight">
+                      <span className="text-gray-600 font-semibold">{currentRole}</span>
+                      <span className="mx-2 text-gray-500 font-normal" aria-hidden>
+                        →
+                      </span>
+                      <span>{targetRole}</span>
+                    </h2>
+                    {timeline && (
+                      <p className="mt-1.5 text-sm text-gray-600 leading-snug flex items-start gap-1.5">
+                        <svg
+                          className="w-3.5 h-3.5 flex-shrink-0 text-gray-500 mt-0.5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={2}
+                          aria-hidden
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                        <span>
+                          Estimated timeline:{" "}
+                          <span className="font-medium text-gray-800 tabular-nums">{timeline}</span>
+                        </span>
+                      </p>
+                    )}
+                  </div>
                   <button
                     type="button"
                     onClick={toggleSaved}
@@ -457,7 +486,7 @@ function CareerMapInner({ data }: Props) {
                         ? "Remove from your saved list (this device only)"
                         : "Add to your saved list to reopen later (this device only)"
                     }
-                    className={`flex-shrink-0 inline-flex items-center gap-1.5 self-start px-3 py-1.5 rounded-xl border text-xs font-medium transition-colors ${
+                    className={`flex-shrink-0 inline-flex items-center gap-1.5 self-start sm:mt-0.5 px-3 py-1.5 rounded-xl border text-xs font-medium transition-colors ${
                       isSaved
                         ? "border-brand-400 bg-brand-50 text-brand-700 hover:bg-brand-100"
                         : "border-gray-200 bg-white text-gray-500 hover:border-brand-300 hover:text-brand-700 hover:bg-brand-50"
@@ -480,25 +509,6 @@ function CareerMapInner({ data }: Props) {
                     {isSaved ? "Saved" : "Save path"}
                   </button>
                 </div>
-                {timeline && (
-                  <span className="mt-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-xs font-medium">
-                    <svg
-                      className="w-3.5 h-3.5 flex-shrink-0"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                      aria-hidden
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                    Estimated timeline: {timeline}
-                  </span>
-                )}
               </div>
             </div>
 
@@ -628,13 +638,8 @@ function CareerMapInner({ data }: Props) {
               )}
             </div>
           </div>
-        </>
+        </div>
       )}
-
-      {/* Footer */}
-      <footer className="mt-16 text-center text-xs text-gray-600">
-        Built on Lenny&apos;s Newsletter podcast transcripts.
-      </footer>
     </main>
   );
 }

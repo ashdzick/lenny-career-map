@@ -4,44 +4,17 @@ import { forwardRef, useMemo, type ReactNode } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import type { Components } from "react-markdown";
+import {
+  extractPathTocFromMarkdown,
+  hastElementToPlainText,
+  bodyHeadingPlainToIdMap,
+  headingPlainMatchKey,
+  slugifyHeading,
+  type PathTocItem,
+} from "@/lib/pathMarkdownToc";
 
-export interface PathTocItem {
-  id: string;
-  label: string;
-}
-
-/** Strip `##` lines into plain labels and stable slug ids (deduped). */
-export function extractPathTocFromMarkdown(markdown: string): PathTocItem[] {
-  const lines = markdown.split(/\r?\n/);
-  const rawTitles: string[] = [];
-  for (const line of lines) {
-    const m = line.match(/^##\s+(.+)$/);
-    if (m) rawTitles.push(m[1].trim());
-  }
-  const used = new Set<string>();
-  return rawTitles.map((mdTitle) => {
-    const label = mdTitle.replace(/\*/g, "").trim();
-    let base = slugifyHeading(label || mdTitle);
-    let id = base;
-    let n = 2;
-    while (used.has(id)) {
-      id = `${base}-${n++}`;
-    }
-    used.add(id);
-    return { id, label: label || mdTitle };
-  });
-}
-
-function slugifyHeading(text: string): string {
-  const s = text
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-")
-    .replace(/^-|-$/g, "");
-  return s || "section";
-}
+export type { PathTocItem };
+export { extractPathTocFromMarkdown };
 
 /** When the file opens with `## …`, return the first TOC entry and markdown after that line (for slots before body). */
 function splitLeadingH2Block(markdown: string, tocItems: PathTocItem[]): { first: PathTocItem | null; rest: string } {
@@ -184,14 +157,17 @@ function ProcessCitations({
   return <>{children}</>;
 }
 
-function makeCitationComponents(citationUrls: Record<string, string>, tocItems: PathTocItem[]): Components {
-  let h2Index = 0;
+function makeCitationComponents(
+  citationUrls: Record<string, string>,
+  bodyPlainToId: Map<string, string>
+): Components {
   return {
     ...components,
-    h2({ children }) {
-      const item = tocItems[h2Index];
-      const id = item?.id ?? `path-section-${h2Index}`;
-      h2Index += 1;
+    h2({ node, children }) {
+      const plain = hastElementToPlainText(node).replace(/\s+/g, " ").trim();
+      const key = headingPlainMatchKey(plain);
+      const fromMap = bodyPlainToId.get(key);
+      const id = fromMap ?? slugifyHeading(plain || "section");
       return (
         <h2
           id={id}
@@ -231,12 +207,15 @@ const LearningPathOutput = forwardRef<HTMLDivElement, Props>(
 
     const splitFirstHeadingForMarket = Boolean(afterFirstH2 && leadingH2);
     const markdownForParser = splitFirstHeadingForMarket ? bodyAfterFirstH2 : markdown;
-    const tocForParser = splitFirstHeadingForMarket ? tocItems.slice(1) : tocItems;
-
-    const resolvedComponents = useMemo(
-      () => makeCitationComponents(citationUrls, tocForParser),
-      [citationUrls, tocForParser]
+    const bodyTocForParser = useMemo(
+      () => extractPathTocFromMarkdown(markdownForParser),
+      [markdownForParser]
     );
+    const bodyPlainToId = useMemo(() => bodyHeadingPlainToIdMap(bodyTocForParser), [bodyTocForParser]);
+    const resolvedComponents = useMemo(() => {
+      void markdown; // bust cache when path body changes (citationUrls object often reused)
+      return makeCitationComponents(citationUrls, bodyPlainToId);
+    }, [citationUrls, markdown, bodyPlainToId]);
 
     return (
       <div

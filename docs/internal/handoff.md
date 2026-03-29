@@ -12,6 +12,8 @@ Next.js 14 app: **pre-generated** career transition paths from Lenny podcast/new
 |------|---------|
 | Home UI | `components/CareerMapApp.tsx` — role pickers, path output, save/notes/PDF, “Also explore” |
 | Path markdown + citations | `components/LearningPathOutput.tsx` |
+| TOC + path heading ids | `lib/pathMarkdownToc.ts` — remark-based TOC; plain-title → id map for body `h2` (must match **On this page** in `PathReadingNav.tsx`) |
+| Sticky / mobile TOC | `components/PathReadingNav.tsx` |
 | **Go deeper** block | `components/GoDeeperSection.tsx` — **Articles cited in this path** (newsletter citations) + **More episodes to consider** (podcasts) |
 | Citation checklist | `components/EpisodePlaylist.tsx` (embedded inside Go deeper) |
 | Explore index | `app/explore/page.tsx` |
@@ -27,6 +29,7 @@ Next.js 14 app: **pre-generated** career transition paths from Lenny podcast/new
 4. **Role `<select>`s** use **`suppressHydrationWarning`** — URL-driven values can differ from prerender.
 5. **PDF:** `dynamic(..., { ssr: false })`; only render after **`mounted`** in `CareerMapApp` to avoid hydration mismatch.
 6. **ChevronDown** SVG has explicit **`width`/`height`/inline size** so icons don’t blow up if CSS is late.
+7. **TOC / `h2` ids:** Do not drive body heading ids with a **persistent** slug assigner inside **`useMemo`** (the `used` set survives across re-renders and produces `-2` suffixes). Do not rely on **render order index** alone — react-markdown can invoke **`h2` more than once per logical heading**; use **`bodyHeadingPlainToIdMap`** + **`headingPlainMatchKey`** in `LearningPathOutput.tsx` so nav `href="#…"` always matches a real element id.
 
 ## UX / copy conventions
 

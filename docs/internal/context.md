@@ -45,4 +45,5 @@ A fuller internal log (gitignored on this repo) is `design-decisions-log.md` if 
 
 - Paths are **pre-generated** for fixed role pairs and shipped as JSON (`data/paths.json`), not generated on each page load.
 - Corpus / transcript pipeline is separate from the Next.js UI; see `README.md` for commands and env vars.
+- **On this page / `h2` anchors:** TOC ids and rendered markdown headings are aligned via `lib/pathMarkdownToc.ts` — body `h2` elements use a **title → id map** from the same remark-based TOC so anchors stay stable across re-renders and duplicate heading renders (see local `design-decisions-log.md` for the full postmortem).
 - **Continuing in a new chat:** read [`handoff.md`](./handoff.md) first (code map, gotchas, next steps).

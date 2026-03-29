@@ -99,7 +99,7 @@ A prioritized list (most important first) of concrete, buildable skills. For eac
 - **Skill name**: 2–3 sentences on why it matters for this specific transition. Cite the episode(s): [Episode Title — Guest Name]. Then 1–2 sentences of the specific insight from that episode.
 
 ## Mindset Shifts
-2–4 fundamental shifts in thinking required for this transition. Write each as **From X → To Y**, followed by a short paragraph explaining why this reframe matters. Cite the episode(s) that illuminate it.
+2–4 fundamental shifts in thinking required for this transition. Use the **same list format as Skills to Build**: each item must be one markdown list line, `- **From X → To Y**:`, immediately followed by your paragraph (same line is fine) explaining why this reframe matters. Cite the episode(s) that illuminate it.
 
 ---
 If the provided transcripts do not contain enough relevant material to fill a section, write: "The provided transcripts do not cover this directly."`;
@@ -219,6 +219,28 @@ function scoreEpisodes(corpus, currentRole, targetRole, topN = 15) {
 }
 
 // ---------------------------------------------------------------------------
+// Normalize Mindset Shifts to list items (matches Skills to Build rendering)
+// ---------------------------------------------------------------------------
+function normalizeMindsetShiftsToListFormat(markdown) {
+  const marker = "## Mindset Shifts\n\n";
+  const idx = markdown.indexOf(marker);
+  if (idx === -1) return markdown;
+
+  const after = idx + marker.length;
+  const rest = markdown.slice(after);
+  const m = rest.match(/\n## /);
+  const end = m ? m.index : rest.length;
+  const mindsetBody = rest.slice(0, end);
+  const tail = rest.slice(end);
+
+  const paras = mindsetBody.trim().split(/\n\n+/).filter(Boolean);
+  if (paras.some((p) => !p.trimStart().startsWith("**"))) return markdown;
+
+  const converted = paras.map((p) => "- " + p.trim()).join("\n\n");
+  return markdown.slice(0, after) + converted + tail;
+}
+
+// ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
 async function main() {
@@ -293,7 +315,8 @@ Please generate my career transition learning path following the structure in yo
         messages: [{ role: "user", content: userMessage }],
       });
 
-      const markdown = message.content[0].type === "text" ? message.content[0].text : "";
+      let markdown = message.content[0].type === "text" ? message.content[0].text : "";
+      markdown = normalizeMindsetShiftsToListFormat(markdown);
       results[key] = { from, to, markdown, generatedAt: new Date().toISOString() };
 
       // Save after each generation so we can resume on interruption

@@ -115,7 +115,7 @@ export default function PodcastRecs({
         {embeddedTitle != null && (
           <div className="flex items-center justify-between gap-3 mb-3 min-h-[1.25rem]">
             <div className="min-w-0">{embeddedTitle}</div>
-            <span className="text-xs text-brand-700 font-medium tabular-nums shrink-0">
+            <span className="text-xs text-gray-600 tabular-nums shrink-0">
               {heardCount}/{recs.length} completed
             </span>
           </div>

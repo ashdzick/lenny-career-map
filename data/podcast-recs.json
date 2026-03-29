@@ -14,6 +14,21 @@
       "title": "How to create a winning product strategy | Melissa Perri",
       "guest": "Melissa Perri",
       "url": "https://www.lennysnewsletter.com/p/how-to-create-a-winning-product-strategy"
+    },
+    {
+      "title": "An inside look at Mixpanel’s product journey | Vijay Iyengar (Head of Product)",
+      "guest": "Vijay",
+      "url": "https://www.lennysnewsletter.com/p/an-inside-look-at-mixpanels-product"
+    },
+    {
+      "title": "Leaving big tech to build the #1 technology newsletter | Gergely Orosz (The Pragmatic Engineer)",
+      "guest": "Gergely",
+      "url": "https://www.lennysnewsletter.com/p/leaving-big-tech-to-build-the-1-technology"
+    },
+    {
+      "title": "The future of AI in software development | Inbal Shani (CPO of GitHub)",
+      "guest": "Inbal S",
+      "url": "https://www.lennysnewsletter.com/p/the-future-of-ai-in-software-development"
     }
   ],
   "Software Engineer|||Engineering Manager": [
@@ -31,6 +46,21 @@
       "title": "The power user’s guide to Codex: parallelizing workflows, planning techniques, advanced context engineering tips, automating code reviews, and more | Alexander Embiricos",
       "guest": "Alexander Embiricos",
       "url": "https://www.lennysnewsletter.com/p/this-week-on-how-i-ai-the-power-users"
+    },
+    {
+      "title": "Al Engineering 101 with Chip Huyen (Nvidia, Stanford, Netflix)",
+      "guest": "Chip Huyen",
+      "url": "https://www.lennysnewsletter.com/p/al-engineering-101-with-chip-huyen"
+    },
+    {
+      "title": "The engineering mindset | Will Larson (Carta, Stripe, Uber, Calm, Digg)",
+      "guest": "Will Larson",
+      "url": "https://www.lennysnewsletter.com/p/the-engineering-mindset-will-larson"
+    },
+    {
+      "title": "AI prompt engineering in 2025: What works and what doesn’t | Sander Schulhoff (Learn Prompting, HackAPrompt)",
+      "guest": "Sander Schulhoff",
+      "url": "https://www.lennysnewsletter.com/p/ai-prompt-engineering-in-2025-sander-schulhoff"
     }
   ],
   "Software Engineer|||Founder / CEO": [
@@ -48,6 +78,21 @@
       "title": "Founder-led sales | Pete Kazanjy (Founding Sales, Atrium)",
       "guest": "Pete Kazanjy",
       "url": "https://www.lennysnewsletter.com/p/founder-led-sales-pete-kazanjy-founding"
+    },
+    {
+      "title": "Behind the product: Replit | Amjad Masad (co-founder and CEO)",
+      "guest": "Amjad Masad",
+      "url": "https://www.lennysnewsletter.com/p/behind-the-product-replit-amjad-masad"
+    },
+    {
+      "title": "Leaving big tech to build the #1 technology newsletter | Gergely Orosz (The Pragmatic Engineer)",
+      "guest": "Gergely",
+      "url": "https://www.lennysnewsletter.com/p/leaving-big-tech-to-build-the-1-technology"
+    },
+    {
+      "title": "The future of AI in software development | Inbal Shani (CPO of GitHub)",
+      "guest": "Inbal S",
+      "url": "https://www.lennysnewsletter.com/p/the-future-of-ai-in-software-development"
     }
   ],
   "Software Engineer|||Data Scientist": [
@@ -65,6 +110,21 @@
       "title": "The future of AI in software development | Inbal Shani (CPO of GitHub)",
       "guest": "Inbal S",
       "url": "https://www.lennysnewsletter.com/p/the-future-of-ai-in-software-development"
+    },
+    {
+      "title": "Al Engineering 101 with Chip Huyen (Nvidia, Stanford, Netflix)",
+      "guest": "Chip Huyen",
+      "url": "https://www.lennysnewsletter.com/p/al-engineering-101-with-chip-huyen"
+    },
+    {
+      "title": "The power user’s guide to Codex: parallelizing workflows, planning techniques, advanced context engineering tips, automating code reviews, and more | Alexander Embiricos",
+      "guest": "Alexander Embiricos",
+      "url": "https://www.lennysnewsletter.com/p/this-week-on-how-i-ai-the-power-users"
+    },
+    {
+      "title": "The engineering mindset | Will Larson (Carta, Stripe, Uber, Calm, Digg)",
+      "guest": "Will Larson",
+      "url": "https://www.lennysnewsletter.com/p/the-engineering-mindset-will-larson"
     }
   ],
   "Software Engineer|||Product Designer": [
@@ -82,6 +142,21 @@
       "title": "How to create a winning product strategy | Melissa Perri",
       "guest": "Melissa Perri",
       "url": "https://www.lennysnewsletter.com/p/how-to-create-a-winning-product-strategy"
+    },
+    {
+      "title": "An inside look at Mixpanel’s product journey | Vijay Iyengar (Head of Product)",
+      "guest": "Vijay",
+      "url": "https://www.lennysnewsletter.com/p/an-inside-look-at-mixpanels-product"
+    },
+    {
+      "title": "Leaving big tech to build the #1 technology newsletter | Gergely Orosz (The Pragmatic Engineer)",
+      "guest": "Gergely",
+      "url": "https://www.lennysnewsletter.com/p/leaving-big-tech-to-build-the-1-technology"
+    },
+    {
+      "title": "The future of AI in software development | Inbal Shani (CPO of GitHub)",
+      "guest": "Inbal S",
+      "url": "https://www.lennysnewsletter.com/p/the-future-of-ai-in-software-development"
     }
   ],
   "Engineering Manager|||VP of Engineering / CTO": [
@@ -99,6 +174,21 @@
       "title": "The power user’s guide to Codex: parallelizing workflows, planning techniques, advanced context engineering tips, automating code reviews, and more | Alexander Embiricos",
       "guest": "Alexander Embiricos",
       "url": "https://www.lennysnewsletter.com/p/this-week-on-how-i-ai-the-power-users"
+    },
+    {
+      "title": "The rise of the professional vibe coder (a new AI-era job) | Lazar Jovanovic (Professional Vibe Coder)",
+      "guest": "Lazar Jovanovic",
+      "url": "https://www.lennysnewsletter.com/p/getting-paid-to-vibe-code"
+    },
+    {
+      "title": "The future of AI in software development | Inbal Shani (CPO of GitHub)",
+      "guest": "Inbal S",
+      "url": "https://www.lennysnewsletter.com/p/the-future-of-ai-in-software-development"
+    },
+    {
+      "title": "Al Engineering 101 with Chip Huyen (Nvidia, Stanford, Netflix)",
+      "guest": "Chip Huyen",
+      "url": "https://www.lennysnewsletter.com/p/al-engineering-101-with-chip-huyen"
     }
   ],
   "Engineering Manager|||Product Manager": [
@@ -116,6 +206,21 @@
       "title": "How to create a winning product strategy | Melissa Perri",
       "guest": "Melissa Perri",
       "url": "https://www.lennysnewsletter.com/p/how-to-create-a-winning-product-strategy"
+    },
+    {
+      "title": "An inside look at Mixpanel’s product journey | Vijay Iyengar (Head of Product)",
+      "guest": "Vijay",
+      "url": "https://www.lennysnewsletter.com/p/an-inside-look-at-mixpanels-product"
+    },
+    {
+      "title": "Leaving big tech to build the #1 technology newsletter | Gergely Orosz (The Pragmatic Engineer)",
+      "guest": "Gergely",
+      "url": "https://www.lennysnewsletter.com/p/leaving-big-tech-to-build-the-1-technology"
+    },
+    {
+      "title": "The power user’s guide to Codex: parallelizing workflows, planning techniques, advanced context engineering tips, automating code reviews, and more | Alexander Embiricos",
+      "guest": "Alexander Embiricos",
+      "url": "https://www.lennysnewsletter.com/p/this-week-on-how-i-ai-the-power-users"
     }
   ],
   "Engineering Manager|||Founder / CEO": [
@@ -133,6 +238,21 @@
       "title": "Founder-led sales | Pete Kazanjy (Founding Sales, Atrium)",
       "guest": "Pete Kazanjy",
       "url": "https://www.lennysnewsletter.com/p/founder-led-sales-pete-kazanjy-founding"
+    },
+    {
+      "title": "Behind the product: Replit | Amjad Masad (co-founder and CEO)",
+      "guest": "Amjad Masad",
+      "url": "https://www.lennysnewsletter.com/p/behind-the-product-replit-amjad-masad"
+    },
+    {
+      "title": "Leaving big tech to build the #1 technology newsletter | Gergely Orosz (The Pragmatic Engineer)",
+      "guest": "Gergely",
+      "url": "https://www.lennysnewsletter.com/p/leaving-big-tech-to-build-the-1-technology"
+    },
+    {
+      "title": "The power user’s guide to Codex: parallelizing workflows, planning techniques, advanced context engineering tips, automating code reviews, and more | Alexander Embiricos",
+      "guest": "Alexander Embiricos",
+      "url": "https://www.lennysnewsletter.com/p/this-week-on-how-i-ai-the-power-users"
     }
   ],
   "Product Manager|||Founder / CEO": [
@@ -150,6 +270,21 @@
       "title": "How a great founder becomes a great CEO | Jonathan Lowenhar (co-founder of Enjoy The Work)",
       "guest": "Jonathan Lowenhar",
       "url": "https://www.lennysnewsletter.com/p/how-a-great-founder-becomes-a-great-ceo-jonathan-lowenhar"
+    },
+    {
+      "title": "Founder-led sales | Pete Kazanjy (Founding Sales, Atrium)",
+      "guest": "Pete Kazanjy",
+      "url": "https://www.lennysnewsletter.com/p/founder-led-sales-pete-kazanjy-founding"
+    },
+    {
+      "title": "Building better product roadmaps | Janna Bastow (Mind the Product, ProdPad)",
+      "guest": "Janna Bastow",
+      "url": "https://www.lennysnewsletter.com/p/building-better-roadmaps-janna-bastow"
+    },
+    {
+      "title": "Good Strategy, Bad Strategy | Richard Rumelt",
+      "guest": "Richard Rumelt",
+      "url": "https://www.lennysnewsletter.com/p/good-strategy-bad-strategy-richard"
     }
   ],
   "Product Manager|||Chief Product Officer": [
@@ -167,6 +302,21 @@
       "title": "How to create a winning product strategy | Melissa Perri",
       "guest": "Melissa Perri",
       "url": "https://www.lennysnewsletter.com/p/how-to-create-a-winning-product-strategy"
+    },
+    {
+      "title": "An inside look at Mixpanel’s product journey | Vijay Iyengar (Head of Product)",
+      "guest": "Vijay",
+      "url": "https://www.lennysnewsletter.com/p/an-inside-look-at-mixpanels-product"
+    },
+    {
+      "title": "Gibson Biddle on his DHM product strategy framework, GEM roadmap prioritization framework, 5 Netflix strategy mini case studies, building a personal board of directors, and much more",
+      "guest": "Gibson Biddle",
+      "url": "https://www.lennysnewsletter.com/p/gibson-biddle-on-the-the-dhm-product"
+    },
+    {
+      "title": "Linear’s secret to building beloved B2B products | Nan Yu (Head of Product)",
+      "guest": "Nan Yu",
+      "url": "https://www.lennysnewsletter.com/p/linears-secret-to-building-beloved-b2b-products-nan-yu"
     }
   ],
   "Product Manager|||Growth Manager": [
@@ -184,6 +334,21 @@
       "title": "Customer-led growth | Georgiana Laudi (Forget The Funnel)",
       "guest": "Gia Laudi",
       "url": "https://www.lennysnewsletter.com/p/customer-led-growth-georgiana-laudi"
+    },
+    {
+      "title": "How Snyk built a product-led growth juggernaut | Ben Williams (VP of Product at Snyk)",
+      "guest": "Ben Williams",
+      "url": "https://www.lennysnewsletter.com/p/how-snyk-built-a-product-led-growth"
+    },
+    {
+      "title": "Building better product roadmaps | Janna Bastow (Mind the Product, ProdPad)",
+      "guest": "Janna Bastow",
+      "url": "https://www.lennysnewsletter.com/p/building-better-roadmaps-janna-bastow"
+    },
+    {
+      "title": "Good Strategy, Bad Strategy | Richard Rumelt",
+      "guest": "Richard Rumelt",
+      "url": "https://www.lennysnewsletter.com/p/good-strategy-bad-strategy-richard"
     }
   ],
   "Product Manager|||Engineering Manager": [
@@ -201,6 +366,21 @@
       "title": "Leaving big tech to build the #1 technology newsletter | Gergely Orosz (The Pragmatic Engineer)",
       "guest": "Gergely",
       "url": "https://www.lennysnewsletter.com/p/leaving-big-tech-to-build-the-1-technology"
+    },
+    {
+      "title": "How to create a winning product strategy | Melissa Perri",
+      "guest": "Melissa Perri",
+      "url": "https://www.lennysnewsletter.com/p/how-to-create-a-winning-product-strategy"
+    },
+    {
+      "title": "An inside look at Mixpanel’s product journey | Vijay Iyengar (Head of Product)",
+      "guest": "Vijay",
+      "url": "https://www.lennysnewsletter.com/p/an-inside-look-at-mixpanels-product"
+    },
+    {
+      "title": "Gibson Biddle on his DHM product strategy framework, GEM roadmap prioritization framework, 5 Netflix strategy mini case studies, building a personal board of directors, and much more",
+      "guest": "Gibson Biddle",
+      "url": "https://www.lennysnewsletter.com/p/gibson-biddle-on-the-the-dhm-product"
     }
   ],
   "Product Designer|||Product Manager": [
@@ -218,13 +398,24 @@
       "title": "How to create a winning product strategy | Melissa Perri",
       "guest": "Melissa Perri",
       "url": "https://www.lennysnewsletter.com/p/how-to-create-a-winning-product-strategy"
+    },
+    {
+      "title": "An inside look at Mixpanel’s product journey | Vijay Iyengar (Head of Product)",
+      "guest": "Vijay",
+      "url": "https://www.lennysnewsletter.com/p/an-inside-look-at-mixpanels-product"
+    },
+    {
+      "title": "Linear’s secret to building beloved B2B products | Nan Yu (Head of Product)",
+      "guest": "Nan Yu",
+      "url": "https://www.lennysnewsletter.com/p/linears-secret-to-building-beloved-b2b-products-nan-yu"
+    },
+    {
+      "title": "Gibson Biddle on his DHM product strategy framework, GEM roadmap prioritization framework, 5 Netflix strategy mini case studies, building a personal board of directors, and much more",
+      "guest": "Gibson Biddle",
+      "url": "https://www.lennysnewsletter.com/p/gibson-biddle-on-the-the-dhm-product"
     }
   ],
   "Product Designer|||UX Researcher": [
-    {
-      "title": "Interview Q Compilation",
-      "guest": "Interview Q Compilation"
-    },
     {
       "title": "How to interview product managers",
       "guest": "Harry Stebbings",
@@ -232,15 +423,32 @@
     },
     {
       "title": "Teresa Torres on how to interview customers, automating continuous discovery, the opportunity solution tree framework, making the case for user research, common interviewing mistakes, and much more",
-      "guest": "Teresa Torres"
+      "guest": "Teresa Torres",
+      "url": "https://www.lennysnewsletter.com/p/teresa-torres-on-how-to-interview"
+    },
+    {
+      "title": "Building better product roadmaps | Janna Bastow (Mind the Product, ProdPad)",
+      "guest": "Janna Bastow",
+      "url": "https://www.lennysnewsletter.com/p/building-better-roadmaps-janna-bastow"
+    },
+    {
+      "title": "Good Strategy, Bad Strategy | Richard Rumelt",
+      "guest": "Richard Rumelt",
+      "url": "https://www.lennysnewsletter.com/p/good-strategy-bad-strategy-richard"
+    },
+    {
+      "title": "How to create a winning product strategy | Melissa Perri",
+      "guest": "Melissa Perri",
+      "url": "https://www.lennysnewsletter.com/p/how-to-create-a-winning-product-strategy"
+    },
+    {
+      "title": "An inside look at Mixpanel’s product journey | Vijay Iyengar (Head of Product)",
+      "guest": "Vijay",
+      "url": "https://www.lennysnewsletter.com/p/an-inside-look-at-mixpanels-product"
     }
   ],
   "UX Researcher|||Product Designer": [
     {
-      "title": "Interview Q Compilation",
-      "guest": "Interview Q Compilation"
-    },
-    {
       "title": "How to interview product managers",
       "guest": "Harry Stebbings",
       "url": "https://www.lennysnewsletter.com/p/how-to-interview-product-managers"
@@ -249,14 +457,30 @@
       "title": "Building better product roadmaps | Janna Bastow (Mind the Product, ProdPad)",
       "guest": "Janna Bastow",
       "url": "https://www.lennysnewsletter.com/p/building-better-roadmaps-janna-bastow"
+    },
+    {
+      "title": "Good Strategy, Bad Strategy | Richard Rumelt",
+      "guest": "Richard Rumelt",
+      "url": "https://www.lennysnewsletter.com/p/good-strategy-bad-strategy-richard"
+    },
+    {
+      "title": "How to create a winning product strategy | Melissa Perri",
+      "guest": "Melissa Perri",
+      "url": "https://www.lennysnewsletter.com/p/how-to-create-a-winning-product-strategy"
+    },
+    {
+      "title": "Teresa Torres on how to interview customers, automating continuous discovery, the opportunity solution tree framework, making the case for user research, common interviewing mistakes, and much more",
+      "guest": "Teresa Torres",
+      "url": "https://www.lennysnewsletter.com/p/teresa-torres-on-how-to-interview"
+    },
+    {
+      "title": "OpenAI researcher on why soft skills are the future of work | Karina Nguyen (Research at OpenAI, ex-Anthropic)",
+      "guest": "Karina Nguyen",
+      "url": "https://www.lennysnewsletter.com/p/why-soft-skills-are-the-future-of-work-karina-nguyen"
     }
   ],
   "UX Researcher|||Product Manager": [
     {
-      "title": "Interview Q Compilation",
-      "guest": "Interview Q Compilation"
-    },
-    {
       "title": "How to interview product managers",
       "guest": "Harry Stebbings",
       "url": "https://www.lennysnewsletter.com/p/how-to-interview-product-managers"
@@ -265,6 +489,26 @@
       "title": "Building better product roadmaps | Janna Bastow (Mind the Product, ProdPad)",
       "guest": "Janna Bastow",
       "url": "https://www.lennysnewsletter.com/p/building-better-roadmaps-janna-bastow"
+    },
+    {
+      "title": "Good Strategy, Bad Strategy | Richard Rumelt",
+      "guest": "Richard Rumelt",
+      "url": "https://www.lennysnewsletter.com/p/good-strategy-bad-strategy-richard"
+    },
+    {
+      "title": "How to create a winning product strategy | Melissa Perri",
+      "guest": "Melissa Perri",
+      "url": "https://www.lennysnewsletter.com/p/how-to-create-a-winning-product-strategy"
+    },
+    {
+      "title": "Teresa Torres on how to interview customers, automating continuous discovery, the opportunity solution tree framework, making the case for user research, common interviewing mistakes, and much more",
+      "guest": "Teresa Torres",
+      "url": "https://www.lennysnewsletter.com/p/teresa-torres-on-how-to-interview"
+    },
+    {
+      "title": "OpenAI researcher on why soft skills are the future of work | Karina Nguyen (Research at OpenAI, ex-Anthropic)",
+      "guest": "Karina Nguyen",
+      "url": "https://www.lennysnewsletter.com/p/why-soft-skills-are-the-future-of-work-karina-nguyen"
     }
   ],
   "Data Analyst|||Product Manager": [
@@ -282,6 +526,21 @@
       "title": "How to create a winning product strategy | Melissa Perri",
       "guest": "Melissa Perri",
       "url": "https://www.lennysnewsletter.com/p/how-to-create-a-winning-product-strategy"
+    },
+    {
+      "title": "An inside look at Mixpanel’s product journey | Vijay Iyengar (Head of Product)",
+      "guest": "Vijay",
+      "url": "https://www.lennysnewsletter.com/p/an-inside-look-at-mixpanels-product"
+    },
+    {
+      "title": "Building a world-class data org | Jessica Lachs (VP of Analytics and Data Science at DoorDash)",
+      "guest": "Jess Lachs",
+      "url": "https://www.lennysnewsletter.com/p/building-a-world-class-data-org-jessica-lachs"
+    },
+    {
+      "title": "How GiveDirectly increased donations by over $3 million/year through experimentation",
+      "guest": "post by the team at GiveDirectly",
+      "url": "https://www.lennysnewsletter.com/p/how-givedirectly-increased-donations"
     }
   ],
   "Data Analyst|||Data Scientist": [
@@ -299,6 +558,21 @@
       "title": "Building product at Stripe: craft, metrics, and customer obsession | Jeff Weinstein (Product lead)",
       "guest": "Jeff Weinstein",
       "url": "https://www.lennysnewsletter.com/p/building-product-at-stripe-jeff-weinstein"
+    },
+    {
+      "title": "Why great AI products are all about the data | Shaun Clowes (CPO Confluent, ex-Salesforce, Atlassian)",
+      "guest": "Shaun Clowes",
+      "url": "https://www.lennysnewsletter.com/p/why-great-ai-products-are-all-about-the-data-shaun-clowes"
+    },
+    {
+      "title": "Scaling Duolingo, embracing failure, and insight into Latin America’s tech scene | Gina Gotthilf (Latitud, Duolingo)",
+      "guest": "Gina Gotthilf",
+      "url": "https://www.lennysnewsletter.com/p/scaling-duolingo-embracing-failure"
+    },
+    {
+      "title": "Unorthodox PM wisdom: Automating user insights, unselling job candidates, logging every decision, more | Kevin Yien (Stripe, Square, Mutiny)",
+      "guest": "Kevin Yien",
+      "url": "https://www.lennysnewsletter.com/p/unorthodox-pm-wisdom-kevin-yien"
     }
   ],
   "Data Analyst|||Growth Manager": [
@@ -316,6 +590,21 @@
       "title": "Growth tactics from OpenAI and Stripe’s first marketer | Krithika Shankarraman",
       "guest": "Krithika Shankarraman",
       "url": "https://www.lennysnewsletter.com/p/growth-tactics-from-openai-and-stripes-first-marketer"
+    },
+    {
+      "title": "Inside Etsy’s product, growth, and marketplace evolution | Tim Holley (VP of Product)",
+      "guest": "Tim Holley",
+      "url": "https://www.lennysnewsletter.com/p/inside-etsys-product-growth-and-marketplace"
+    },
+    {
+      "title": "Building a world-class data org | Jessica Lachs (VP of Analytics and Data Science at DoorDash)",
+      "guest": "Jess Lachs",
+      "url": "https://www.lennysnewsletter.com/p/building-a-world-class-data-org-jessica-lachs"
+    },
+    {
+      "title": "How GiveDirectly increased donations by over $3 million/year through experimentation",
+      "guest": "post by the team at GiveDirectly",
+      "url": "https://www.lennysnewsletter.com/p/how-givedirectly-increased-donations"
     }
   ],
   "Data Scientist|||Product Manager": [
@@ -333,6 +622,21 @@
       "title": "How to create a winning product strategy | Melissa Perri",
       "guest": "Melissa Perri",
       "url": "https://www.lennysnewsletter.com/p/how-to-create-a-winning-product-strategy"
+    },
+    {
+      "title": "An inside look at Mixpanel’s product journey | Vijay Iyengar (Head of Product)",
+      "guest": "Vijay",
+      "url": "https://www.lennysnewsletter.com/p/an-inside-look-at-mixpanels-product"
+    },
+    {
+      "title": "Building a world-class data org | Jessica Lachs (VP of Analytics and Data Science at DoorDash)",
+      "guest": "Jess Lachs",
+      "url": "https://www.lennysnewsletter.com/p/building-a-world-class-data-org-jessica-lachs"
+    },
+    {
+      "title": "How GiveDirectly increased donations by over $3 million/year through experimentation",
+      "guest": "post by the team at GiveDirectly",
+      "url": "https://www.lennysnewsletter.com/p/how-givedirectly-increased-donations"
     }
   ],
   "Data Scientist|||Engineering Manager": [
@@ -350,6 +654,21 @@
       "title": "The power user’s guide to Codex: parallelizing workflows, planning techniques, advanced context engineering tips, automating code reviews, and more | Alexander Embiricos",
       "guest": "Alexander Embiricos",
       "url": "https://www.lennysnewsletter.com/p/this-week-on-how-i-ai-the-power-users"
+    },
+    {
+      "title": "The rise of the professional vibe coder (a new AI-era job) | Lazar Jovanovic (Professional Vibe Coder)",
+      "guest": "Lazar Jovanovic",
+      "url": "https://www.lennysnewsletter.com/p/getting-paid-to-vibe-code"
+    },
+    {
+      "title": "How GiveDirectly increased donations by over $3 million/year through experimentation",
+      "guest": "post by the team at GiveDirectly",
+      "url": "https://www.lennysnewsletter.com/p/how-givedirectly-increased-donations"
+    },
+    {
+      "title": "Building product at Stripe: craft, metrics, and customer obsession | Jeff Weinstein (Product lead)",
+      "guest": "Jeff Weinstein",
+      "url": "https://www.lennysnewsletter.com/p/building-product-at-stripe-jeff-weinstein"
     }
   ],
   "Marketing Manager|||Growth Manager": [
@@ -367,6 +686,21 @@
       "title": "Growth tactics from OpenAI and Stripe’s first marketer | Krithika Shankarraman",
       "guest": "Krithika Shankarraman",
       "url": "https://www.lennysnewsletter.com/p/growth-tactics-from-openai-and-stripes-first-marketer"
+    },
+    {
+      "title": "Inside Etsy’s product, growth, and marketplace evolution | Tim Holley (VP of Product)",
+      "guest": "Tim Holley",
+      "url": "https://www.lennysnewsletter.com/p/inside-etsys-product-growth-and-marketplace"
+    },
+    {
+      "title": "An inside look at Deel’s unprecedented growth | Meltem Kuran Berkowitz (Head of Growth)",
+      "guest": "Meltem Kuran",
+      "url": "https://www.lennysnewsletter.com/p/an-inside-look-at-deels-unprecedented"
+    },
+    {
+      "title": "When and how to invest in new acquisition channels | Adam Grenier (Uber, MasterClass)",
+      "guest": "Adam Grenier",
+      "url": "https://www.lennysnewsletter.com/p/when-to-invest-in-new-acquisition"
     }
   ],
   "Marketing Manager|||Product Manager": [
@@ -384,6 +718,21 @@
       "title": "Good Strategy, Bad Strategy | Richard Rumelt",
       "guest": "Richard Rumelt",
       "url": "https://www.lennysnewsletter.com/p/good-strategy-bad-strategy-richard"
+    },
+    {
+      "title": "Developing a growth model + marketplace growth strategy | Dan Hockenmaier (Faire, Thumbtack, Reforge)",
+      "guest": "Dan Hockenmaier",
+      "url": "https://www.lennysnewsletter.com/p/developing-a-growth-model-marketplace"
+    },
+    {
+      "title": "Growth tactics from OpenAI and Stripe’s first marketer | Krithika Shankarraman",
+      "guest": "Krithika Shankarraman",
+      "url": "https://www.lennysnewsletter.com/p/growth-tactics-from-openai-and-stripes-first-marketer"
+    },
+    {
+      "title": "An inside look at Deel’s unprecedented growth | Meltem Kuran Berkowitz (Head of Growth)",
+      "guest": "Meltem Kuran",
+      "url": "https://www.lennysnewsletter.com/p/an-inside-look-at-deels-unprecedented"
     }
   ],
   "Marketing Manager|||Founder / CEO": [
@@ -401,6 +750,21 @@
       "title": "The AI-native startup: 5 products, 7-figure revenue, 100% AI-written code | Dan Shipper (co-founder/CEO of Every)",
       "guest": "Dan Shipper",
       "url": "https://www.lennysnewsletter.com/p/inside-every-dan-shipper"
+    },
+    {
+      "title": "Behind the product: Replit | Amjad Masad (co-founder and CEO)",
+      "guest": "Amjad Masad",
+      "url": "https://www.lennysnewsletter.com/p/behind-the-product-replit-amjad-masad"
+    },
+    {
+      "title": "Developing a growth model + marketplace growth strategy | Dan Hockenmaier (Faire, Thumbtack, Reforge)",
+      "guest": "Dan Hockenmaier",
+      "url": "https://www.lennysnewsletter.com/p/developing-a-growth-model-marketplace"
+    },
+    {
+      "title": "Growth tactics from OpenAI and Stripe’s first marketer | Krithika Shankarraman",
+      "guest": "Krithika Shankarraman",
+      "url": "https://www.lennysnewsletter.com/p/growth-tactics-from-openai-and-stripes-first-marketer"
     }
   ],
   "Growth Manager|||Chief Marketing Officer": [
@@ -418,6 +782,21 @@
       "title": "Customer-led growth | Georgiana Laudi (Forget The Funnel)",
       "guest": "Gia Laudi",
       "url": "https://www.lennysnewsletter.com/p/customer-led-growth-georgiana-laudi"
+    },
+    {
+      "title": "Inside Etsy’s product, growth, and marketplace evolution | Tim Holley (VP of Product)",
+      "guest": "Tim Holley",
+      "url": "https://www.lennysnewsletter.com/p/inside-etsys-product-growth-and-marketplace"
+    },
+    {
+      "title": "An inside look at Deel’s unprecedented growth | Meltem Kuran Berkowitz (Head of Growth)",
+      "guest": "Meltem Kuran",
+      "url": "https://www.lennysnewsletter.com/p/an-inside-look-at-deels-unprecedented"
+    },
+    {
+      "title": "The original growth hacker reveals his secrets | Sean Ellis (author of “Hacking Growth”)",
+      "guest": "Sean Ellis",
+      "url": "https://www.lennysnewsletter.com/p/the-original-growth-hacker-sean-ellis"
     }
   ],
   "Growth Manager|||Product Manager": [
@@ -435,6 +814,21 @@
       "title": "Good Strategy, Bad Strategy | Richard Rumelt",
       "guest": "Richard Rumelt",
       "url": "https://www.lennysnewsletter.com/p/good-strategy-bad-strategy-richard"
+    },
+    {
+      "title": "Developing a growth model + marketplace growth strategy | Dan Hockenmaier (Faire, Thumbtack, Reforge)",
+      "guest": "Dan Hockenmaier",
+      "url": "https://www.lennysnewsletter.com/p/developing-a-growth-model-marketplace"
+    },
+    {
+      "title": "Customer-led growth | Georgiana Laudi (Forget The Funnel)",
+      "guest": "Gia Laudi",
+      "url": "https://www.lennysnewsletter.com/p/customer-led-growth-georgiana-laudi"
+    },
+    {
+      "title": "Growth tactics from OpenAI and Stripe’s first marketer | Krithika Shankarraman",
+      "guest": "Krithika Shankarraman",
+      "url": "https://www.lennysnewsletter.com/p/growth-tactics-from-openai-and-stripes-first-marketer"
     }
   ],
   "Account Executive|||Product Manager": [
@@ -452,6 +846,16 @@
       "title": "How to create a winning product strategy | Melissa Perri",
       "guest": "Melissa Perri",
       "url": "https://www.lennysnewsletter.com/p/how-to-create-a-winning-product-strategy"
+    },
+    {
+      "title": "An inside look at Mixpanel’s product journey | Vijay Iyengar (Head of Product)",
+      "guest": "Vijay",
+      "url": "https://www.lennysnewsletter.com/p/an-inside-look-at-mixpanels-product"
+    },
+    {
+      "title": "Relentless curiosity, radical accountability, and HubSpot’s winning growth formula | Christopher Miller (VP of Product, Growth and AI)",
+      "guest": "Christopher Miller",
+      "url": "https://www.lennysnewsletter.com/p/relentless-curiosity-radical-accountability"
     }
   ],
   "Account Executive|||Founder / CEO": [
@@ -469,6 +873,16 @@
       "title": "The AI-native startup: 5 products, 7-figure revenue, 100% AI-written code | Dan Shipper (co-founder/CEO of Every)",
       "guest": "Dan Shipper",
       "url": "https://www.lennysnewsletter.com/p/inside-every-dan-shipper"
+    },
+    {
+      "title": "Behind the product: Replit | Amjad Masad (co-founder and CEO)",
+      "guest": "Amjad Masad",
+      "url": "https://www.lennysnewsletter.com/p/behind-the-product-replit-amjad-masad"
+    },
+    {
+      "title": "Relentless curiosity, radical accountability, and HubSpot’s winning growth formula | Christopher Miller (VP of Product, Growth and AI)",
+      "guest": "Christopher Miller",
+      "url": "https://www.lennysnewsletter.com/p/relentless-curiosity-radical-accountability"
     }
   ],
   "Account Executive|||Marketing Manager": [
@@ -486,6 +900,11 @@
       "title": "Relentless curiosity, radical accountability, and HubSpot’s winning growth formula | Christopher Miller (VP of Product, Growth and AI)",
       "guest": "Christopher Miller",
       "url": "https://www.lennysnewsletter.com/p/relentless-curiosity-radical-accountability"
+    },
+    {
+      "title": "When and how to invest in new acquisition channels | Adam Grenier (Uber, MasterClass)",
+      "guest": "Adam Grenier",
+      "url": "https://www.lennysnewsletter.com/p/when-to-invest-in-new-acquisition"
     }
   ],
   "Management Consultant|||Product Manager": [
@@ -503,6 +922,21 @@
       "title": "Good Strategy, Bad Strategy | Richard Rumelt",
       "guest": "Richard Rumelt",
       "url": "https://www.lennysnewsletter.com/p/good-strategy-bad-strategy-richard"
+    },
+    {
+      "title": "How to create a winning product strategy | Melissa Perri",
+      "guest": "Melissa Perri",
+      "url": "https://www.lennysnewsletter.com/p/how-to-create-a-winning-product-strategy"
+    },
+    {
+      "title": "Building high-performing teams | Melissa Tan (Webflow, Dropbox, Canva)",
+      "guest": "Melissa Tan",
+      "url": "https://www.lennysnewsletter.com/p/building-high-performing-teams-melissa"
+    },
+    {
+      "title": "10 contrarian leadership truths every leader needs to hear | Matt MacInnis (Rippling)",
+      "guest": "Matt MacInnis",
+      "url": "https://www.lennysnewsletter.com/p/10-contrarian-leadership-truths"
     }
   ],
   "Management Consultant|||Founder / CEO": [
@@ -520,6 +954,21 @@
       "title": "The AI-native startup: 5 products, 7-figure revenue, 100% AI-written code | Dan Shipper (co-founder/CEO of Every)",
       "guest": "Dan Shipper",
       "url": "https://www.lennysnewsletter.com/p/inside-every-dan-shipper"
+    },
+    {
+      "title": "Behind the product: Replit | Amjad Masad (co-founder and CEO)",
+      "guest": "Amjad Masad",
+      "url": "https://www.lennysnewsletter.com/p/behind-the-product-replit-amjad-masad"
+    },
+    {
+      "title": "Building high-performing teams | Melissa Tan (Webflow, Dropbox, Canva)",
+      "guest": "Melissa Tan",
+      "url": "https://www.lennysnewsletter.com/p/building-high-performing-teams-melissa"
+    },
+    {
+      "title": "How to interview product managers",
+      "guest": "Harry Stebbings",
+      "url": "https://www.lennysnewsletter.com/p/how-to-interview-product-managers"
     }
   ],
   "Management Consultant|||Chief of Staff": [
@@ -537,6 +986,21 @@
       "title": "10 contrarian leadership truths every leader needs to hear | Matt MacInnis (Rippling)",
       "guest": "Matt MacInnis",
       "url": "https://www.lennysnewsletter.com/p/10-contrarian-leadership-truths"
+    },
+    {
+      "title": "How to build a high-performing growth team | Adam Fishman (Patreon, Lyft, Imperfect Foods)",
+      "guest": "Adam Fishman",
+      "url": "https://www.lennysnewsletter.com/p/how-to-build-a-high-performing-growth"
+    },
+    {
+      "title": "How to build a team that can “take a punch”: A playbook for building resilient, high-performing teams | Hilary Gridley (Head of Core Product, Whoop)",
+      "guest": "Hilary Gridley",
+      "url": "https://www.lennysnewsletter.com/p/how-to-build-a-team-that-can-take-a-punch"
+    },
+    {
+      "title": "What differentiates the highest-performing product teams | John Cutler (Amplitude, The Beautiful Mess)",
+      "guest": "John Cutler",
+      "url": "https://www.lennysnewsletter.com/p/what-differentiates-the-highest-performing"
     }
   ],
   "Business Analyst|||Product Manager": [
@@ -554,6 +1018,21 @@
       "title": "How to create a winning product strategy | Melissa Perri",
       "guest": "Melissa Perri",
       "url": "https://www.lennysnewsletter.com/p/how-to-create-a-winning-product-strategy"
+    },
+    {
+      "title": "An inside look at Mixpanel’s product journey | Vijay Iyengar (Head of Product)",
+      "guest": "Vijay",
+      "url": "https://www.lennysnewsletter.com/p/an-inside-look-at-mixpanels-product"
+    },
+    {
+      "title": "Business strategy with Hamilton Helmer (author of 7 Powers)",
+      "guest": "Hamilton Helmer",
+      "url": "https://www.lennysnewsletter.com/p/business-strategy-with-hamilton-helmer"
+    },
+    {
+      "title": "10 lessons on bootstrapping a $200m business | Patrick Campbell (ProfitWell)",
+      "guest": "Patrick Campbell",
+      "url": "https://www.lennysnewsletter.com/p/10-lessons-from-bootstrapping-a-200m"
     }
   ],
   "Business Analyst|||Data Analyst": [
@@ -571,6 +1050,21 @@
       "title": "Business strategy with Hamilton Helmer (author of 7 Powers)",
       "guest": "Hamilton Helmer",
       "url": "https://www.lennysnewsletter.com/p/business-strategy-with-hamilton-helmer"
+    },
+    {
+      "title": "10 lessons on bootstrapping a $200m business | Patrick Campbell (ProfitWell)",
+      "guest": "Patrick Campbell",
+      "url": "https://www.lennysnewsletter.com/p/10-lessons-from-bootstrapping-a-200m"
+    },
+    {
+      "title": "How to grow a subscription business | Yuriy Timen (Grammarly, Canva, Airtable)",
+      "guest": "Yuriy Timen",
+      "url": "https://www.lennysnewsletter.com/p/transform-your-subscription-growth"
+    },
+    {
+      "title": "How to achieve hypergrowth in your business and career | Carilu Dietrich (Atlassian, Miro, Segment, 1Password)",
+      "guest": "Carilu Dietrich",
+      "url": "https://www.lennysnewsletter.com/p/how-to-achieve-hypergrowth-in-your"
     }
   ],
   "Chief of Staff|||Product Manager": [
@@ -588,6 +1082,11 @@
       "title": "How to create a winning product strategy | Melissa Perri",
       "guest": "Melissa Perri",
       "url": "https://www.lennysnewsletter.com/p/how-to-create-a-winning-product-strategy"
+    },
+    {
+      "title": "An inside look at Mixpanel’s product journey | Vijay Iyengar (Head of Product)",
+      "guest": "Vijay",
+      "url": "https://www.lennysnewsletter.com/p/an-inside-look-at-mixpanels-product"
     }
   ],
   "Chief of Staff|||Founder / CEO": [
@@ -605,6 +1104,11 @@
       "title": "The AI-native startup: 5 products, 7-figure revenue, 100% AI-written code | Dan Shipper (co-founder/CEO of Every)",
       "guest": "Dan Shipper",
       "url": "https://www.lennysnewsletter.com/p/inside-every-dan-shipper"
+    },
+    {
+      "title": "Behind the product: Replit | Amjad Masad (co-founder and CEO)",
+      "guest": "Amjad Masad",
+      "url": "https://www.lennysnewsletter.com/p/behind-the-product-replit-amjad-masad"
     }
   ],
   "Chief Product Officer|||Founder / CEO": [
@@ -622,13 +1126,24 @@
       "title": "How a great founder becomes a great CEO | Jonathan Lowenhar (co-founder of Enjoy The Work)",
       "guest": "Jonathan Lowenhar",
       "url": "https://www.lennysnewsletter.com/p/how-a-great-founder-becomes-a-great-ceo-jonathan-lowenhar"
+    },
+    {
+      "title": "Founder-led sales | Pete Kazanjy (Founding Sales, Atrium)",
+      "guest": "Pete Kazanjy",
+      "url": "https://www.lennysnewsletter.com/p/founder-led-sales-pete-kazanjy-founding"
+    },
+    {
+      "title": "Building better product roadmaps | Janna Bastow (Mind the Product, ProdPad)",
+      "guest": "Janna Bastow",
+      "url": "https://www.lennysnewsletter.com/p/building-better-roadmaps-janna-bastow"
+    },
+    {
+      "title": "Good Strategy, Bad Strategy | Richard Rumelt",
+      "guest": "Richard Rumelt",
+      "url": "https://www.lennysnewsletter.com/p/good-strategy-bad-strategy-richard"
     }
   ],
   "UX Lead|||Director of Product": [
-    {
-      "title": "Interview Q Compilation",
-      "guest": "Interview Q Compilation"
-    },
     {
       "title": "How to interview product managers",
       "guest": "Harry Stebbings",
@@ -638,6 +1153,26 @@
       "title": "Building better product roadmaps | Janna Bastow (Mind the Product, ProdPad)",
       "guest": "Janna Bastow",
       "url": "https://www.lennysnewsletter.com/p/building-better-roadmaps-janna-bastow"
+    },
+    {
+      "title": "Good Strategy, Bad Strategy | Richard Rumelt",
+      "guest": "Richard Rumelt",
+      "url": "https://www.lennysnewsletter.com/p/good-strategy-bad-strategy-richard"
+    },
+    {
+      "title": "How to create a winning product strategy | Melissa Perri",
+      "guest": "Melissa Perri",
+      "url": "https://www.lennysnewsletter.com/p/how-to-create-a-winning-product-strategy"
+    },
+    {
+      "title": "Teresa Torres on how to interview customers, automating continuous discovery, the opportunity solution tree framework, making the case for user research, common interviewing mistakes, and much more",
+      "guest": "Teresa Torres",
+      "url": "https://www.lennysnewsletter.com/p/teresa-torres-on-how-to-interview"
+    },
+    {
+      "title": "OpenAI researcher on why soft skills are the future of work | Karina Nguyen (Research at OpenAI, ex-Anthropic)",
+      "guest": "Karina Nguyen",
+      "url": "https://www.lennysnewsletter.com/p/why-soft-skills-are-the-future-of-work-karina-nguyen"
     }
   ],
   "Product Manager|||VP of Product": [
@@ -655,6 +1190,21 @@
       "title": "How to create a winning product strategy | Melissa Perri",
       "guest": "Melissa Perri",
       "url": "https://www.lennysnewsletter.com/p/how-to-create-a-winning-product-strategy"
+    },
+    {
+      "title": "An inside look at Mixpanel’s product journey | Vijay Iyengar (Head of Product)",
+      "guest": "Vijay",
+      "url": "https://www.lennysnewsletter.com/p/an-inside-look-at-mixpanels-product"
+    },
+    {
+      "title": "Gibson Biddle on his DHM product strategy framework, GEM roadmap prioritization framework, 5 Netflix strategy mini case studies, building a personal board of directors, and much more",
+      "guest": "Gibson Biddle",
+      "url": "https://www.lennysnewsletter.com/p/gibson-biddle-on-the-the-dhm-product"
+    },
+    {
+      "title": "Linear’s secret to building beloved B2B products | Nan Yu (Head of Product)",
+      "guest": "Nan Yu",
+      "url": "https://www.lennysnewsletter.com/p/linears-secret-to-building-beloved-b2b-products-nan-yu"
     }
   ],
   "Founder / CEO|||Product Manager": [
@@ -672,6 +1222,21 @@
       "title": "How to create a winning product strategy | Melissa Perri",
       "guest": "Melissa Perri",
       "url": "https://www.lennysnewsletter.com/p/how-to-create-a-winning-product-strategy"
+    },
+    {
+      "title": "Behind the product: Replit | Amjad Masad (co-founder and CEO)",
+      "guest": "Amjad Masad",
+      "url": "https://www.lennysnewsletter.com/p/behind-the-product-replit-amjad-masad"
+    },
+    {
+      "title": "How a great founder becomes a great CEO | Jonathan Lowenhar (co-founder of Enjoy The Work)",
+      "guest": "Jonathan Lowenhar",
+      "url": "https://www.lennysnewsletter.com/p/how-a-great-founder-becomes-a-great-ceo-jonathan-lowenhar"
+    },
+    {
+      "title": "Founder-led sales | Pete Kazanjy (Founding Sales, Atrium)",
+      "guest": "Pete Kazanjy",
+      "url": "https://www.lennysnewsletter.com/p/founder-led-sales-pete-kazanjy-founding"
     }
   ],
   "Software Engineer|||Staff Engineer": [
@@ -689,43 +1254,28 @@
       "title": "The power user’s guide to Codex: parallelizing workflows, planning techniques, advanced context engineering tips, automating code reviews, and more | Alexander Embiricos",
       "guest": "Alexander Embiricos",
       "url": "https://www.lennysnewsletter.com/p/this-week-on-how-i-ai-the-power-users"
+    },
+    {
+      "title": "Al Engineering 101 with Chip Huyen (Nvidia, Stanford, Netflix)",
+      "guest": "Chip Huyen",
+      "url": "https://www.lennysnewsletter.com/p/al-engineering-101-with-chip-huyen"
+    },
+    {
+      "title": "The engineering mindset | Will Larson (Carta, Stripe, Uber, Calm, Digg)",
+      "guest": "Will Larson",
+      "url": "https://www.lennysnewsletter.com/p/the-engineering-mindset-will-larson"
+    },
+    {
+      "title": "AI prompt engineering in 2025: What works and what doesn’t | Sander Schulhoff (Learn Prompting, HackAPrompt)",
+      "guest": "Sander Schulhoff",
+      "url": "https://www.lennysnewsletter.com/p/ai-prompt-engineering-in-2025-sander-schulhoff"
     }
   ],
   "Director of UX|||Director of Product": [
     {
-      "title": "Interview Q Compilation",
-      "guest": "Interview Q Compilation"
-    },
-    {
       "title": "How to interview product managers",
       "guest": "Harry Stebbings",
       "url": "https://www.lennysnewsletter.com/p/how-to-interview-product-managers"
-    },
-    {
-      "title": "Building better product roadmaps | Janna Bastow (Mind the Product, ProdPad)",
-      "guest": "Janna Bastow",
-      "url": "https://www.lennysnewsletter.com/p/building-better-roadmaps-janna-bastow"
-    }
-  ],
-  "Director of UX|||Principal PM": [
-    {
-      "title": "Interview Q Compilation",
-      "guest": "Interview Q Compilation"
-    },
-    {
-      "title": "How to interview product managers",
-      "guest": "Harry Stebbings",
-      "url": "https://www.lennysnewsletter.com/p/how-to-interview-product-managers"
-    },
-    {
-      "title": "Teresa Torres on how to interview customers, automating continuous discovery, the opportunity solution tree framework, making the case for user research, common interviewing mistakes, and much more",
-      "guest": "Teresa Torres"
-    }
-  ],
-  "Product Manager|||AI PM": [
-    {
-      "title": "Aishwarya Naresh Reganti + Kiriti Badam",
-      "guest": "Aishwarya Naresh Reganti + Kiriti Badam"
     },
     {
       "title": "Building better product roadmaps | Janna Bastow (Mind the Product, ProdPad)",
@@ -736,21 +1286,117 @@
       "title": "Good Strategy, Bad Strategy | Richard Rumelt",
       "guest": "Richard Rumelt",
       "url": "https://www.lennysnewsletter.com/p/good-strategy-bad-strategy-richard"
+    },
+    {
+      "title": "How to create a winning product strategy | Melissa Perri",
+      "guest": "Melissa Perri",
+      "url": "https://www.lennysnewsletter.com/p/how-to-create-a-winning-product-strategy"
+    },
+    {
+      "title": "Teresa Torres on how to interview customers, automating continuous discovery, the opportunity solution tree framework, making the case for user research, common interviewing mistakes, and much more",
+      "guest": "Teresa Torres",
+      "url": "https://www.lennysnewsletter.com/p/teresa-torres-on-how-to-interview"
+    },
+    {
+      "title": "OpenAI researcher on why soft skills are the future of work | Karina Nguyen (Research at OpenAI, ex-Anthropic)",
+      "guest": "Karina Nguyen",
+      "url": "https://www.lennysnewsletter.com/p/why-soft-skills-are-the-future-of-work-karina-nguyen"
     }
   ],
-  "Product Designer|||AI PM": [
+  "Director of UX|||Principal PM": [
     {
-      "title": "Aishwarya Naresh Reganti + Kiriti Badam",
-      "guest": "Aishwarya Naresh Reganti + Kiriti Badam"
+      "title": "How to interview product managers",
+      "guest": "Harry Stebbings",
+      "url": "https://www.lennysnewsletter.com/p/how-to-interview-product-managers"
+    },
+    {
+      "title": "Teresa Torres on how to interview customers, automating continuous discovery, the opportunity solution tree framework, making the case for user research, common interviewing mistakes, and much more",
+      "guest": "Teresa Torres",
+      "url": "https://www.lennysnewsletter.com/p/teresa-torres-on-how-to-interview"
+    },
+    {
+      "title": "OpenAI researcher on why soft skills are the future of work | Karina Nguyen (Research at OpenAI, ex-Anthropic)",
+      "guest": "Karina Nguyen",
+      "url": "https://www.lennysnewsletter.com/p/why-soft-skills-are-the-future-of-work-karina-nguyen"
     },
     {
       "title": "The UX research reckoning is here | Judd Antin (Airbnb, Meta)",
-      "guest": "Judd Antin"
+      "guest": "Judd Antin",
+      "url": "https://www.lennysnewsletter.com/p/judd-antin"
+    },
+    {
+      "title": "Dylan Field live at Config: Intuition, simplicity, and the future of design",
+      "guest": "Dylan Field",
+      "url": "https://www.lennysnewsletter.com/p/dylan-field-live-at-config"
+    },
+    {
+      "title": "35 years of product design wisdom from Apple, Disney, Pinterest, and beyond | Bob Baxley",
+      "guest": "Bob Baxley",
+      "url": "https://www.lennysnewsletter.com/p/35-years-of-product-design-wisdom-bob-baxley"
+    }
+  ],
+  "Product Manager|||AI PM": [
+    {
+      "title": "Aishwarya Naresh Reganti + Kiriti Badam",
+      "guest": "Aishwarya Naresh Reganti + Kiriti Badam",
+      "url": "https://www.lennysnewsletter.com/p/why-your-ai-product-needs-a-different"
     },
     {
       "title": "Building better product roadmaps | Janna Bastow (Mind the Product, ProdPad)",
       "guest": "Janna Bastow",
       "url": "https://www.lennysnewsletter.com/p/building-better-roadmaps-janna-bastow"
+    },
+    {
+      "title": "Good Strategy, Bad Strategy | Richard Rumelt",
+      "guest": "Richard Rumelt",
+      "url": "https://www.lennysnewsletter.com/p/good-strategy-bad-strategy-richard"
+    },
+    {
+      "title": "Lessons from Airtable’s unconventional growth strategy | Zoelle Egner",
+      "guest": "Zoelle Egner",
+      "url": "https://www.lennysnewsletter.com/p/lessons-from-airtables-unconventional"
+    },
+    {
+      "title": "How to create a winning product strategy | Melissa Perri",
+      "guest": "Melissa Perri",
+      "url": "https://www.lennysnewsletter.com/p/how-to-create-a-winning-product-strategy"
+    },
+    {
+      "title": "An inside look at Mixpanel’s product journey | Vijay Iyengar (Head of Product)",
+      "guest": "Vijay",
+      "url": "https://www.lennysnewsletter.com/p/an-inside-look-at-mixpanels-product"
+    }
+  ],
+  "Product Designer|||AI PM": [
+    {
+      "title": "Aishwarya Naresh Reganti + Kiriti Badam",
+      "guest": "Aishwarya Naresh Reganti + Kiriti Badam",
+      "url": "https://www.lennysnewsletter.com/p/why-your-ai-product-needs-a-different"
+    },
+    {
+      "title": "The UX research reckoning is here | Judd Antin (Airbnb, Meta)",
+      "guest": "Judd Antin",
+      "url": "https://www.lennysnewsletter.com/p/judd-antin"
+    },
+    {
+      "title": "Building better product roadmaps | Janna Bastow (Mind the Product, ProdPad)",
+      "guest": "Janna Bastow",
+      "url": "https://www.lennysnewsletter.com/p/building-better-roadmaps-janna-bastow"
+    },
+    {
+      "title": "Building beautiful products with Stripe’s Head of Design | Katie Dill (Stripe, Airbnb, Lyft)",
+      "guest": "Katie Dill",
+      "url": "https://www.lennysnewsletter.com/p/building-beautiful-products-with"
+    },
+    {
+      "title": "Good Strategy, Bad Strategy | Richard Rumelt",
+      "guest": "Richard Rumelt",
+      "url": "https://www.lennysnewsletter.com/p/good-strategy-bad-strategy-richard"
+    },
+    {
+      "title": "How to create a winning product strategy | Melissa Perri",
+      "guest": "Melissa Perri",
+      "url": "https://www.lennysnewsletter.com/p/how-to-create-a-winning-product-strategy"
     }
   ],
   "Software Engineer|||AI Engineer": [
@@ -761,12 +1407,28 @@
     },
     {
       "title": "Aishwarya Naresh Reganti + Kiriti Badam",
-      "guest": "Aishwarya Naresh Reganti + Kiriti Badam"
+      "guest": "Aishwarya Naresh Reganti + Kiriti Badam",
+      "url": "https://www.lennysnewsletter.com/p/why-your-ai-product-needs-a-different"
     },
     {
       "title": "The future of AI in software development | Inbal Shani (CPO of GitHub)",
       "guest": "Inbal S",
       "url": "https://www.lennysnewsletter.com/p/the-future-of-ai-in-software-development"
+    },
+    {
+      "title": "The power user’s guide to Codex: parallelizing workflows, planning techniques, advanced context engineering tips, automating code reviews, and more | Alexander Embiricos",
+      "guest": "Alexander Embiricos",
+      "url": "https://www.lennysnewsletter.com/p/this-week-on-how-i-ai-the-power-users"
+    },
+    {
+      "title": "Al Engineering 101 with Chip Huyen (Nvidia, Stanford, Netflix)",
+      "guest": "Chip Huyen",
+      "url": "https://www.lennysnewsletter.com/p/al-engineering-101-with-chip-huyen"
+    },
+    {
+      "title": "The engineering mindset | Will Larson (Carta, Stripe, Uber, Calm, Digg)",
+      "guest": "Will Larson",
+      "url": "https://www.lennysnewsletter.com/p/the-engineering-mindset-will-larson"
     }
   ]
 }

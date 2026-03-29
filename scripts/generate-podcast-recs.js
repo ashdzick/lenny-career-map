@@ -10,7 +10,7 @@ const paths       = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../data/
 const citationUrls= JSON.parse(fs.readFileSync(path.resolve(__dirname, "../data/citation-urls.json")));
 
 // ── Junk filter: roundups, announcements, admin posts ───────────────────────
-const JUNK = /best of|year in review|announcing|taking a sick|favorite reads|survey of|applications open|summit|friends summit|podcast feed|jobs board|talent collective|this week #|issue \d+|open roles/i;
+const JUNK = /best of|year in review|compilation|announcing|taking a sick|favorite reads|survey of|applications open|summit|friends summit|podcast feed|jobs board|talent collective|this week #|issue \d+|open roles/i;
 
 const podcasts = corpus.filter(e =>
   e.guest &&
@@ -66,13 +66,9 @@ function expand(stems) {
   return [...e];
 }
 
-function scorePodcasts(from, to, topN = 3) {
-  const cs = expand(kw(from));
-  const ts = expand(kw(to));
-  const wm = new Map();
-  for (const s of cs) wm.set(s, Math.max(wm.get(s) || 0, 1.0));
-  for (const s of ts) wm.set(s, Math.max(wm.get(s) || 0, 1.5));
-
+// Score all podcasts against a weight map; cs/ts are the from/to stem arrays used
+// for the bridge-bonus check. Returns raw scored episodes (unsorted slice not applied).
+function scoreAll(wm, cs, ts) {
   return podcasts
     .map(e => {
       const toks = e.text.toLowerCase().split(/[^a-z0-9]+/).filter(t => t.length >= 3);
@@ -94,33 +90,54 @@ function scorePodcasts(from, to, topN = 3) {
       const ttoks = (e.title + " " + e.guest).toLowerCase().split(/[^a-z0-9]+/).filter(t => t.length >= 3);
       const tf = new Map();
       for (const t of ttoks) tf.set(t, (tf.get(t) || 0) + 1);
-      let ts2 = 0;
+      let titleBonus = 0;
       for (const [term, w] of wm.entries()) {
         let c = 0;
         for (const [tok, n] of tf.entries()) if (tok.startsWith(term)) c += n;
-        if (c > 0) ts2 += (c / Math.max(ttoks.length, 1)) * w * 5;
+        if (c > 0) titleBonus += (c / Math.max(ttoks.length, 1)) * w * 5;
       }
 
-      let score = sc + ts2;
+      let score = sc + titleBonus;
       if (ch > 0 && th > 0) score *= 1.4;
       if (e.sparse) score *= 0.5;
       return { ...e, score };
     })
     .filter(e => e.score > 0.01)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, topN)
-    .map(e => ({
-      title: e.title,
-      guest: e.guest,
-      ...(citationUrls[e.title] ? { url: citationUrls[e.title] } : {}),
-    }));
+    .sort((a, b) => b.score - a.score);
+}
+
+// Two-pass scoring:
+//   Pass A (4 slots) — full from+to weighting, rewards episodes spanning both roles
+//   Pass B (2 slots) — from-only weighting, surfaces episodes specific to the user's background
+function scorePathPodcasts(from, to) {
+  const cs = expand(kw(from));
+  const ts = expand(kw(to));
+
+  const wmA = new Map();
+  for (const s of cs) wmA.set(s, Math.max(wmA.get(s) || 0, 1.0));
+  for (const s of ts) wmA.set(s, Math.max(wmA.get(s) || 0, 1.5));
+  const passA = scoreAll(wmA, cs, ts).slice(0, 4);
+
+  const usedIds = new Set(passA.map(e => e.id));
+
+  const wmB = new Map();
+  for (const s of cs) wmB.set(s, 1.0);
+  const passB = scoreAll(wmB, cs, [])
+    .filter(e => !usedIds.has(e.id))
+    .slice(0, 2);
+
+  return [...passA, ...passB].map(e => ({
+    title: e.title,
+    guest: e.guest,
+    ...(citationUrls[e.title] ? { url: citationUrls[e.title] } : {}),
+  }));
 }
 
 // ── Generate recs for every path ─────────────────────────────────────────────
 const recs = {};
 for (const key of Object.keys(paths)) {
   const [from, to] = key.split("|||");
-  recs[key] = scorePodcasts(from, to, 3);
+  recs[key] = scorePathPodcasts(from, to);
 }
 
 const outPath = path.resolve(__dirname, "../data/podcast-recs.json");

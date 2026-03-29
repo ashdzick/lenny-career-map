@@ -1,102 +1,87 @@
-# Lenny’s Career Map
+# Lenny's Career Map
 
-A Next.js app that serves **pre-generated career transition learning paths** (from role A → role B). Paths are grounded in transcript excerpts from [Lenny Rachitsky’s podcast](https://www.lennysnewsletter.com/) and ship as static JSON so the site stays fast and cheap to host.
+Get a personalized career transition roadmap — grounded in real advice from [Lenny Rachitsky's podcast](https://www.lennysnewsletter.com/) — for free, instantly.
 
-**Live site:** [lenny-career-map.vercel.app](https://lenny-career-map.vercel.app/)  
+**Live site:** [lenny-career-map.vercel.app](https://lenny-career-map.vercel.app/)
 **Source:** [github.com/ashdzick/lenny-career-map](https://github.com/ashdzick/lenny-career-map)
 
-## License
+---
 
-The **code in this repository** is licensed under [MIT-0](LICENSE) (MIT No Attribution): use it freely; no copyright notice is required in copies.
+## Using the site
 
-This is a **community / independent** project. **Path text, citations, and recommendations in `data/`** are derived from Lenny’s podcast and related public material (plus tooling such as AI-assisted generation). That content is **not** claimed as personal intellectual property by the maintainers; it remains subject to the underlying sources and sites. See below for trademarks.
+No sign-up or setup needed. Just visit the [live site](https://lenny-career-map.vercel.app/) and:
 
-## Trademarks and content
+1. **Pick your current role** from the "From" dropdown
+2. **Pick your target role** from the "To" dropdown
+3. **Read your path** — a detailed guide covering skill gaps to close, practical steps, timelines, and podcast episodes to listen to
+4. **Save paths** you want to revisit (stored in your browser)
+5. **Add notes** to any path, or **download it as a PDF**
 
-“Lenny’s Newsletter,” podcast names, and related branding are properties of their respective owners. This project is **not** affiliated with or endorsed by Lenny Rachitsky or his newsletter unless explicitly stated elsewhere by those parties.
+## What's covered
 
-Third-party URLs and episode metadata remain subject to their original sites’ terms.
+46 transitions across five role categories:
 
-## Contributing
+| Category | Roles |
+|----------|-------|
+| **Business** | Account Executive, Business Analyst, Chief of Staff, Chief Marketing Officer, Management Consultant, Marketing Manager |
+| **Data** | Data Analyst, Data Scientist |
+| **Design & Research** | Director of UX, Product Designer, UX Lead, UX Researcher |
+| **Engineering** | AI Engineer, Engineering Manager, Software Engineer, Staff Engineer |
+| **Product** | AI PM, Chief Product Officer, Founder / CEO, Growth Manager, Product Manager |
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). Security-sensitive reports: see [SECURITY.md](SECURITY.md).
+Example paths: Software Engineer → Product Manager, Data Scientist → Growth Manager, Management Consultant → Founder / CEO, Product Designer → Product Manager.
 
-## Requirements
+Use the [Explore page](https://lenny-career-map.vercel.app/explore) to browse all available transitions by source role.
 
-- **Node.js** (LTS recommended)
-- **npm**
+## How it works
 
-Running the **data pipeline** (optional for UI-only work) also needs:
+Each learning path is grounded in transcript excerpts from Lenny's podcast, then generated offline using Claude. Paths ship as static JSON files so the site is fast and has no AI cost at runtime — what you see was carefully produced ahead of time, not improvised on demand.
 
-- **`GITHUB_TOKEN`** — for cloning the private transcript repository (see [Regenerating data](#regenerating-data))
-- **`ANTHROPIC_API_KEY`** — for regenerating paths with Claude
+---
 
-## Quick start
+## Running locally
 
 ```bash
 npm install
-npm run dev
+npm run dev        # http://localhost:3000
 ```
-
-Open [http://localhost:3000](http://localhost:3000). The home page reads `data/paths.json` and related JSON files at build/request time.
 
 ```bash
-npm run build   # production build
-npm start       # run production server locally
+npm run build      # production build (requires data/paths.json)
+npm start          # run production server locally
 ```
 
-**Production builds** expect `data/paths.json` to exist. If it is missing, `next.config.mjs` throws so you do not deploy without paths.
+Production builds require `data/paths.json` to exist. If it's missing, `next.config.mjs` throws an error so you can't accidentally deploy without content.
+
+**Requirements:** Node.js (LTS), npm.
 
 ## Regenerating data
 
-Paths are **not** generated at request time. The route under `app/api/generate` returns a short JSON message only; content is produced **offline** and committed (or deployed) with the repo.
+Paths are produced offline and committed to the repo — the API route under `app/api/generate` is a stub only. To regenerate:
 
 ### 1. Build the corpus
 
-Clones the configured GitHub repo of podcast transcripts into `.tmp/transcripts` and writes `data/corpus.json` (gitignored; large).
+Clones the podcast transcript repository and writes `data/corpus.json` (gitignored; large).
 
 ```bash
 GITHUB_TOKEN=ghp_xxx npm run build:corpus
 ```
 
-Optional overrides (defaults match `scripts/build-corpus.js`):
-
+Optional env overrides (defaults in `scripts/build-corpus.js`):
 - `TRANSCRIPT_REPO_OWNER` (default: `LennysNewsletter`)
 - `TRANSCRIPT_REPO_NAME` (default: `lennys-newsletterpodcastdata-all`)
 
-The token must have access to that repository.
-
 ### 2. Generate paths
 
-Uses the corpus and Anthropic’s API to fill `data/paths.json` for every transition listed in `scripts/generate-paths.js`.
+Uses the corpus and Claude to write `data/paths.json` for every transition.
 
 ```bash
 ANTHROPIC_API_KEY=sk-ant-xxx npm run generate:paths
 ```
 
-Requires a successful corpus build first.
+Requires a successful corpus build first. The `scripts/` folder contains additional one-off batch writers used during iteration — prefer `npm run generate:paths` for the full pipeline.
 
-### Other scripts
-
-The `scripts/` folder includes additional one-off and batch writers (`write-paths-*.js`, `dump-all-contexts.js`, etc.) used while iterating on data. Prefer `npm run generate:paths` for the full pipeline unless you know you need a specific script.
-
-## Data files (`data/`)
-
-| File | Purpose |
-|------|---------|
-| `paths.json` | Role-pair keys (`from|||to`) → markdown path + metadata |
-| `citation-urls.json` | Citation URL map for the UI |
-| `market-signals.json` | Market signal copy (+ optional `_sourceUrl`) |
-| `podcast-recs.json` | Podcast recommendations by key |
-| `corpus.json` | Built transcript corpus (large; from `build:corpus`; **gitignored**) |
-
-Smaller or auxiliary files (e.g. `all-contexts.json`) may be used by scripts during generation.
-
-## Maintainer docs
-
-Product context, UX phases, and handoff notes live under [`docs/internal/`](docs/internal/README.md). They are not required to run the app.
-
-## App layout
+## Project structure
 
 | Path | Role |
 |------|------|
@@ -108,20 +93,34 @@ Product context, UX phases, and handoff notes live under [`docs/internal/`](docs
 | `lib/roleGroups.ts` | Role grouping for navigation |
 | `next.config.mjs` | Production guard + trace includes for `data/*.json` |
 
+## Data files
+
+| File | Purpose |
+|------|---------|
+| `paths.json` | Role-pair keys (`from\|\|\|to`) → markdown path + metadata |
+| `citation-urls.json` | Citation URL map for the UI |
+| `market-signals.json` | Market signal copy (+ optional `_sourceUrl`) |
+| `podcast-recs.json` | Podcast recommendations by key |
+| `corpus.json` | Built transcript corpus (large; **gitignored**) |
+
 ## Tech stack
 
 - Next.js 14, React 18, TypeScript, Tailwind CSS
 - `react-markdown` + `remark-gfm` for path rendering
-- `html2canvas` + `jspdf` for PDF
+- `html2canvas` + `jspdf` for PDF export
 - `@anthropic-ai/sdk` for offline path generation
 - `simple-git` + `gray-matter` for corpus build
 
-Dependencies are subject to their own licenses (see each package in `node_modules`).
+## Contributing
 
-## Repo maintenance (maintainers)
+See [CONTRIBUTING.md](CONTRIBUTING.md). For security issues, see [SECURITY.md](SECURITY.md).
 
-1. In **Settings → General**, tune description and topics; consider **Private vulnerability reporting** (see [SECURITY.md](SECURITY.md)).
-2. Confirm **no secrets** are in history (`git log -p`, search for tokens). Rotate any keys that ever leaked.
-3. Optional: issue/PR templates under `.github/` when outside contributors show up.
-4. Run `npm audit` and address or document any findings you accept as risk.
-5. `package.json` keeps `"private": true` so `npm publish` is blocked; that is intentional for an app repo.
+Internal product context and handoff notes live under [`docs/internal/`](docs/internal/README.md).
+
+## License & trademarks
+
+The **code** is licensed under [MIT-0](LICENSE) (MIT No Attribution) — use freely, no copyright notice required.
+
+**Path content** in `data/` is derived from Lenny's podcast and AI-assisted generation. It is not claimed as personal intellectual property by the maintainers; it remains subject to the underlying sources.
+
+"Lenny's Newsletter," podcast names, and related branding are properties of their respective owners. This project is **not** affiliated with or endorsed by Lenny Rachitsky or his newsletter unless explicitly stated by those parties. Third-party URLs and episode metadata remain subject to their original sites' terms.

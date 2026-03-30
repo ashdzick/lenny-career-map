@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect, useMemo, Suspense } from "react";
+import { useRef, useState, useEffect, useLayoutEffect, useMemo, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import Link from "next/link";
@@ -10,9 +10,11 @@ import { PathReadingNavMobile, PathReadingNavGutter } from "@/components/PathRea
 import { hasMarkdownCitations } from "@/components/EpisodePlaylist";
 import CareerMapLoading from "@/components/CareerMapLoading";
 import HomeBuildYourOwnLinks from "@/components/HomeBuildYourOwnLinks";
+import { HomeHowItWorks, HomeTryTransitions } from "@/components/HomeEmptyFeatured";
 import ReadingColumnShell from "@/components/ReadingColumnShell";
 import MarketSignal from "@/components/MarketSignal";
 import type { PathsData } from "@/app/page";
+import { pickHomeStarterPaths } from "@/lib/homeFeatured";
 import { roleGroups } from "@/lib/roleGroups";
 import { useLocalStorage } from "@/lib/useLocalStorage";
 import { useActiveScrollSection } from "@/lib/useActiveScrollSection";
@@ -45,17 +47,27 @@ function CareerMapInner({ data }: Props) {
   const searchParams = useSearchParams();
   const { roles, paths } = data;
 
-  const initialFrom = searchParams.get("from") ?? "";
-  const initialTo = searchParams.get("to") ?? "";
+  const urlFrom = searchParams.get("from") ?? "";
+  const urlTo = searchParams.get("to") ?? "";
 
-  const [currentRole, setCurrentRole] = useState(initialFrom);
-  const [targetRole, setTargetRole] = useState(initialTo);
+  /** URL is source of truth; initial empty avoids SSR/hydration mismatch with query string. */
+  const [currentRole, setCurrentRole] = useState("");
+  const [targetRole, setTargetRole] = useState("");
   const [markdown, setMarkdown] = useState("");
   const [error, setError] = useState<string | null>(null);
   const outputRef = useRef<HTMLDivElement>(null);
   const pathScrollRef = useRef<HTMLDivElement>(null);
   /** Last path key we scrolled to — avoids duplicate scroll on URL + debounce both loading same pair. */
   const pathScrollKeyRef = useRef<string | null>(null);
+  /** While editing “from” with a path open: keep article until ?from&to resolves again (avoid wiping the page). */
+  const preserveArticleForPartialUrlRef = useRef(false);
+  /** Pair key for notes/save/headline when target row is cleared during that edit (`from|||target`). */
+  const [pathStuckKey, setPathStuckKey] = useState<string | null>(null);
+  /** Pair key for the markdown currently on screen (may differ from URL while a new pair is loading). */
+  const [contentPathKey, setContentPathKey] = useState<string | null>(null);
+  /** Latest paths map — do not put `paths` in URL-sync effect deps (RSC can pass a new object ref after each router.replace). */
+  const pathsRef = useRef(paths);
+  pathsRef.current = paths;
 
   // ── Persistent state ──────────────────────────────────────────────────────
   const [savedPaths, setSavedPaths] = useLocalStorage<SavedPath[]>(
@@ -81,52 +93,67 @@ function CareerMapInner({ data }: Props) {
 
   const notReady = roles.length === 0;
   const totalPaths = Object.keys(paths).length;
-  const pathKey = currentRole && targetRole ? `${currentRole}|||${targetRole}` : "";
+  const pathKey =
+    currentRole && targetRole
+      ? `${currentRole}|||${targetRole}`
+      : pathStuckKey ?? "";
+  /** Notes, save, headline, podcast recs: tie to rendered article, not draft URL pair. */
+  const storagePathKey =
+    markdown && contentPathKey && contentPathKey.includes("|||")
+      ? contentPathKey
+      : pathKey.includes("|||")
+        ? pathKey
+        : "";
   const savedPathsSafe = Array.isArray(savedPaths) ? savedPaths : [];
-  const isSaved = savedPathsSafe.some((p) => p.from === currentRole && p.to === targetRole);
+  const isSaved = Boolean(
+    storagePathKey &&
+      savedPathsSafe.some((p) => `${p.from}|||${p.to}` === storagePathKey)
+  );
   const notesSafe: Record<string, string> =
     notes != null && typeof notes === "object" && !Array.isArray(notes)
       ? (notes as Record<string, string>)
       : {};
 
   function toggleSaved() {
-    if (!currentRole || !targetRole) return;
+    if (!storagePathKey) return;
+    const [from, to] = storagePathKey.split("|||");
+    if (!from || !to) return;
     setSavedPaths((prev) => {
       const list = Array.isArray(prev) ? prev : [];
       return isSaved
-        ? list.filter((p) => !(p.from === currentRole && p.to === targetRole))
-        : [...list, { from: currentRole, to: targetRole }];
+        ? list.filter((p) => !(p.from === from && p.to === to))
+        : [...list, { from, to }];
     });
   }
 
   function updateNote(value: string) {
-    if (!pathKey) return;
+    if (!storagePathKey) return;
     notesEditRef.current = true;
     setNotes((prev) => {
       const base =
         prev != null && typeof prev === "object" && !Array.isArray(prev)
           ? (prev as Record<string, string>)
           : {};
-      return { ...base, [pathKey]: value };
+      return { ...base, [storagePathKey]: value };
     });
   }
 
   /** Only reset note UI when the user actually switches paths (not on first mount). */
   useEffect(() => {
     const prev = prevPathKeyForNotes.current;
-    prevPathKeyForNotes.current = pathKey;
-    if (prev === null || prev === pathKey) return;
+    prevPathKeyForNotes.current = storagePathKey;
+    if (prev === null || prev === storagePathKey) return;
     notesEditRef.current = false;
     setNoteStatus("idle");
     const { t1, t2 } = noteStatusTimers.current;
     if (t1) clearTimeout(t1);
     if (t2) clearTimeout(t2);
-  }, [pathKey]);
+  }, [storagePathKey]);
 
-  const currentNoteText = notesSafe[pathKey];
+  const currentNoteText = notesSafe[storagePathKey];
 
   useEffect(() => {
-    if (!pathKey || !notesEditRef.current) return;
+    if (!storagePathKey || !notesEditRef.current) return;
     setNoteStatus("saving");
     const { t1: prev1, t2: prev2 } = noteStatusTimers.current;
     if (prev1) clearTimeout(prev1);
@@ -138,52 +165,65 @@ function CareerMapInner({ data }: Props) {
       clearTimeout(t1);
       clearTimeout(t2);
     };
-  }, [pathKey, currentNoteText]);
+  }, [storagePathKey, currentNoteText]);
 
-  // Auto-load path when URL params are present on mount
-  useEffect(() => {
-    if (initialFrom && initialTo) {
-      const key = `${initialFrom}|||${initialTo}`;
-      const entry = paths[key];
+  // Apply URL → state + path content (deep links, back/forward, logo home, partial ?from=)
+  useLayoutEffect(() => {
+    const pathsMap = pathsRef.current;
+    setCurrentRole(urlFrom);
+    setTargetRole(urlTo);
+
+    if (urlFrom && urlTo) {
+      preserveArticleForPartialUrlRef.current = false;
+      setPathStuckKey(null);
+      const key = `${urlFrom}|||${urlTo}`;
+      const entry = pathsMap[key];
       if (entry) {
         setMarkdown(entry.markdown);
+        setContentPathKey(key);
+        setError(null);
         pathScrollKeyRef.current = key;
-      } else if (initialFrom || initialTo) {
-        setError("No path found for this combination. Try a different pair.");
-        pathScrollKeyRef.current = null;
-      }
-    }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Debounced auto-load when both roles are selected (keeps URL in sync)
-  useEffect(() => {
-    if (!currentRole || !targetRole) return;
-
-    const key = `${currentRole}|||${targetRole}`;
-    const t = window.setTimeout(() => {
-      const entry = paths[key];
-      setError(null);
-      if (entry) {
-        setMarkdown(entry.markdown);
-        const params = new URLSearchParams();
-        params.set("from", currentRole);
-        params.set("to", targetRole);
-        router.replace(`?${params.toString()}`, { scroll: false });
-        if (pathScrollKeyRef.current !== key) {
-          pathScrollKeyRef.current = key;
-          window.setTimeout(() => {
-            pathScrollRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-          }, 50);
-        }
+        window.setTimeout(() => {
+          pathScrollRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 50);
       } else {
         setMarkdown("");
+        setContentPathKey(null);
         pathScrollKeyRef.current = null;
         setError("No path found for this combination. Try a different pair.");
       }
+    } else if (urlFrom && !urlTo && preserveArticleForPartialUrlRef.current) {
+      /* User changed “from” while reading; URL is ?from= only — keep article until they pick a new target. */
+      return;
+    } else {
+      preserveArticleForPartialUrlRef.current = false;
+      setPathStuckKey(null);
+      setMarkdown("");
+      setContentPathKey(null);
+      pathScrollKeyRef.current = null;
+      setError(null);
+    }
+  }, [urlFrom, urlTo]);
+
+  // Debounced URL write when the user changes roles (keeps ?from / ?from&to shareable and aligned with selects)
+  useEffect(() => {
+    if (!currentRole) return;
+
+    const t = window.setTimeout(() => {
+      const params = new URLSearchParams();
+      params.set("from", currentRole);
+      if (targetRole) params.set("to", targetRole);
+      const desired = params.toString();
+      const cur = new URLSearchParams(
+        typeof window !== "undefined" ? window.location.search.slice(1) : ""
+      );
+      const curTo = cur.get("to") ?? "";
+      if (cur.get("from") === currentRole && curTo === (targetRole ?? "")) return;
+      router.replace(`?${desired}`, { scroll: false });
     }, 320);
 
     return () => window.clearTimeout(t);
-  }, [currentRole, targetRole, paths, router]);
+  }, [currentRole, targetRole, router]);
 
   // Only show roles that have at least one outbound path in the left dropdown
   const sourceRoles = roles.filter((r) =>
@@ -208,14 +248,18 @@ function CareerMapInner({ data }: Props) {
       )
     : [];
 
+  const [relFrom, relTo] = storagePathKey
+    ? storagePathKey.split("|||")
+    : [currentRole, targetRole];
+
   // Related paths: same source OR same target, different pair, max 4
   const relatedPaths = markdown
     ? Object.keys(paths)
         .filter((key) => {
           const [from, to] = key.split("|||");
           return (
-            (from === currentRole || to === targetRole) &&
-            !(from === currentRole && to === targetRole)
+            (from === relFrom || to === relTo) &&
+            !(from === relFrom && to === relTo)
           );
         })
         .slice(0, 4)
@@ -226,13 +270,17 @@ function CareerMapInner({ data }: Props) {
     : [];
 
   const timeline = markdown ? extractTimeline(markdown) : null;
+  const marketTargetRole =
+    storagePathKey && storagePathKey.includes("|||")
+      ? (storagePathKey.split("|||")[1] ?? "")
+      : "";
   const pathMarketSignal =
-    markdown && targetRole ? data.marketSignals[targetRole] : undefined;
+    markdown && marketTargetRole ? data.marketSignals[marketTargetRole] : undefined;
   const pathTocItems = useMemo(() => extractPathTocFromMarkdown(markdown), [markdown]);
   const hasGoDeeperContent =
     !!markdown &&
     (hasMarkdownCitations(markdown) ||
-      ((data.podcastRecs?.[pathKey]?.length ?? 0) > 0));
+      ((data.podcastRecs?.[storagePathKey]?.length ?? 0) > 0));
 
   const navSectionIds = useMemo(() => {
     const ids = pathTocItems.map((item) => item.id);
@@ -244,21 +292,62 @@ function CareerMapInner({ data }: Props) {
   const activeSectionId = useActiveScrollSection(navSectionIds, Boolean(markdown));
 
   function handleCurrentRoleChange(value: string) {
+    if (!value) {
+      preserveArticleForPartialUrlRef.current = false;
+      setPathStuckKey(null);
+      setCurrentRole("");
+      setTargetRole("");
+      setMarkdown("");
+      setContentPathKey(null);
+      setError(null);
+      pathScrollKeyRef.current = null;
+      router.replace("?", { scroll: false });
+      return;
+    }
+
+    if (markdown && pathScrollKeyRef.current) {
+      preserveArticleForPartialUrlRef.current = true;
+      setPathStuckKey(pathScrollKeyRef.current);
+    } else {
+      preserveArticleForPartialUrlRef.current = false;
+      setPathStuckKey(null);
+      setMarkdown("");
+      setContentPathKey(null);
+      setError(null);
+      pathScrollKeyRef.current = null;
+    }
+
     setCurrentRole(value);
     setTargetRole("");
+
+    const params = new URLSearchParams();
+    params.set("from", value);
+    router.replace(`?${params.toString()}`, { scroll: false });
+  }
+
+  /** Logo-style home: clear path UI (soft nav to `/` alone would keep stale client state). */
+  function resetToHome() {
+    preserveArticleForPartialUrlRef.current = false;
+    setPathStuckKey(null);
+    setCurrentRole("");
+    setTargetRole("");
     setMarkdown("");
+    setContentPathKey(null);
     setError(null);
     pathScrollKeyRef.current = null;
-    router.replace("?", { scroll: false });
+    router.replace("/", { scroll: true });
   }
 
   function loadPath(from: string, to: string) {
+    preserveArticleForPartialUrlRef.current = false;
+    setPathStuckKey(null);
     const key = `${from}|||${to}`;
     const entry = paths[key];
     if (!entry) return;
     setCurrentRole(from);
     setTargetRole(to);
     setMarkdown(entry.markdown);
+    setContentPathKey(key);
     setError(null);
     const params = new URLSearchParams();
     params.set("from", from);
@@ -270,11 +359,14 @@ function CareerMapInner({ data }: Props) {
     }, 50);
   }
 
-  return (
-    <main id="main-content" tabIndex={-1}>
-      <ReadingColumnShell>
-      {/* Header */}
-      <header className={markdown ? "mb-6" : "mb-10"}>
+  const inFeaturedHero = !markdown && !notReady;
+  const starterPaths = useMemo(() => pickHomeStarterPaths(paths, 2), [paths]);
+  const homeHeader = (
+    <header
+      className={
+        markdown ? "mb-6" : inFeaturedHero ? "mb-6" : "mb-10"
+      }
+    >
         <div className="flex items-center gap-2 mb-3">
           <div className="w-2 h-2 rounded-full bg-brand-500" />
           <span className="text-xs font-medium text-brand-800 uppercase tracking-widest">
@@ -282,17 +374,19 @@ function CareerMapInner({ data }: Props) {
           </span>
         </div>
         <div className="flex items-start justify-between gap-4 flex-wrap">
-          <div>
+          <Link
+            href="/"
+            onClick={(e) => {
+              e.preventDefault();
+              resetToHome();
+            }}
+            className="min-w-0 inline-block rounded-sm text-brand-900 no-underline decoration-transparent outline-none transition-opacity hover:opacity-90 hover:no-underline focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-50"
+            aria-label="Career Transition Map — Home"
+          >
             <h1 className="text-3xl font-bold text-brand-900 leading-tight">
               Career Transition Map
             </h1>
-            {!markdown && (
-              <p className="mt-2 text-base text-gray-600 leading-relaxed">
-                Choose your current and target role. Every insight is grounded in
-                Lenny&apos;s podcast interviews — no fabricated advice.
-              </p>
-            )}
-          </div>
+          </Link>
           {(totalPaths > 0 || (mounted && savedPathsSafe.length > 0)) && (
             <nav
               className="flex flex-shrink-0 flex-wrap items-center justify-end gap-x-4 gap-y-2 mt-1"
@@ -321,93 +415,213 @@ function CareerMapInner({ data }: Props) {
             </nav>
           )}
         </div>
-      </header>
+    </header>
+  );
 
-      {/* Not ready state */}
-      {notReady && (
-        <div className="rounded-xl bg-amber-50 border border-amber-200 px-5 py-4 text-sm text-amber-800">
-          <p className="font-medium mb-1">Paths not generated yet.</p>
-          <p>
-            Run{" "}
-            <code className="px-1.5 py-0.5 rounded bg-amber-100 font-mono text-xs">
-              ANTHROPIC_API_KEY=sk-ant-xxx npm run generate:paths
-            </code>{" "}
-            to build the static path library.
-          </p>
-        </div>
-      )}
+  const selectClassBase =
+    "w-full appearance-none px-4 py-3 pr-10 rounded-xl text-gray-900 " +
+    "focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 " +
+    "transition-colors text-sm cursor-pointer " +
+    "disabled:bg-gray-100 disabled:border-gray-200 disabled:hover:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed";
+  /** Homepage hero card only — tinted so they stand out on white. */
+  const selectClassHome =
+    `${selectClassBase} border border-brand-200/90 bg-brand-50 hover:bg-brand-100/60 focus:border-brand-400`;
+  /** When a path is open or outside hero — white so they don’t blend into tinted page chrome. */
+  const selectClassPlain =
+    `${selectClassBase} border border-gray-200 bg-white hover:bg-gray-50/90 focus:border-brand-300`;
 
-      {/* Form */}
-      {!notReady && (
-        <div className="space-y-4 mb-6">
-          <div className="grid sm:grid-cols-2 gap-4">
-            {/* Current role */}
-            <div>
-              <label
-                htmlFor="current-role"
-                className="block text-sm font-medium text-gray-700 mb-1.5"
-              >
-                I currently work as a
-              </label>
-              <div className="relative">
-                <select
-                  id="current-role"
-                  suppressHydrationWarning
-                  value={currentRole}
-                  onChange={(e) => handleCurrentRoleChange(e.target.value)}
-                  className="w-full appearance-none px-4 py-2.5 pr-9 rounded-xl border border-gray-200 bg-white
-                             text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-400
-                             focus:border-transparent transition-shadow text-sm cursor-pointer"
-                >
-                  <option value="">Select a role…</option>
-                  {groupedSourceRoles.map((group) => (
-                    <optgroup key={group.label} label={group.label}>
-                      {group.roles.map((r) => (
-                        <option key={r} value={r}>{r}</option>
-                      ))}
-                    </optgroup>
-                  ))}
-                </select>
-                <ChevronDown />
-              </div>
-            </div>
-
-            {/* Target role */}
-            <div>
-              <label
-                htmlFor="target-role"
-                className="block text-sm font-medium text-gray-700 mb-1.5"
-              >
-                I want to become a
-              </label>
-              <div className="relative">
-                <select
-                  id="target-role"
-                  suppressHydrationWarning
-                  value={targetRole}
-                  onChange={(e) => {
-                    setTargetRole(e.target.value);
-                    setMarkdown("");
-                    setError(null);
-                  }}
-                  disabled={!currentRole}
-                  className="w-full appearance-none px-4 py-2.5 pr-9 rounded-xl border border-gray-200 bg-white
-                             text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-400
-                             focus:border-transparent disabled:opacity-40 disabled:cursor-not-allowed
-                             transition-shadow text-sm cursor-pointer"
-                >
-                  <option value="">
-                    {currentRole ? "Select a target role…" : "Select current role first"}
-                  </option>
-                  {availableTargets.map((r) => (
+  const rolePickersPlain = (
+    <div className="space-y-4 mb-6">
+      <div className="grid sm:grid-cols-2 gap-4">
+        <div className="py-2">
+          <label
+            htmlFor="current-role"
+            className="block text-sm font-bold text-gray-700 mb-2.5"
+          >
+            I currently work as a
+          </label>
+          <div className="relative">
+            <select
+              id="current-role"
+              suppressHydrationWarning
+              value={currentRole}
+              onChange={(e) => handleCurrentRoleChange(e.target.value)}
+              className={selectClassPlain}
+            >
+              <option value="">Select a role…</option>
+              {groupedSourceRoles.map((group) => (
+                <optgroup key={group.label} label={group.label}>
+                  {group.roles.map((r) => (
                     <option key={r} value={r}>{r}</option>
                   ))}
-                </select>
-                <ChevronDown />
-              </div>
-            </div>
+                </optgroup>
+              ))}
+            </select>
+            <ChevronDown />
           </div>
         </div>
+
+        <div className="py-2">
+          <label
+            htmlFor="target-role"
+            className="block text-sm font-bold text-gray-700 mb-2.5"
+          >
+            I want to become a
+          </label>
+          <div className="relative">
+            <select
+              id="target-role"
+              suppressHydrationWarning
+              value={targetRole}
+              onChange={(e) => {
+                setTargetRole(e.target.value);
+                setMarkdown("");
+                setError(null);
+              }}
+              disabled={!currentRole}
+              className={selectClassPlain}
+            >
+              <option value="">
+                {currentRole ? "Select a target role…" : "Select current role first"}
+              </option>
+              {availableTargets.map((r) => (
+                <option key={r} value={r}>{r}</option>
+              ))}
+            </select>
+            <ChevronDown />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const heroPickerModule = (
+    <div className="rounded-2xl border border-gray-200/90 bg-white p-5 sm:p-6 mb-8 shadow-sm ring-1 ring-gray-100/80">
+      <h2 className="text-xl font-bold text-brand-900 mt-0 mb-3 scroll-mt-24">
+        Build Your Transition Map
+      </h2>
+      <p className="text-sm text-gray-600 mb-6">
+        Model a tech career transition. Receive market insights, time horizons and learning
+        recommendations (from Lenny&apos;s Podcast and Newsletter) to help you make the switch
+      </p>
+
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] sm:items-end sm:gap-4">
+        <div className="py-2">
+          <label
+            htmlFor="current-role"
+            className="block text-sm font-bold text-gray-700 mb-2.5"
+          >
+            I currently work as a
+          </label>
+          <div className="relative">
+            <select
+              id="current-role"
+              suppressHydrationWarning
+              value={currentRole}
+              onChange={(e) => handleCurrentRoleChange(e.target.value)}
+              className={selectClassHome}
+            >
+              <option value="">Select a role…</option>
+              {groupedSourceRoles.map((group) => (
+                <optgroup key={group.label} label={group.label}>
+                  {group.roles.map((r) => (
+                    <option key={r} value={r}>{r}</option>
+                  ))}
+                </optgroup>
+              ))}
+            </select>
+            <ChevronDown />
+          </div>
+        </div>
+
+        <div
+          className="hidden sm:flex items-end justify-center pb-3 text-brand-500"
+          aria-hidden
+        >
+          <svg
+            className="w-9 h-9 shrink-0"
+            width={36}
+            height={36}
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={1.75}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M13 7l5 5m0 0l-5 5m5-5H6"
+            />
+          </svg>
+        </div>
+
+        <div className="py-2">
+          <label
+            htmlFor="target-role"
+            className="block text-sm font-bold text-gray-700 mb-2.5"
+          >
+            I want to become a
+          </label>
+          <div className="relative">
+            <select
+              id="target-role"
+              suppressHydrationWarning
+              value={targetRole}
+              onChange={(e) => {
+                setTargetRole(e.target.value);
+                setMarkdown("");
+                setError(null);
+              }}
+              disabled={!currentRole}
+              className={selectClassHome}
+            >
+              <option value="">
+                {currentRole ? "Select a target role…" : "Select current role first"}
+              </option>
+              {availableTargets.map((r) => (
+                <option key={r} value={r}>{r}</option>
+              ))}
+            </select>
+            <ChevronDown />
+          </div>
+        </div>
+      </div>
+
+      {!currentRole && (
+        <HomeTryTransitions paths={starterPaths} onTry={loadPath} embedded />
+      )}
+    </div>
+  );
+
+  return (
+    <main id="main-content" tabIndex={-1}>
+      <ReadingColumnShell>
+      {inFeaturedHero ? (
+        <div className="border-b border-gray-100 pb-8 mb-6">
+          {homeHeader}
+          {heroPickerModule}
+          <HomeHowItWorks />
+          {!currentRole && (
+            <HomeBuildYourOwnLinks className="mt-4 mb-0" />
+          )}
+        </div>
+      ) : (
+        <>
+          {homeHeader}
+          {notReady && (
+            <div className="rounded-xl bg-amber-50 border border-amber-200 px-5 py-4 text-sm text-amber-800">
+              <p className="font-medium mb-1">Paths not generated yet.</p>
+              <p>
+                Run{" "}
+                <code className="px-1.5 py-0.5 rounded bg-amber-100 font-mono text-xs">
+                  ANTHROPIC_API_KEY=sk-ant-xxx npm run generate:paths
+                </code>{" "}
+                to build the static path library.
+              </p>
+            </div>
+          )}
+          {!notReady && rolePickersPlain}
+        </>
       )}
 
       {/* Error */}
@@ -420,7 +634,9 @@ function CareerMapInner({ data }: Props) {
         </div>
       )}
 
-      {!currentRole && <HomeBuildYourOwnLinks className="mt-2 mb-6" />}
+      {!currentRole && !inFeaturedHero && (
+        <HomeBuildYourOwnLinks className="mt-2 mb-6" />
+      )}
       </ReadingColumnShell>
 
       {/* Output — separated from header + pickers for clearer “content” band */}
@@ -444,11 +660,11 @@ function CareerMapInner({ data }: Props) {
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
                   <div className="min-w-0">
                     <h2 className="text-2xl sm:text-[1.65rem] font-bold text-brand-900 leading-snug tracking-tight">
-                      <span className="text-gray-600 font-semibold">{currentRole}</span>
+                      <span className="text-gray-600 font-semibold">{relFrom}</span>
                       <span className="mx-2 text-gray-500 font-normal" aria-hidden>
                         →
                       </span>
-                      <span>{targetRole}</span>
+                      <span>{relTo}</span>
                     </h2>
                     {timeline && (
                       <p className="mt-1.5 text-sm text-gray-600 leading-snug flex items-start gap-1.5">
@@ -528,7 +744,7 @@ function CareerMapInner({ data }: Props) {
                   pathMarketSignal ? (
                     <div className="mb-4">
                       <MarketSignal
-                        targetRole={targetRole}
+                        targetRole={marketTargetRole}
                         signal={pathMarketSignal}
                         sourceUrl={data.marketSignalSourceUrl}
                         compact
@@ -542,8 +758,8 @@ function CareerMapInner({ data }: Props) {
               <GoDeeperSection
                 markdown={markdown}
                 citationUrls={data.citationUrls}
-                pathKey={pathKey}
-                recs={data.podcastRecs[pathKey] ?? []}
+                pathKey={storagePathKey}
+                recs={data.podcastRecs[storagePathKey] ?? []}
               />
 
               {/* Personal notes */}
@@ -590,7 +806,7 @@ function CareerMapInner({ data }: Props) {
                 </div>
                 <textarea
                   id="path-notes"
-                  value={notesSafe[pathKey] ?? ""}
+                  value={notesSafe[storagePathKey] ?? ""}
                   onChange={(e) => updateNote(e.target.value)}
                   placeholder="What resonated? Which episodes are priorities? What do you want to action first?"
                   rows={4}
@@ -602,8 +818,8 @@ function CareerMapInner({ data }: Props) {
                 <div className="mt-5">
                   <PDFDownloader
                     outputRef={outputRef}
-                    currentRole={currentRole}
-                    targetRole={targetRole}
+                    currentRole={relFrom}
+                    targetRole={relTo}
                     variant="link"
                   />
                 </div>

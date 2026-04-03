@@ -13,6 +13,7 @@
     "build:corpus": "node scripts/build-corpus.js",
     "generate:paths": "node scripts/generate-paths.js",
     "generate:podcast-recs": "node scripts/generate-podcast-recs.js",
+    "check:links": "node scripts/check-external-links.js",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

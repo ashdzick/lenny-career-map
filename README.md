@@ -83,6 +83,8 @@ ANTHROPIC_API_KEY=sk-ant-xxx npm run generate:paths
 
 Requires a successful corpus build first. For podcast recommendations, run `npm run generate:podcast-recs` (requires `data/corpus.json` and `data/paths.json`; see [`docs/HOW_PATHS_ARE_GENERATED.md`](docs/HOW_PATHS_ARE_GENERATED.md)). Optional helpers in `scripts/` for debugging the corpus: `get-chunks.js`, `dump-all-contexts.js`.
 
+**Check citation and podcast URLs:** `npm run check:links` walks every `https` URL in `data/citation-urls.json`, `data/podcast-recs.json`, and `data/market-signals.json` with throttled requests (~2.5s apart) so Lenny’s site is less likely to return 429. Run it after bulk URL edits; Substack slugs sometimes change ([`citation-urls.json`](data/citation-urls.json) maps bracket labels in path markdown to `/p/…` links).
+
 ## Generating paths on demand (API hookup)
 
 This app **does not** call an LLM in production. Everything in [`data/paths.json`](data/paths.json) is precomputed. If you want **live** generation instead (or as a fallback for new role pairs), the rough shape is:

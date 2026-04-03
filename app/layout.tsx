@@ -8,10 +8,27 @@ const inter = Inter({
   display: "swap",
 });
 
+const siteTitle = "Lenny's Career Transition Map";
+const siteDescription =
+  "Discover your career transition path grounded in insights from Lenny Rachitsky's podcast interviews.";
+
 export const metadata: Metadata = {
-  title: "Lenny's Career Transition Map",
-  description:
-    "Discover your career transition path grounded in insights from Lenny Rachitsky's podcast interviews.",
+  metadataBase: new URL("https://lenny-career-map.vercel.app"),
+  title: siteTitle,
+  description: siteDescription,
+  openGraph: {
+    title: siteTitle,
+    description: siteDescription,
+    url: "/",
+    siteName: siteTitle,
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: siteTitle,
+    description: siteDescription,
+  },
 };
 
 export default function RootLayout({

@@ -31,3 +31,4 @@ tsconfig.tsbuildinfo
 
 # Local-only internal notes (not for GitHub)
 /docs/internal/design-decisions-log.md
+/docs/blog-post-draft.md

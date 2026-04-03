@@ -612,10 +612,11 @@ function CareerMapInner({ data }: Props) {
             <div className="rounded-xl bg-amber-50 border border-amber-200 px-5 py-4 text-sm text-amber-800">
               <p className="font-medium mb-1">Paths not generated yet.</p>
               <p>
-                Run{" "}
-                <code className="px-1.5 py-0.5 rounded bg-amber-100 font-mono text-xs">
-                  ANTHROPIC_API_KEY=sk-ant-xxx npm run generate:paths
-                </code>{" "}
+                Set <code className="px-1.5 py-0.5 rounded bg-amber-100 font-mono text-xs">ANTHROPIC_API_KEY</code> in{" "}
+                <code className="px-1.5 py-0.5 rounded bg-amber-100 font-mono text-xs">.env.local</code> (see{" "}
+                <code className="px-1.5 py-0.5 rounded bg-amber-100 font-mono text-xs">.env.local.example</code>
+                ), then run{" "}
+                <code className="px-1.5 py-0.5 rounded bg-amber-100 font-mono text-xs">npm run generate:paths</code>{" "}
                 to build the static path library.
               </p>
             </div>

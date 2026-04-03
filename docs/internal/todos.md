@@ -5,7 +5,7 @@ Small follow-ups that are easy to lose while you’re focused on UI or other wor
 
 ## Data & content
 
-- [x] **Podcast recs — one empty path:** `Director of UX → Principal PM` had `[]` because `kw()` dropped every token (`director`/`principal` = noise; `ux`/`pm` below the old 3-character minimum). Fixed by allowing a small `SHORT_ROLE` set (`ux`, `pm`, …) in `kw()` in `scripts/generate-podcast-recs.js`, `get-chunks.js`, and `dump-all-contexts.js`, then re-running `node scripts/generate-podcast-recs.js`.
+- [x] **Podcast recs — one empty path:** `Director of UX → Principal PM` had `[]` because `kw()` dropped every token (`director`/`principal` = noise; `ux`/`pm` below the old 3-character minimum). Fixed by allowing a small `SHORT_ROLE` set (`ux`, `pm`, …) in `kw()` in `scripts/generate-podcast-recs.js`, `get-chunks.js`, and `dump-all-contexts.js`, then re-running `npm run generate:podcast-recs`.
 
 ## UI — done (kept for history)
 

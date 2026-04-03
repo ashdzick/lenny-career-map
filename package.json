@@ -8,13 +8,11 @@
     "type": "git",
     "url": "https://github.com/ashdzick/lenny-career-map.git"
   },
-  "bugs": {
-    "url": "https://github.com/ashdzick/lenny-career-map/issues"
-  },
   "homepage": "https://lenny-career-map.vercel.app",
   "scripts": {
     "build:corpus": "node scripts/build-corpus.js",
     "generate:paths": "node scripts/generate-paths.js",
+    "generate:podcast-recs": "node scripts/generate-podcast-recs.js",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

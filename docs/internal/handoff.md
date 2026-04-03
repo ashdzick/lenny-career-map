@@ -46,4 +46,5 @@ Next.js 14 app: **pre-generated** career transition paths from Lenny podcast/new
 npm run dev          # local dev
 npm run build && npm start   # production locally
 npm run preview      # same as build && start (one command)
+npm run generate:podcast-recs   # after corpus + paths exist
 ```

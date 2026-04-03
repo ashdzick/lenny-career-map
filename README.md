@@ -55,9 +55,11 @@ Production builds require `data/paths.json` to exist. If it's missing, `next.con
 
 **Requirements:** Node.js (LTS), npm.
 
+For offline regeneration, copy [`.env.local.example`](.env.local.example) to `.env.local` and fill in tokens (see **Regenerating data**). `.env.local` is gitignored.
+
 ## Regenerating data
 
-Paths are produced offline and committed to the repo — the API route under `app/api/generate` is a stub only. To regenerate:
+Paths are produced offline and committed to the repo — the API route under `app/api/generate` is a stub only (see **Generating paths on demand** below if you want a real endpoint). To regenerate:
 
 ### 1. Build the corpus
 
@@ -79,7 +81,18 @@ Uses the corpus and Claude to write `data/paths.json` for every transition.
 ANTHROPIC_API_KEY=sk-ant-xxx npm run generate:paths
 ```
 
-Requires a successful corpus build first. The `scripts/` folder contains additional one-off batch writers used during iteration — prefer `npm run generate:paths` for the full pipeline.
+Requires a successful corpus build first. For podcast recommendations, run `npm run generate:podcast-recs` (requires `data/corpus.json` and `data/paths.json`; see [`docs/HOW_PATHS_ARE_GENERATED.md`](docs/HOW_PATHS_ARE_GENERATED.md)). Optional helpers in `scripts/` for debugging the corpus: `get-chunks.js`, `dump-all-contexts.js`.
+
+## Generating paths on demand (API hookup)
+
+This app **does not** call an LLM in production. Everything in [`data/paths.json`](data/paths.json) is precomputed. If you want **live** generation instead (or as a fallback for new role pairs), the rough shape is:
+
+1. **Server-only API key** — Put `ANTHROPIC_API_KEY` (or another provider) in **server** env (e.g. Vercel project settings). Never expose it to the browser.
+2. **Reuse the offline pipeline logic** — [`scripts/generate-paths.js`](scripts/generate-paths.js) already scores episodes from `corpus.json`, builds a prompt, and calls the Anthropic SDK. Extract the “score excerpts → build messages → call API → return markdown” steps into a **shared module** you can import from a **Next.js Route Handler** (e.g. replace or extend the stub at [`app/api/generate/route.ts`](app/api/generate/route.ts)).
+3. **Corpus on the server** — The generator expects transcript data. Either keep `corpus.json` on the server (not in the client bundle), load it inside the route, or swap in your own RAG/source.
+4. **Wire the UI** — [`app/page.tsx`](app/page.tsx) currently reads static JSON and passes `PathsData` into [`CareerMapApp`](components/CareerMapApp.tsx). For on-demand paths, add a client `fetch` to your route when the user picks a pair that isn’t in `paths`, then set the returned markdown (and any citation URLs) into the same props shape the component already expects.
+
+Expect **latency, cost, and rate limits** per request; consider caching responses by `from|||to` if you open this up publicly.
 
 ## Project structure
 
@@ -111,9 +124,7 @@ Requires a successful corpus build first. The `scripts/` folder contains additio
 - `@anthropic-ai/sdk` for offline path generation
 - `simple-git` + `gray-matter` for corpus build
 
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md). For security issues, see [SECURITY.md](SECURITY.md).
+For security issues, see [SECURITY.md](SECURITY.md).
 
 Internal product context and handoff notes live under [`docs/internal/`](docs/internal/README.md).
 
